@@ -20,8 +20,8 @@
    - github地址:
    - 邮箱：
 - 张书慧
-   - github地址：
-   - 邮箱
+   - github地址：<https://github.com/zsh1200>
+   - 邮箱:1941495849@qq.com
 
 - 刘峻婷
    - github地址：
