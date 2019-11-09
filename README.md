@@ -15,10 +15,10 @@
   - 邮箱：627387735@qq.com
 - 王奇
    - github地址：
-   - 邮箱：
+   - 邮箱：1471141893@qq.com
 - 朱立辰
-   - github地址:
-   - 邮箱：
+   - github地址:<https://github.com/hiztt>
+   - 邮箱：390597658@qq.com
 - 张书慧
    - github地址：<https://github.com/zsh1200>
    - 邮箱:1941495849@qq.com
