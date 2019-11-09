@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "cn.edu.hebtu.software.maina119"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Androidx
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    //智能刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    //灵活的RecyclerViewAdapter   https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47-androidx'
+    //recyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //视频播放框架  https://github.com/CarGuo/GSYVideoPlayer
+    implementation 'com.shuyu:GSYVideoPlayer:7.1.1'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //动态权限申请框架   https://github.com/googlesamples/easypermissions
+    implementation 'pub.devrel:easypermissions:0.3.0'
+    //图片选择器  https://github.com/LuckSiege/PictureSelector
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
+    //Butterknife注解
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+}
