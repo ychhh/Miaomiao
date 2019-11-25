@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f3db276e-29ad-4eb0-af9e-82fb0ec2fe48" name="Default Changelist" comment="add java and ui">
+      <change afterPath="$PROJECT_DIR$/../UI/data/document.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/data/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/edit_personal.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/edit_personal/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/edit_personal/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/index/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/index/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_phone/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_phone/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_problem/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_problem/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_psd/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/login_psd/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/main/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/main/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/mycat/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/mycat/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/try/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/files/try/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/edit_personal/u244.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/edit_personal/u247.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/login_phone/clear_u8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/login_phone/login_main_u9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/login_phone/u2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/aixin01_u42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/aixin01_u43.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/jiayi_u46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/jiayi_u47.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/pinglunqu_u50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u101.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u131.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u141.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u143.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u152.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u158.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u164.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u176.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u177.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u178.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u180.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u183.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u187.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u188.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u189.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u190.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u193.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u194.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u36.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u37.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u38.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u39.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u40.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u45.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u47.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u49.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u53.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u54.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u59.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u70.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u79.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u80.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u81.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u89.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/u90.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/main/xiugaimima_u173.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/mycat/mp1_u198.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/mycat/mp1_u198_selected.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/mycat/u211.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/mycat/u212.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/mycat/u235.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/images/try/u132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/login_phone.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/login_problem.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/login_psd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/main.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/mycat.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/debug.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/reset.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/reset_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_off.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/debug/styles/images/variables_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/back.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/back_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/back_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/footnotes_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/forward.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/forward.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/forward_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/forward_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_off.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/images/notes_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/page_notes/styles/page_notes.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/recordplay/recordplay.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/recordplay/styles/recordplay.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/079_page_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/086_case_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/225_responsive_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/228_togglenotes_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/229_variables_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/231_event_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/232_search_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/233_hyperlink_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/235_folderclosed_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/236_folderopen_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/adaptivecheck.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/flow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/flow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/folder_closed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/folder_closed.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/folder_open.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/folder_open.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/hotspots_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/images.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/minus.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/note.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/note.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/page.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/page.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/plus.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/share_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_off.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/sitemap_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/images/views_on.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/plugins/sitemap/styles/sitemap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/Other.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/allow_access.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/axure-chrome-extension.crx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/axure_logo.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/axure_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/chrome.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/extensions_menu.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/safari.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/safari_advanced.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/safari_restrictions.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/splitter.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/chrome/splitter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/axure_rp_page.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/default.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/images.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/newwindow.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/note.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_flat_0_aaaaaa_40x100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_glass_55_fbf9ee_1x400.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_glass_65_ffffff_1x400.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_glass_75_dadada_1x400.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_glass_75_e6e6e6_1x400.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_glass_75_ffffff_1x400.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-bg_inset-soft_95_fef1ec_1x100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-icons_222222_256x240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-icons_2e83ff_256x240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-icons_454545_256x240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-icons_888888_256x240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/images/ui-icons_cd0a0a_256x240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/jquery-ui-themes.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/expand.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/259_close_12rollover1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/259_close_12rollover2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/260_collapse_12rollover1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/260_collapse_12rollover2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/261_expand_12rollover1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/261_expand_12rollover2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/close.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/close_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/close_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/divider.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/divider.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/expand.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/expand.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/expand_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/expand_hover.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/images.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/images/transparent.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/reload.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/jquery-1.7.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/jquery-ui-1.8.10.custom.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/messagecenter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/player/axplayer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/player/splitter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/prototypePost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/prototypePre.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/startPost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/resources/scripts/startPre.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/start.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/start_c_1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/start_g_0.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/try.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/小鱼/1.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/小鱼/2.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/小鱼/3.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UI/小鱼/4.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao需求说明书.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../~$aomiao需求说明书.docx" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+              <folding>
+                <element signature="e#256#257#0" expanded="true" />
+                <element signature="e#326#327#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/miaomiao.iml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1180" />
+    <option name="height" value="610" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="miaomiao_java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="MiaomiaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="miaomiao" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hbsd.rjxy.miaomiao.MiaomiaoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f3db276e-29ad-4eb0-af9e-82fb0ec2fe48" name="Default Changelist" comment="" />
+      <created>1574601808275</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574601808275</updated>
+      <workItem from="1574601813105" duration="797000" />
+      <workItem from="1574660898517" duration="1257000" />
+      <workItem from="1574662571999" duration="551000" />
+      <workItem from="1574663184768" duration="28000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2633000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2600536" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43767706" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add java and ui" />
+    <option name="LAST_COMMIT_MESSAGE" value="add java and ui" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-devtools/2.2.1.RELEASE/spring-boot-devtools-2.2.1.RELEASE.jar!/org/springframework/boot/devtools/restart/RestartLauncher.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding>
+            <element signature="e#256#257#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/miaomiao.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8.0_131</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
