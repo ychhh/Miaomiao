@@ -14,7 +14,7 @@
   - github地址：<https://github.com/ychhh>
   - 邮箱：627387735@qq.com
 - 王奇
-   - github地址：
+   - github地址：https://github.com/123wangqi
    - 邮箱：1471141893@qq.com
 - 朱立辰
    - github地址:<https://github.com/hiztt>
