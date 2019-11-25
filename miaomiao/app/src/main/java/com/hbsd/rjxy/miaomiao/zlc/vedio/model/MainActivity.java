@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
@@ -20,7 +18,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{
 
     private FragmentTabHost  tabHost = null;
-    private Class[] tabClass = {Fragment1.class,Fragment2.class,Fragment1.class,Fragment1.class,Fragment1.class};
+    private Class[] tabClass = {MainFragment.class,Fragment2.class, MainFragment.class, MainFragment.class, MainFragment.class};
     private ImageView iv_tabSpec = null;
 
 
