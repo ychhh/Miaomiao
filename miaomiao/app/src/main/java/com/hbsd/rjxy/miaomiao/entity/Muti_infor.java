@@ -25,6 +25,8 @@ public class Muti_infor {
     private float miRecommended;//推荐系数
     private String miTag;//标签，逗号隔开
 
+    public Muti_infor() {
+    }
 
     /**
      * 视频的构造方法

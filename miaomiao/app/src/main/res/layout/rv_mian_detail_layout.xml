@@ -11,7 +11,7 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"/>-->
 
-    <cn.edu.hebtu.software.maina119.MeGSYVideoPlayer
+    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
 
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"

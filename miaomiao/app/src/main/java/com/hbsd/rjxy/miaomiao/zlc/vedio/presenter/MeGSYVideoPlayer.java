@@ -6,6 +6,7 @@ import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.hbsd.rjxy.miaomiao.R;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import moe.codeest.enviews.ENPlayView;

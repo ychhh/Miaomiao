@@ -11,7 +11,16 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
@@ -21,14 +30,18 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     private Class[] tabClass = {MainFragment.class,Fragment2.class, MainFragment.class, MainFragment.class, MainFragment.class};
     private ImageView iv_tabSpec = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //初始化登录用户   如果未登陆过，传空，如果登陆过，根据id请求获取user信息，创建user实体
 
+        if(true){
+            //未登录
+           new VideoPreseter(getApplicationContext(),null).execute();
+        }else{
 
-
+        }
 
         mTranslucent();//透明状态栏
 
@@ -105,4 +118,6 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
         }
 
     }
+
+
 }

@@ -5,11 +5,14 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
 
 import java.util.List;
 
-public class MeAdapter extends BaseQuickAdapter<MeVideo,MeViewHolder> {
+public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> {
 
     private Context context;
 
@@ -20,8 +23,8 @@ public class MeAdapter extends BaseQuickAdapter<MeVideo,MeViewHolder> {
 
 
     @Override
-    protected void convert(final MeViewHolder helper, MeVideo item) {
-        helper.gsyVideoPlayer.setUpLazy(item.getUrl(),true,null,null,"title");
+    protected void convert(final MeViewHolder helper, Muti_infor item) {
+        helper.gsyVideoPlayer.setUpLazy(item.getMiPath(),true,null,null,"title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //返回摁钮不可见
@@ -43,11 +46,11 @@ public class MeAdapter extends BaseQuickAdapter<MeVideo,MeViewHolder> {
 
 //        helper.gsyVideoPlayer.loadCoverImage("http://www.zin4ever.top/924Cakeprj/images/dreamcake.png",R.drawable.thumbimage);
 
-//        Glide.with(context)
-////                .load(item.getThumbUrl())
-////                .into(helper.iv_thumb);
-        helper.iv_thumb.setImageResource(R.mipmap.thumbimage1);
-        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
+        Glide.with(context)
+                .load(item.getMiCover())
+                .into(helper.iv_thumb);
+//        helper.iv_thumb.setImageResource(R.mipmap.thumbimage1);
+//        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
     }
 
     @Override
