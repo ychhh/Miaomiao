@@ -8,5 +8,6 @@ import android.view.ViewGroup;
 public interface IMainFragmentView {
 
     public View initFragment(LayoutInflater inflater, ViewGroup container);
+    public void initPlayPosition(Context context);
 
 }
