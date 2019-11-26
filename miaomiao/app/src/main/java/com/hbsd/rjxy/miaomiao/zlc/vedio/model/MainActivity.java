@@ -11,16 +11,8 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
