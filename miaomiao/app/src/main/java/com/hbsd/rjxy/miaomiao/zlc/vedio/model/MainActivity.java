@@ -27,7 +27,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{
 
     private FragmentTabHost  tabHost = null;
-    private Class[] tabClass = {MainFragment.class,Fragment2.class, MainFragment.class, MainFragment.class, MainFragment.class};
+    private Class[] tabClass = {MainFragment.class,Fragment2.class, Fragment2.class, Fragment2.class, Fragment2.class};
     private ImageView iv_tabSpec = null;
 
     @Override

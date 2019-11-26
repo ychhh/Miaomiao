@@ -42,7 +42,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private int playTop;
     private int playBottom;
     //这个是否第一次播放的初始化放到了initData方法中
-    boolean firstOpenVideo;
+    boolean firstOpenVideo = true;
 
     @Nullable
     @Override
@@ -147,7 +147,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onLoadMoreRequested() {
                 //这里是上拉加载
-                initData(videoList);
+                videoList = initData(videoList);
             }
         },recyclerView);
 
@@ -184,6 +184,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     public void getVideoList(List<Muti_infor> videoList){
         this.videoList = videoList;
         //通知adapter内容改变
+        adapter.loadMoreComplete();
     }
 
 
@@ -204,6 +205,13 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         muti_infor1.setMiPath("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
         muti_infor1.setMiCover("https://www.zin4ever.top/924Cakeprj/images/dreamcake.png");
         videoList.add(muti_infor1);
+
+
+        if(firstOpenVideo != false){
+            firstOpenVideo = true;
+        }else{
+            adapter.loadMoreComplete();
+        }
         return videoList;
     }
 }
