@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,8 @@ public interface IMainFragmentView {
 
     public RecyclerView initRecyclerView(RecyclerView recyclerView);
     public MeAdapter initAdapter(MeAdapter adapter);
+
+    public void setTextViewColor(TextView selectedView, TextView unselectedView);
 
 
 

@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -31,9 +32,17 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class MainFragment extends Fragment implements IMainFragmentView , IVideoPreseter {
 
+public class MainFragment extends Fragment implements IMainFragmentView , IVideoPreseter , View.OnClickListener {
+
+
+    @BindView(R.id.tv_subscribed)
+    TextView tv_subscribed;
+    @BindView(R.id.tv_recommend)
+    TextView tv_recommend;
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
@@ -48,6 +57,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = initFragment(inflater,container);
+
+        ButterKnife.bind(this,view);
+        tv_recommend.setOnClickListener(this::onClick);
+        tv_subscribed.setOnClickListener(this::onClick);
         //注册订阅者     ！！重复注册
 //        EventBus.getDefault().register(this);
 
@@ -202,8 +215,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             videoList = new ArrayList<>();
         }
         Muti_infor muti_infor1 = new Muti_infor();
-        muti_infor1.setMiPath("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
-        muti_infor1.setMiCover("https://www.zin4ever.top/924Cakeprj/images/dreamcake.png");
+
+
+        muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
+        muti_infor1.setMiCover("https://zin4ever.top/924Cakeprj/images/dreamcake.png");
         videoList.add(muti_infor1);
 
 
@@ -213,5 +228,46 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             adapter.loadMoreComplete();
         }
         return videoList;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.tv_subscribed:
+                /**点击订阅的事件
+                 *
+                 * 1.切换订阅为选中状态
+                 * 2.请求服务器重新获得视频数据
+                 *
+                 */
+                setTextViewColor(tv_subscribed,tv_recommend);
+
+
+
+
+                break;
+
+            case R.id.tv_recommend:
+                /**点击推荐的事件
+                 *
+                 * 1.切换推荐为选中状态
+                 * 2.请求服务器重新获得视频数据
+                 *
+                 */
+                setTextViewColor(tv_recommend,tv_subscribed);
+
+
+                break;
+
+
+        }
+
+    }
+
+    @Override
+    public void setTextViewColor(TextView selectedView,TextView unselectedView) {
+        selectedView.setTextColor(getResources().getColor(R.color.mainuptextselected));
+        unselectedView.setTextColor(getResources().getColor(R.color.mainuptextnormal));
     }
 }

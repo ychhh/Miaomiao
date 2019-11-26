@@ -13,6 +13,4 @@ public class Constant {
 
     public static String INIT_VIDEO_URL = "";//请求视频的url
 
-
-
 }

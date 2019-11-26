@@ -1,37 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="match_parent">
 
 
     <!--<com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer-->
 
-        <!--android:id="@+id/videoPlayer"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
+    <!--android:id="@+id/videoPlayer"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
 
     <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
 
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-   
-
-    <ImageView
-        android:id="@+id/iv_thumb"
-        android:scaleType="fitCenter"
-        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 
     <ImageView
-        android:background="#BE4646"
-        android:layout_marginTop="100dp"
+        android:id="@+id/iv_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter" />
+
+    <com.hbsd.rjxy.miaomiao.utils.CircleImageView
+        android:id="@+id/iv_cathead"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="right"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/catheadtest" />
+
+    <ImageView
+        android:src="@drawable/feed"
+        android:layout_marginTop="350dp"
+        android:layout_gravity="right"
+        android:id="@+id/iv_feed"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+
+    <ImageView
+        android:scaleType="fitCenter"
+        android:src="@drawable/subscribe"
+        android:layout_marginTop="420dp"
+        android:layout_gravity="right"
+        android:id="@+id/iv_subscribe"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_marginTop="500dp"
+        android:layout_gravity="right"
+        android:layout_width="50dp"
+        android:layout_height="80dp">
+
+
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitCenter"
+            android:src="@drawable/comment"
+            android:id="@+id/iv_comment"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/tv_comment_amount"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"
+            android:text="0"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
+
+
+
+
 
 
 </FrameLayout>
