@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/black"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ImageView
         android:id="@+id/iv_tabSpec"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:id="@+id/tv_tabname"
+        android:text="hiiii"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

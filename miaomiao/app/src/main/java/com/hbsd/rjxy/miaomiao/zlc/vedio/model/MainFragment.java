@@ -4,9 +4,12 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +25,9 @@ import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -121,6 +126,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         recyclerView.setNestedScrollingEnabled(true);
         //
         recyclerView.setAdapter(adapter);
+
+
+
         //监听
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -130,6 +138,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 scrollCalculatorHelper.onScrollStateChanged(recyclerView, newState);
+
+                //获取当前正在显示的view
+                //做不到恢复上一个的封面，被回收了，干！
+
             }
 
             @Override
@@ -166,6 +178,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
         //倒数第一个的时候预加载
         adapter.setPreLoadNumber(1);
+        adapter.setEnableLoadMore(true);
         //载入动画
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         /**-----------------------点击事件------------------------**/
@@ -201,11 +214,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 
 
     @Override
@@ -215,12 +223,26 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             videoList = new ArrayList<>();
         }
         Muti_infor muti_infor1 = new Muti_infor();
-
-
-
         muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
         muti_infor1.setMiCover("http://q1kb2gx86.bkt.clouddn.com/cover1.png");
         videoList.add(muti_infor1);
+
+        Muti_infor muti_infor2 = new Muti_infor();
+        muti_infor2.setMiPath("http://q1kb2gx86.bkt.clouddn.com/50d10301117b759c793b4f07ccfbdeca.mp4");
+        muti_infor2.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203009.jpg");
+        videoList.add(muti_infor2);
+
+        Muti_infor muti_infor3 = new Muti_infor();
+        muti_infor3.setMiPath("http://q1kb2gx86.bkt.clouddn.com/765454469a1c2c869749ee68d6a0f8ca.mp4");
+        muti_infor3.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203048.jpg");
+        videoList.add(muti_infor3);
+
+        Muti_infor muti_infor4 = new Muti_infor();
+        muti_infor4.setMiPath("http://q1kb2gx86.bkt.clouddn.com/b48a416cd3047220952f3c0ed320a085.mp4");
+        muti_infor4.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203116.jpg");
+        videoList.add(muti_infor4);
+
+
 
 
         if(firstOpenVideo != false){
@@ -270,5 +292,27 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     public void setTextViewColor(TextView selectedView,TextView unselectedView) {
         selectedView.setTextColor(getResources().getColor(R.color.mainuptextselected));
         unselectedView.setTextColor(getResources().getColor(R.color.mainuptextnormal));
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onPause() {
+        //切换fragment的时候停止播放，释放所有播放视频
+        GSYVideoManager.releaseAllVideos();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        //每次回来也要自动播放
+        firstOpenVideo = true;
+        super.onResume();
     }
 }

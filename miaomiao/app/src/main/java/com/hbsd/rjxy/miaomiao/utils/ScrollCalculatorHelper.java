@@ -94,6 +94,7 @@ public class ScrollCalculatorHelper {
                 //说明第一个完全可视
                 if (rect.top == 0 && rect.bottom == height) {
                     gsyBaseVideoPlayer = player;
+
                     //恢复封面图
                     imageView = layoutManager.getChildAt(0).findViewById(R.id.iv_thumb);
                     if(imageView.getVisibility() == View.INVISIBLE && imageView != null){
@@ -149,9 +150,9 @@ public class ScrollCalculatorHelper {
                 }
                 if (inPosition) {
                     //设置状态位，如果允许非wifi情况下自动播放，则直接调用原生的startPlayLogic()方法
-                    startPlayLogic(gsyBaseVideoPlayer, gsyBaseVideoPlayer.getContext());
+//                    startPlayLogic(gsyBaseVideoPlayer, gsyBaseVideoPlayer.getContext());
 //                    gsyBaseVideoPlayer.startPlayLogic();
-//                    startMePlayLogic(gsyBaseVideoPlayer);
+                    startMePlayLogic(gsyBaseVideoPlayer);
                 }
             }else{
 

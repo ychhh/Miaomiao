@@ -2,6 +2,8 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -12,7 +14,7 @@ import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
 
 import java.util.List;
 
-public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> {
+public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> implements View.OnClickListener {
 
     private Context context;
 
@@ -24,6 +26,24 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> {
 
     @Override
     protected void convert(final MeViewHolder helper, Muti_infor item) {
+
+        int cid = item.getCatId();
+        //通过cid请求头像
+        helper.getView(R.id.iv_cathead).setOnClickListener(this::onClick);
+
+        //设置小鱼干的点击事件
+        helper.getView(R.id.iv_feed).setOnClickListener(this::onClick);
+
+        //设置订阅的点击事件
+        helper.getView(R.id.iv_subscribe).setOnClickListener(this::onClick);
+
+        //设置评论的点击事件
+        helper.getView(R.id.iv_comment).setOnClickListener(this::onClick);
+
+        //设置评论数量
+        helper.setTag(R.id.tv_comment_amount,item.getMiCommentCount());
+
+
         helper.gsyVideoPlayer.setUpLazy(item.getMiPath(),true,null,null,"title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
@@ -44,21 +64,41 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> {
 
         helper.gsyVideoPlayer.changeUiToNormal();
 
-//        helper.gsyVideoPlayer.loadCoverImage("http://www.zin4ever.top/924Cakeprj/images/dreamcake.png",R.drawable.thumbimage);
-
-
+        //加载封面
         Glide.with(context)
                 .load(item.getMiCover())
                 .into(helper.iv_thumb);
-
-
-//        helper.iv_thumb.setImageResource(R.mipmap.thumbimage1);
         helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
     }
 
     @Override
     public int getItemViewType(int position) {
         return super.getItemViewType(position);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_cathead:
+                //点击头像  do something
+                Toast.makeText(context,"这是头像",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.iv_feed:
+                //点击小鱼干，发送请求
+                Toast.makeText(context,"这是小鱼干",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.iv_subscribe:
+                //点击订阅 do something
+                Toast.makeText(context,"这是订阅",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.iv_comment:
+                //点击评论，跳转
+                Toast.makeText(context,"这是评论",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
 

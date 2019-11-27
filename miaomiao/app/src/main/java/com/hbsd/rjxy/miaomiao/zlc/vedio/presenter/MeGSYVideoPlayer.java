@@ -23,13 +23,6 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToNormal() {
         super.changeUiToNormal();
-//        setViewShowState(mLoadingProgressBar, GONE);
-//        setViewShowState(mTopContainer,INVISIBLE);
-//        setViewShowState(mBottomContainer,INVISIBLE);
-//        setViewShowState(mStartButton,GONE);
-//        setViewShowState(mLoadingProgressBar,VISIBLE);
-//        setViewShowState(mBottomProgressBar,INVISIBLE);
-//        setViewShowState(mLockScreen,GONE);
     }
 
     @Override
@@ -75,5 +68,10 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
 
     public void getImageView(ImageView imageView){
         this.imageView = imageView;
+    }
+
+    //写一个方法把imageView恢复显示
+    public void visibleImage(){
+        this.imageView.setVisibility(VISIBLE);
     }
 }

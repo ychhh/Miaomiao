@@ -79,6 +79,8 @@ public class VideoPreseter extends AsyncTask<Object,Object,String>{
         List<Muti_infor> videoList = gson.fromJson(s,new TypeToken<List<Muti_infor>>(){}.getType());
         if(videoList != null){
             EventBus.getDefault().post(videoList);
+        }else{
+            //没有拿到返回结果
         }
     }
 }

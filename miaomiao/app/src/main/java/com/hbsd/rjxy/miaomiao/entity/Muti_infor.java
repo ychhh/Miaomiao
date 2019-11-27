@@ -25,6 +25,12 @@ public class Muti_infor {
     private float miRecommended;//推荐系数
     private String miTag;//标签，逗号隔开
 
+
+    //这条不是数据库表中的字段，chead，猫的头像
+    //还是拿到视频之后在去通过cid请求猫头像的url
+
+
+
     public Muti_infor() {
     }
 
