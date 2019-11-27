@@ -13,4 +13,10 @@ public class Constant {
 
     public static String INIT_VIDEO_URL = "";//请求视频的url
 
+<<<<<<< Updated upstream
+=======
+    public static String LOGIN_URL="http://10.7.88.158:8080/login/password";//登录的URL
+
+
+>>>>>>> Stashed changes
 }
