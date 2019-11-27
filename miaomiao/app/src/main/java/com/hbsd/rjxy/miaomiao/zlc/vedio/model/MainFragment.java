@@ -217,8 +217,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         Muti_infor muti_infor1 = new Muti_infor();
 
 
+
         muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
-        muti_infor1.setMiCover("http://zin4ever.top/924Cakeprj/images/dreamcake.png");
+        muti_infor1.setMiCover("http://q1kb2gx86.bkt.clouddn.com/cover1.png");
         videoList.add(muti_infor1);
 
 

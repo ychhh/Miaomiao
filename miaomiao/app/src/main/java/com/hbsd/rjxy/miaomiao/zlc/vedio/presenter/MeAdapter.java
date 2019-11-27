@@ -47,13 +47,13 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> {
 //        helper.gsyVideoPlayer.loadCoverImage("http://www.zin4ever.top/924Cakeprj/images/dreamcake.png",R.drawable.thumbimage);
 
 
-//        Glide.with(context)
-//                .load(item.getMiCover())
-//                .into(helper.iv_thumb);
+        Glide.with(context)
+                .load(item.getMiCover())
+                .into(helper.iv_thumb);
 
 
 //        helper.iv_thumb.setImageResource(R.mipmap.thumbimage1);
-//        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
+        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
     }
 
     @Override
