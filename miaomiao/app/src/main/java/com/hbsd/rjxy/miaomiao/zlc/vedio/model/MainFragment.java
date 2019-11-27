@@ -159,7 +159,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                //这里是上拉加载
+                //这里是预加载请求
                 videoList = initData(videoList);
             }
         },recyclerView);
@@ -218,7 +218,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
         muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
-        muti_infor1.setMiCover("https://zin4ever.top/924Cakeprj/images/dreamcake.png");
+        muti_infor1.setMiCover("http://zin4ever.top/924Cakeprj/images/dreamcake.png");
         videoList.add(muti_infor1);
 
 
