@@ -30,6 +30,8 @@
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ProblemsLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
+        <!--告诉用户需要登录的页面-->
+        <activity android:name=".zlc.vedio.model.PleaseLoginActivity"/>
     </application>
 
 </manifest>

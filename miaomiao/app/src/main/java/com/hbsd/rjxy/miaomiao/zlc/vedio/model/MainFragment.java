@@ -2,14 +2,11 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -275,6 +272,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  *
                  */
                 setTextViewColor(tv_subscribed,tv_recommend);
+
+                //如果没有登录，显示请登录的页面
+                startActivity(new Intent(getContext(),PleaseLoginActivity.class));
 
 
 

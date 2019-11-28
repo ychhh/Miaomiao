@@ -10,4 +10,7 @@
     <!--背景色-->
     <color name="bgcolor">#CA7945</color>
     <color name="white">#ffffff</color>
+
+    <!--登录按钮-->
+    <color name="pleaseLogin">#B3FF2828</color>
 </resources>
