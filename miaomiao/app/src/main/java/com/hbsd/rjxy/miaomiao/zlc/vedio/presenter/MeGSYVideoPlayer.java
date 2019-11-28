@@ -66,6 +66,7 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
         }
     }
 
+    
     public void getImageView(ImageView imageView){
         this.imageView = imageView;
     }

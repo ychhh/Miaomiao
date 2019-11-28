@@ -129,7 +129,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
 
-        //监听
+        //监听recyclerView的滑动
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             int firstVisibleItem, lastVisibleItem;
@@ -138,10 +138,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 scrollCalculatorHelper.onScrollStateChanged(recyclerView, newState);
-
-                //获取当前正在显示的view
-                //做不到恢复上一个的封面，被回收了，干！
-
             }
 
             @Override
@@ -149,16 +145,30 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 super.onScrolled(recyclerView, dx, dy);
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
                 //这是滑动自动播放的代码
-//                if (!mFull) {
-
-
                 scrollCalculatorHelper.onScroll(recyclerView, firstVisibleItem, lastVisibleItem, lastVisibleItem - firstVisibleItem);
                 //第一次进入程序自动播放
                 if(firstOpenVideo){
                     scrollCalculatorHelper.onScrollStateChanged(recyclerView, RecyclerView.SCROLL_STATE_IDLE);
                     firstOpenVideo = false;
+                }
+            }
+        });
+
+
+        /**
+         * 视频移出去后改变封面图的visible状态
+         */
+        recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+            @Override
+            public void onChildViewAttachedToWindow(@NonNull View view) {
+
+            }
+
+            @Override
+            public void onChildViewDetachedFromWindow(@NonNull View view) {
+                if(recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE){
+                    scrollCalculatorHelper.isNowPlaying(view);
                 }
             }
         });

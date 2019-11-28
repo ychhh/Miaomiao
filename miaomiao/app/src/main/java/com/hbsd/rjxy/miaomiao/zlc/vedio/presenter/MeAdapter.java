@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +70,11 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
                 .load(item.getMiCover())
                 .into(helper.iv_thumb);
         helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MeViewHolder holder) {
+        super.onViewRecycled(holder);
     }
 
     @Override

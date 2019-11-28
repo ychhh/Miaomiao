@@ -11,8 +11,10 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"/>-->
 
-    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
 
+
+
+    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -23,6 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter" />
+
+
+
 
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/iv_cathead"
