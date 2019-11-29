@@ -10,4 +10,6 @@
     <!--背景色-->
     <color name="bgcolor">#CA7945</color>
     <color name="white">#ffffff</color>
+    <!--摁钮颜色-->
+    <color name="btnLogin">#FF1B1B</color>
 </resources>

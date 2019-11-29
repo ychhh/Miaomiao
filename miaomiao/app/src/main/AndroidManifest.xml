@@ -30,6 +30,13 @@
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ProblemsLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
+        <!--提示登陆页面-->
+        <activity android:name=".zlc.vedio.model.PleaseLoginActivity"/>
+
+        <!--点击猫头像或评论跳转到额activity-->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/>
     </application>
+
+
 
 </manifest>

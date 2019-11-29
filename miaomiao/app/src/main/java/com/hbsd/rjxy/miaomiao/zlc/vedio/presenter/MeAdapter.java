@@ -1,6 +1,7 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import java.util.List;
 
@@ -88,6 +90,11 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
             case R.id.iv_cathead:
                 //点击头像  do something
                 Toast.makeText(context,"这是头像",Toast.LENGTH_SHORT).show();
+
+                //跳转
+                context.startActivity(new Intent(context, InfoAndCommentActivity.class));
+
+
                 break;
 
             case R.id.iv_feed:
