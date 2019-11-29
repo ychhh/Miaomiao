@@ -319,7 +319,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     @Override
     public void onPause() {
         //切换fragment的时候停止播放，释放所有播放视频
-        GSYVideoManager.releaseAllVideos();
+        GSYVideoManager.onPause();
         super.onPause();
     }
 
@@ -327,6 +327,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     public void onResume() {
         //每次回来也要自动播放
         firstOpenVideo = true;
+        GSYVideoManager.onResume();
         super.onResume();
     }
 }

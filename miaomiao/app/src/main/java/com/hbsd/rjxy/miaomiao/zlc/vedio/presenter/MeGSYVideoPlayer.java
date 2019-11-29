@@ -1,10 +1,12 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.hbsd.rjxy.miaomiao.R;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -17,20 +19,41 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
 
     public MeGSYVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        changeUiToClear();
     }
 
-
+    //双击逻辑
     @Override
-    protected void changeUiToNormal() {
-        super.changeUiToNormal();
+    protected void touchDoubleUp() {
+
     }
 
     @Override
     protected void onClickUiToggle() {
-        super.onClickUiToggle();
+        //单击逻辑替换成双击暂停逻辑
+        if (!mHadPlay) {
+            return;
+        }
+        if(mCurrentState == CURRENT_STATE_PLAYING){
+            //如果正在播放
+            try {
+                onVideoPause();
+                changeUiToClear();//去掉ui的变化
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(mCurrentState == CURRENT_STATE_PAUSE){
+            //如果是暂停的状态
+            startAfterPrepared();
+            changeUiToClear();//去掉ui的变化
+        }
+
+        //因为调用的是播放按钮点击的逻辑方法
+//        clickStartIcon();
     }
 
 
+    //去掉中心开始暂停按钮
     @Override
     protected void updateStartImage() {
         super.updateStartImage();
@@ -64,6 +87,7 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
         if(imageView != null && imageView.getVisibility()== View.VISIBLE){
             imageView.setVisibility(INVISIBLE);
         }
+
     }
 
     
@@ -75,4 +99,30 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
     public void visibleImage(){
         this.imageView.setVisibility(VISIBLE);
     }
+
+
+    //去掉进度条
+
+    @Override
+    public void onPrepared() {
+        super.onPrepared();
+        changeUiToClear();
+    }
+
+
+    @Override
+    protected void changeUiToNormal() {
+        changeUiToClear();
+    }
+
+    @Override
+    protected void changeUiToPreparingShow() {
+        changeUiToClear();
+    }
+
+    @Override
+    protected void changeUiToPlayingBufferingShow() {
+        changeUiToClear();
+    }
+
 }
