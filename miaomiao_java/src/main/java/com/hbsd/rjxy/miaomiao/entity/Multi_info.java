@@ -1,13 +1,15 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
 
+import javax.persistence.*;
 import java.util.Date;
 
-/**
- *
- * 信息表的实体类
- */
-public class Muti_infor {
+@Entity
+@Table(name = "multi_info")
+public class Multi_info {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int miId;
     private int type;//0：视频，1：图片，2：纯文字
     private int catId;
@@ -26,74 +28,6 @@ public class Muti_infor {
     private String miTag;//标签，逗号隔开
 
 
-    //这条不是数据库表中的字段，chead，猫的头像
-    //还是拿到视频之后在去通过cid请求猫头像的url
-
-
-
-    public Muti_infor() {
-    }
-
-    /**
-     * 视频的构造方法
-     */
-    public Muti_infor(int miId, int type, int catId, int userId, String miPath, Date miUpdateTime, String miContent, int miVisited, int miStatus, int miCommentCount, String miFormat, int miHot, int miAddress, String miCover, float miRecommended, String miTag) {
-        this.miId = miId;
-        this.type = type;
-        this.catId = catId;
-        this.userId = userId;
-        this.miPath = miPath;
-        this.miUpdateTime = miUpdateTime;
-        this.miContent = miContent;
-        this.miVisited = miVisited;
-        this.miStatus = miStatus;
-        this.miCommentCount = miCommentCount;
-        this.miFormat = miFormat;
-        this.miHot = miHot;
-        this.miAddress = miAddress;
-        this.miCover = miCover;
-        this.miRecommended = miRecommended;
-        this.miTag = miTag;
-    }
-
-
-    /**
-     * 图片的构造方法
-     * @return
-     */
-    public Muti_infor(int miId, int type, int catId, int userId, String miPath, Date miUpdateTime, String miContent, int miStatus, String miFormat, int miAddress, String miTag) {
-        this.miId = miId;
-        this.type = type;
-        this.catId = catId;
-        this.userId = userId;
-        this.miPath = miPath;
-        this.miUpdateTime = miUpdateTime;
-        this.miContent = miContent;
-        this.miStatus = miStatus;
-        this.miFormat = miFormat;
-        this.miAddress = miAddress;
-        this.miTag = miTag;
-    }
-
-    /**
-     * 纯文字的构造方法
-     * @return
-     */
-    public Muti_infor(int miId, int type, int catId, int userId, Date miUpdateTime, String miContent, int miStatus, int miAddress) {
-        this.miId = miId;
-        this.type = type;
-        this.catId = catId;
-        this.userId = userId;
-        this.miUpdateTime = miUpdateTime;
-        this.miContent = miContent;
-        this.miStatus = miStatus;
-        this.miAddress = miAddress;
-    }
-
-    /**
-     *
-     *              Getter   Setter   方法
-     */
     public int getMiId() {
         return miId;
     }
@@ -224,7 +158,7 @@ public class Muti_infor {
 
     @Override
     public String toString() {
-        return "Muti_infor{" +
+        return "Multi_info{" +
                 "miId=" + miId +
                 ", type=" + type +
                 ", catId=" + catId +

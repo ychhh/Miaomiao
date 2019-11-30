@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6687be6-a38a-4556-ae56-6a2e4374ba7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Multi_info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/Muti_infor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/Multi_infor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/IVideoPreseter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/IVideoPreseter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,118 +18,6 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription_record.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-200">
-              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-              <folding>
-                <element signature="e#607#608#0" expanded="true" />
-                <element signature="e#663#664#0" expanded="true" />
-                <element signature="e#750#751#0" expanded="true" />
-                <element signature="e#814#815#0" expanded="true" />
-                <element signature="e#901#902#0" expanded="true" />
-                <element signature="e#965#966#0" expanded="true" />
-                <element signature="e#1081#1082#0" expanded="true" />
-                <element signature="e#1128#1129#0" expanded="true" />
-                <element signature="e#1250#1251#0" expanded="true" />
-                <element signature="e#1299#1300#0" expanded="true" />
-                <element signature="e#1392#1393#0" expanded="true" />
-                <element signature="e#1444#1445#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="27" column="47" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/service/LoginService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/controller/LoginController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/test/TestController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#361#362#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -140,162 +29,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/test/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/test/TestController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription_record.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" />
-      </list>
-    </option>
-  </component>
   <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="F:/apache-maven-3.6.2" />
+      </MavenGeneralSettings>
+    </option>
     <option name="importingSettings">
       <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
         <option name="jdkForImporter" value="1.8" />
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="1180" />
-    <option name="height" value="610" />
-  </component>
+  <component name="ProjectId" id="1UHfKl6dhg6oBU9VxhUq7ug04F7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
-              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
-              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
-              <item name="ljt" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
-              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
-              <item name="ych" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
-              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
-              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
-              <item name="ych" type="462c0819:PsiDirectoryNode" />
-              <item name="subscription" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -305,9 +54,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -350,154 +100,29 @@
       <updated>1574929783467</updated>
       <workItem from="1574929787895" duration="2804000" />
       <workItem from="1574992527115" duration="3482000" />
+      <workItem from="1575018381545" duration="3183000" />
+      <workItem from="1575022455089" duration="62000" />
+      <workItem from="1575022638637" duration="282000" />
+      <workItem from="1575022931390" duration="1828000" />
+      <workItem from="1575028751442" duration="807000" />
     </task>
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6286000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34844193" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" />
-      <window_info anchor="bottom" id="Java Enterprise" order="12" />
-      <window_info anchor="bottom" id="Database Changes" order="13" />
-      <window_info anchor="bottom" id="Version Control" order="14" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Bean Validation" order="9" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/test/Controller.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/service/LoginService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/test/TestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#361#362#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription_record.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-200">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="27" column="47" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-          <folding>
-            <element signature="e#607#608#0" expanded="true" />
-            <element signature="e#663#664#0" expanded="true" />
-            <element signature="e#750#751#0" expanded="true" />
-            <element signature="e#814#815#0" expanded="true" />
-            <element signature="e#901#902#0" expanded="true" />
-            <element signature="e#965#966#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1128#1129#0" expanded="true" />
-            <element signature="e#1250#1251#0" expanded="true" />
-            <element signature="e#1299#1300#0" expanded="true" />
-            <element signature="e#1392#1393#0" expanded="true" />
-            <element signature="e#1444#1445#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="masterDetails">
     <states>

@@ -12,12 +12,13 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+
+import com.hbsd.rjxy.miaomiao.entity.Multi_infor;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import java.util.List;
 
-public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> implements View.OnClickListener {
+public class MeAdapter extends BaseQuickAdapter<Multi_infor,MeViewHolder> implements View.OnClickListener {
 
     private Context context;
 
@@ -28,7 +29,7 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
 
 
     @Override
-    protected void convert(final MeViewHolder helper, Muti_infor item) {
+    protected void convert(final MeViewHolder helper, Multi_infor item) {
 
         int cid = item.getCatId();
         //通过cid请求头像

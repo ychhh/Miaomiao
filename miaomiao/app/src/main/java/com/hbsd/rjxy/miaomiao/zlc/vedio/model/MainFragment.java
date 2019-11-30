@@ -4,13 +4,9 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+import com.hbsd.rjxy.miaomiao.entity.Multi_infor;
+
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
@@ -52,7 +48,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
-    private List<Muti_infor> videoList;         //这里只显示视频，所以是videoList
+    private List<Multi_infor> videoList;         //这里只显示视频，所以是videoList
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -218,7 +214,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getVideoList(List<Muti_infor> videoList){
+    public void getVideoList(List<Multi_infor> videoList){
         this.videoList = videoList;
         //通知adapter内容改变
         adapter.loadMoreComplete();
@@ -228,27 +224,27 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
     @Override
-    public List<Muti_infor> initData(List<Muti_infor> videoList) {
+    public List<Multi_infor> initData(List<Multi_infor> videoList) {
         //测试
         if(videoList == null){
             videoList = new ArrayList<>();
         }
-        Muti_infor muti_infor1 = new Muti_infor();
+        Multi_infor muti_infor1 = new Multi_infor();
         muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
         muti_infor1.setMiCover("http://q1kb2gx86.bkt.clouddn.com/cover1.png");
         videoList.add(muti_infor1);
 
-        Muti_infor muti_infor2 = new Muti_infor();
+        Multi_infor muti_infor2 = new Multi_infor();
         muti_infor2.setMiPath("http://q1kb2gx86.bkt.clouddn.com/50d10301117b759c793b4f07ccfbdeca.mp4");
         muti_infor2.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203009.jpg");
         videoList.add(muti_infor2);
 
-        Muti_infor muti_infor3 = new Muti_infor();
+        Multi_infor muti_infor3 = new Multi_infor();
         muti_infor3.setMiPath("http://q1kb2gx86.bkt.clouddn.com/765454469a1c2c869749ee68d6a0f8ca.mp4");
         muti_infor3.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203048.jpg");
         videoList.add(muti_infor3);
 
-        Muti_infor muti_infor4 = new Muti_infor();
+        Multi_infor muti_infor4 = new Multi_infor();
         muti_infor4.setMiPath("http://q1kb2gx86.bkt.clouddn.com/b48a416cd3047220952f3c0ed320a085.mp4");
         muti_infor4.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203116.jpg");
         videoList.add(muti_infor4);
