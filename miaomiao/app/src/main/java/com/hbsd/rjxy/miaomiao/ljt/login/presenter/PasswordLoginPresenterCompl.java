@@ -1,9 +1,6 @@
 package com.hbsd.rjxy.miaomiao.ljt.login.presenter;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
@@ -38,7 +35,7 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
         protected Object doInBackground(Object[] objects) {
             //创建URL对象
             try {
-                URL url = new URL(Constant.LOGIN_URL);
+                URL url = new URL(Constant.LOGIN_URL+"password");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 OutputStream outputStream = connection.getOutputStream();

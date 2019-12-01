@@ -15,11 +15,8 @@ public class Constant {
 
     public static String INIT_VIDEO_URL = "http://10.7.87.224:8080/video/pagingVideo";//请求视频的url
 
-
     public static String LOGIN_URL="http://10.7.88.158:8080/login/password";//登录的URL
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
-
-
 
 }
