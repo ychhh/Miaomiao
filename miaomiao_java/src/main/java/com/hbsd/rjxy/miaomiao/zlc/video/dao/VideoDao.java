@@ -38,4 +38,15 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
     List<Multi_info> findVideoPaging(int start,int step);
 
 
+    /**
+     * 添加视频评论个数
+     * @param miid
+     * @return
+     */
+    @Modifying
+    @Query(value = "UPDATE multi_info SET mcomment_count=mcomment_count+1 WHERE miid=?",nativeQuery = true)
+    int addVideoCommentAccount(int miid);
+
+
+
 }

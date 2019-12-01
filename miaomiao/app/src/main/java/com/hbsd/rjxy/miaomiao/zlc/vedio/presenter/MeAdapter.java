@@ -3,7 +3,6 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,12 +12,12 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
 
-import com.hbsd.rjxy.miaomiao.entity.Multi_infor;
+import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import java.util.List;
 
-public class MeAdapter extends BaseQuickAdapter<Multi_infor,MeViewHolder> implements View.OnClickListener {
+public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> implements View.OnClickListener {
 
     private Context context;
 
@@ -29,9 +28,9 @@ public class MeAdapter extends BaseQuickAdapter<Multi_infor,MeViewHolder> implem
 
 
     @Override
-    protected void convert(final MeViewHolder helper, Multi_infor item) {
+    protected void convert(final MeViewHolder helper, Multi_info item) {
 
-        int cid = item.getCatId();
+        int cid = item.getCid();
         //通过cid请求头像
         helper.getView(R.id.iv_cathead).setOnClickListener(this::onClick);
 
@@ -45,10 +44,10 @@ public class MeAdapter extends BaseQuickAdapter<Multi_infor,MeViewHolder> implem
         helper.getView(R.id.iv_comment).setOnClickListener(this::onClick);
 
         //设置评论数量
-        helper.setTag(R.id.tv_comment_amount,item.getMiCommentCount());
+        helper.setTag(R.id.tv_comment_amount,item.getMcomment_count());
 
 
-        helper.gsyVideoPlayer.setUpLazy(item.getMiPath(),true,null,null,"title");
+        helper.gsyVideoPlayer.setUpLazy(item.getMpath(),true,null,null,"title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //返回摁钮不可见
@@ -70,7 +69,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_infor,MeViewHolder> implem
 
         //加载封面
         Glide.with(context)
-                .load(item.getMiCover())
+                .load(item.getMcover())
                 .into(helper.iv_thumb);
         helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
     }

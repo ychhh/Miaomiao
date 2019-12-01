@@ -53,7 +53,8 @@ public class ScrollCalculatorHelper {
 
     public void isNowPlaying(View view){
         imageView = view.findViewById(R.id.iv_thumb);
-        if(imageView.getVisibility() == View.INVISIBLE && imageView != null){
+        //如果当前不是最后一个视频
+        if(imageView != null && imageView.getVisibility() == View.INVISIBLE && imageView != null){
             imageView.setVisibility(View.VISIBLE);
         }
 

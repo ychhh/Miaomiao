@@ -18,6 +18,8 @@ import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,11 +39,12 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //初始化登录用户   如果未登陆过，传空，如果登陆过，根据id请求获取user信息，创建user实体
 
         if(true){
             //未登录
-           new VideoPreseter(getApplicationContext(),null).execute();
+//           new VideoPreseter(getApplicationContext(),null).execute();
         }else{
 
         }
