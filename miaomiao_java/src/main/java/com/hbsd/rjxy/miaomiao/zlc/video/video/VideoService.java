@@ -21,6 +21,12 @@ public class VideoService {
         return videoDao.findAll();
     }
 
+
+    /**
+     * 点击小鱼干
+     * @param
+     * @return
+     */
     public int addHotByFish(int miid){
         return videoDao.feedFish(miid);
     }
