@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b6687be6-a38a-4556-ae56-6a2e4374ba7e" name="Default Changelist" comment="" />
+    <list default="true" id="b6687be6-a38a-4556-ae56-6a2e4374ba7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/AddVideoHotPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/FeedPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/PopFish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeGSYVideoPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/MeGSYVideoPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/VideoPreseter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/VideoPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/rv_mian_detail_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/rv_mian_detail_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/VideoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/VideoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/VideoController.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +112,7 @@
       <workItem from="1575022931390" duration="1828000" />
       <workItem from="1575028751442" duration="807000" />
       <workItem from="1575082484108" duration="5190000" />
-      <workItem from="1575171671724" duration="10129000" />
+      <workItem from="1575171671724" duration="15131000" />
     </task>
     <servers />
   </component>

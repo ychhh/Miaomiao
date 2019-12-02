@@ -6,26 +6,48 @@ import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoView;
 
 import moe.codeest.enviews.ENPlayView;
 
-public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
+public class MeGSYVideoPlayer extends StandardGSYVideoPlayer{
 
     ImageView imageView;
+    RelativeLayout relativeLayout;
+    boolean isDoubleClicking = false;
+    Thread mThread;
 
     public MeGSYVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         changeUiToClear();
     }
 
-    //双击逻辑
+    //双击逻辑      //双击一次之后继续点击会有小鱼干出来
     @Override
     protected void touchDoubleUp() {
-
+        relativeLayout.setVisibility(VISIBLE);
+        if(mThread == null || !mThread.isAlive()){
+            mThread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        isDoubleClicking = true;
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    relativeLayout.setVisibility(INVISIBLE);
+                    isDoubleClicking = false;
+                }
+            };
+            mThread.start();
+        }
     }
 
     @Override
@@ -34,7 +56,7 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
         if (!mHadPlay) {
             return;
         }
-        if(mCurrentState == CURRENT_STATE_PLAYING){
+        if(mCurrentState == CURRENT_STATE_PLAYING && !isDoubleClicking){
             //如果正在播放
             try {
                 onVideoPause();
@@ -42,7 +64,7 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else if(mCurrentState == CURRENT_STATE_PAUSE){
+        }else if(mCurrentState == CURRENT_STATE_PAUSE && !isDoubleClicking){
             //如果是暂停的状态
             startAfterPrepared();
             changeUiToClear();//去掉ui的变化
@@ -67,7 +89,7 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
             } else {
                 enPlayView.pause();
             }
-            enPlayView.setVisibility(GONE);
+            enPlayView.setVisibility(INVISIBLE);
         } else if (mStartButton instanceof ImageView) {
             ImageView imageView = (ImageView) mStartButton;
             if (mCurrentState == CURRENT_STATE_PLAYING) {
@@ -77,12 +99,13 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
             } else {
                 imageView.setImageResource(R.drawable.video_click_play_selector);
             }
-            imageView.setVisibility(GONE);
+            imageView.setVisibility(INVISIBLE);
         }
     }
 
     @Override
     public void onSurfaceUpdated(Surface surface) {
+
         super.onSurfaceUpdated(surface);
         if(imageView != null && imageView.getVisibility()== View.VISIBLE){
             imageView.setVisibility(INVISIBLE);
@@ -91,9 +114,10 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     
-    public void getImageView(ImageView imageView){
+    public void setImageView(ImageView imageView){
         this.imageView = imageView;
     }
+    public void setRelativeLayout(RelativeLayout relativeLayout){this.relativeLayout = relativeLayout;}
 
     //写一个方法把imageView恢复显示
     public void visibleImage(){
@@ -124,5 +148,6 @@ public class MeGSYVideoPlayer extends StandardGSYVideoPlayer {
     protected void changeUiToPlayingBufferingShow() {
         changeUiToClear();
     }
+
 
 }

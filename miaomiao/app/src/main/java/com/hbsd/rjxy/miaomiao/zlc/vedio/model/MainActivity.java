@@ -12,16 +12,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
-
-import org.greenrobot.eventbus.EventBus;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
@@ -44,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
 
         if(true){
             //未登录
-//           new VideoPreseter(getApplicationContext(),null).execute();
+//           new VideoPresenter(getApplicationContext(),null).execute();
         }else{
 
         }

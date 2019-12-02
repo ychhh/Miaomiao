@@ -34,12 +34,12 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.RECOMMEND_PAGE_DEFAULT;
 /**
  * 初始化视频信息的异步任务类
  */
-public class VideoPreseter extends AsyncTask<Object,Object,String>{
+public class VideoPresenter extends AsyncTask<Object,Object,String>{
 
     private Context context;
     private User user;
 
-    public VideoPreseter(Context context, @Nullable User user) {
+    public VideoPresenter(Context context, @Nullable User user) {
         this.context = context;
         this.user = user;
     }

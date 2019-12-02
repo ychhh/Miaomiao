@@ -30,12 +30,27 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
     @Override
     protected void convert(final MeViewHolder helper, Multi_info item) {
 
+        //设置视频小鱼干数量  评论数量
+        helper.setText(R.id.tv_video_fish,""+item.getMhot()).setText(R.id.tv_comment_amount,""+item.getMcomment_count());
+
+
+
         int cid = item.getCid();
         //通过cid请求头像
         helper.getView(R.id.iv_cathead).setOnClickListener(this::onClick);
 
         //设置小鱼干的点击事件
-        helper.getView(R.id.iv_feed).setOnClickListener(this::onClick);
+        helper.getView(R.id.iv_feed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击小鱼干，发送请求  判断是否登录过
+
+                //判断已经登陆过
+                item.setMhot(item.getMhot()+1);
+                helper.setText(R.id.tv_video_fish,""+item.getMhot());
+                new FeedPresenter(context,item).execute();
+            }
+        });
 
         //设置订阅的点击事件
         helper.getView(R.id.iv_subscribe).setOnClickListener(this::onClick);
@@ -71,7 +86,10 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         Glide.with(context)
                 .load(item.getMcover())
                 .into(helper.iv_thumb);
-        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
+        helper.gsyVideoPlayer.setImageView(helper.iv_thumb);
+
+        //设置双击显示小鱼
+        helper.gsyVideoPlayer.setRelativeLayout(helper.getView(R.id.popFish));
     }
 
     @Override
@@ -96,12 +114,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
 
 
                 break;
-
-            case R.id.iv_feed:
-                //点击小鱼干，发送请求
-                Toast.makeText(context,"这是小鱼干",Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.iv_subscribe:
                 //点击订阅 do something
                 Toast.makeText(context,"这是订阅",Toast.LENGTH_SHORT).show();

@@ -4,7 +4,6 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
@@ -27,14 +25,13 @@ import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPresenter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +81,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
         //初始化数据
         videoList = initData(videoList);
-        new VideoPreseter(getContext(),null).execute();
+        new VideoPresenter(getContext(),null).execute();
 
         return view;
     }
@@ -180,7 +177,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onLoadMoreRequested() {
                 //这里是预加载请求，当前推荐页++
                 RECOMMEND_PAGE_DEFAULT += 1;
-                new VideoPreseter(getContext(),null).execute();
+                new VideoPresenter(getContext(),null).execute();
             }
         },recyclerView);
 

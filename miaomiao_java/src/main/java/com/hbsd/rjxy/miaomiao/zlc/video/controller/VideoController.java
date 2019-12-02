@@ -32,6 +32,7 @@ public class VideoController {
 
     /**
      * 传参miid
+     * 返回值如果是0代表异常
      * @param request
      * @param response
      * @return
@@ -39,8 +40,14 @@ public class VideoController {
     @RequestMapping("/video/addHot")
     @ResponseBody
     public int findAll(HttpServletRequest request, HttpServletResponse response){
-        int miid = Integer.parseInt(request.getParameter("miid"));
-        return videoService.addHotByFish(miid);
+        JSONObject receive = null;
+        try {
+            receive = new JSONObject(RequestUtil.getJson(request));
+            return videoService.addHotByFish(receive.getInt("miid"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
