@@ -18,21 +18,6 @@ import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.SelfFragment;
 
-
-<<<<<<< HEAD
-=======
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
-import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
->>>>>>> cd9d03cb853cbc918e7888ea0814c6afbae7749c
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{

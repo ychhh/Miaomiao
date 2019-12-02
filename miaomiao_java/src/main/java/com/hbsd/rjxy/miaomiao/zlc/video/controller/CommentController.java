@@ -62,8 +62,6 @@ public class CommentController {
         }
         return "fail";
     }
-
-
     /**
      * 添加评论，传一个comment对象
      *
