@@ -77,6 +77,8 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
                     iPasswordLoginView.onLoginResult(result,0);
                 }else if (result.equals("false")){
                     iPasswordLoginView.onLoginResult(result,0);
+                }else if(result.equals("null")){
+                    iPasswordLoginView.onLoginResult(result,0);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

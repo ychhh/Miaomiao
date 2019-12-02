@@ -15,12 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPasswordLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PasswordLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
+
 
 //注意协议部分的设置
 public class PasswordLoginActivity extends AppCompatActivity implements IPasswordLoginView {
@@ -92,11 +94,13 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
         } else if (result.equals("error")) {
             Toast.makeText(this, "密码错误！", Toast.LENGTH_SHORT).show();
         } else if (result.equals("false")) {
-            showPopupWindow();
+            showPopupWindow(result);
+        }else if (result.equals("null")){
+            showPopupWindow(result);
         }
     }
 
-    public void showPopupWindow() {
+    public void showPopupWindow(String result) {
         if (popupWindow == null || !popupWindow.isShowing()) {
             popupWindow = new PopupWindow();
         }
@@ -108,7 +112,15 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
         //设置popupwindow能否响应点击事件
         popupWindow.setTouchable(true);
         Button btnCancle = popupView.findViewById(R.id.btn_cancel);
+        TextView tvText=popupView.findViewById(R.id.tv_popupText);
         Button btnOk = popupView.findViewById(R.id.btn_ok);
+        if(result.equals("false")){
+            tvText.setText("您还未注册！");
+            btnOk.setText("去注册");
+        }else if(result.equals("null")){
+            tvText.setText("当前账户未设置密码！");
+            btnOk.setText("验证码登录");
+        }
         btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

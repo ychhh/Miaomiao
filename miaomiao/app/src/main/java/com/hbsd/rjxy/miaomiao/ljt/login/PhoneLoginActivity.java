@@ -3,6 +3,7 @@ package com.hbsd.rjxy.miaomiao.ljt.login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -12,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPhoneLoginPresenter;
+import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PhoneLoginPresenterCompl;
+import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
 import org.json.JSONObject;
@@ -27,7 +30,7 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.utils.SMSLog;
 
-public class PhoneLoginActivity extends AppCompatActivity {
+public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLoginView {
 
     private Button btnPwdLogin;
     private EditText etPhone;
@@ -38,6 +41,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private RadioButton rbAgree;
     public EventHandler eh; //事件接收器
     private TimeCount mTimeCount;//计时器
+    private IPhoneLoginPresenter iPhoneLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone_login);
         init();
         findViews();
+        iPhoneLoginPresenter=new PhoneLoginPresenterCompl(this);
     }
 
     private void findViews() {
@@ -67,8 +72,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) { //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码成功
-                        Log.e("验证码","验证成功");
-                        startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class)); //页面跳转
+                        iPhoneLoginPresenter.doLogin(etPhone.getText().toString());
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) { //获取验证码成功
                         runOnUiThread(new Runnable() {
                             @Override
@@ -112,9 +116,12 @@ public class PhoneLoginActivity extends AppCompatActivity {
             case R.id.btn_getPhoneCode://获取验证码
                 if (!etPhone.getText().toString().trim().equals("")) {
                     if (checkTel(etPhone.getText().toString().trim())) {
-                        Log.e("etPhoneNumber",etPhone.getText().toString().trim());
-                        SMSSDK.getVerificationCode("+86", etPhone.getText().toString());//获取验证码
-                        mTimeCount.start();
+                        if (rbAgree.isChecked()) {
+                            SMSSDK.getVerificationCode("+86", etPhone.getText().toString());//获取验证码
+                            mTimeCount.start();
+                        }else{
+                            Toast.makeText(this, "请阅读并同意用户协议！", Toast.LENGTH_SHORT).show();
+                        }
                     }else {
                         Toast.makeText(PhoneLoginActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                     }
@@ -157,6 +164,24 @@ public class PhoneLoginActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eh);
+    }
+
+    /**
+     * 登录成功之后
+     * @param result
+     * @param uid
+     */
+    @Override
+    public void onLoginResult(String result, int uid) {
+        if (result.equals("true")) {
+            //登录成功后将用户id进行存储
+            SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("uid", uid + "");
+            editor.commit();
+            Log.e("用户登录的id", uid + "");
+            startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class)); //页面跳转
+        }
     }
 
     /**
