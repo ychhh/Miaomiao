@@ -12,21 +12,18 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
+import com.hbsd.rjxy.miaomiao.zsh.setting.model.SelfFragment;
 
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{
 
     private FragmentTabHost  tabHost = null;
-    private Class[] tabClass = {MainFragment.class,Fragment2.class, Fragment2.class, Fragment2.class, Fragment2.class};
+    private Class[] tabClass = {MainFragment.class,Fragment2.class, Fragment2.class, Fragment2.class, SelfFragment.class};
     private ImageView iv_tabSpec = null;
 
 
