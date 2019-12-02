@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,9 +14,21 @@ import android.widget.TextView;
 
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{
@@ -45,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
         mTranslucent();//透明状态栏
 
         initTab();
-
-
 
     }
 
