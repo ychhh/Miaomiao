@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:background="@color/bgcolor"
+        android:onClick="onClicked"
         android:text="密码登录"
         android:textSize="18sp" />
 
@@ -29,8 +30,8 @@
         android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:hint="请输入手机号"
         android:textSize="23sp" />
 
@@ -53,8 +54,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textColor="#fff"
             android:background="@color/bgcolor"
-            android:hint="获取验证码" />
+            android:hint="获取验证码"
+            android:onClick="onClicked"/>
     </LinearLayout>
 
     <ImageView
@@ -63,6 +66,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:onClick="onClicked"
         android:src="@drawable/login_main" />
 
     <Button
@@ -71,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/bgcolor"
+        android:onClick="onClicked"
         android:text="登录遇到问题"
         android:textColor="#99ffff"
         android:textSize="15sp" />
@@ -91,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/rb_agree"
-            android:textSize="18sp"
-            android:text="我已阅读并同意用户协议与隐私政策" />
+            android:text="我已阅读并同意用户协议与隐私政策"
+            android:textSize="18sp" />
     </RelativeLayout>
 </LinearLayout>
