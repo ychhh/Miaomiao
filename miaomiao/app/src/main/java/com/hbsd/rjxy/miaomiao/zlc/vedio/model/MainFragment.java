@@ -2,14 +2,12 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,24 +19,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+import com.hbsd.rjxy.miaomiao.entity.EventInfo;
+import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPresenter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.hbsd.rjxy.miaomiao.utils.Constant.RECOMMEND_PAGE_DEFAULT;
 
 
 public class MainFragment extends Fragment implements IMainFragmentView , IVideoPreseter , View.OnClickListener {
@@ -51,7 +52,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
-    private List<Muti_infor> videoList;         //这里只显示视频，所以是videoList
+    private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -66,8 +67,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         ButterKnife.bind(this,view);
         tv_recommend.setOnClickListener(this::onClick);
         tv_subscribed.setOnClickListener(this::onClick);
-        //注册订阅者     ！！重复注册
-//        EventBus.getDefault().register(this);
 
         //获得recyclerView
         recyclerView = view.findViewById(R.id.rv_main);
@@ -82,10 +81,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
         //初始化数据
         videoList = initData(videoList);
-        //初始化Adapter
-        adapter = initAdapter(adapter);
-        //初始化RecyclerView
-        recyclerView = initRecyclerView(recyclerView);
+        new VideoPresenter(getContext(),null).execute();
 
         return view;
     }
@@ -117,19 +113,17 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     }
 
     @Override
-    public RecyclerView initRecyclerView(RecyclerView recyclerView) {
+    public RecyclerView initRecyclerView() {
         //使用自定义的LinearLayoutManager子类
         MeLayoutManager linearLayoutManager = new MeLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         //缺一不可
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(true);
-        //
+        //设置适配器
         recyclerView.setAdapter(adapter);
 
-
-
-        //监听
+        //监听recyclerView的滑动，实现自动播放
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             int firstVisibleItem, lastVisibleItem;
@@ -138,10 +132,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 scrollCalculatorHelper.onScrollStateChanged(recyclerView, newState);
-
-                //获取当前正在显示的view
-                //做不到恢复上一个的封面，被回收了，干！
-
             }
 
             @Override
@@ -149,11 +139,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 super.onScrolled(recyclerView, dx, dy);
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
                 //这是滑动自动播放的代码
-//                if (!mFull) {
-
-
                 scrollCalculatorHelper.onScroll(recyclerView, firstVisibleItem, lastVisibleItem, lastVisibleItem - firstVisibleItem);
                 //第一次进入程序自动播放
                 if(firstOpenVideo){
@@ -162,17 +148,36 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 }
             }
         });
+
+
+        /**
+         * 视频移出去后改变封面图的visible状态
+         */
+        recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+            @Override
+            public void onChildViewAttachedToWindow(@NonNull View view) {
+            }
+
+            @Override
+            public void onChildViewDetachedFromWindow(@NonNull View view) {
+                //如果下一个视频的封面已经被隐藏了，那么改变封面为显示状态
+                if(recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE ){
+                    scrollCalculatorHelper.isNowPlaying(view);
+                }
+            }
+        });
         return recyclerView;
     }
 
     @Override
-    public MeAdapter initAdapter(MeAdapter adapter) {
+    public MeAdapter initAdapter() {
         adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext());
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                //这里是预加载请求
-                videoList = initData(videoList);
+                //这里是预加载请求，当前推荐页++
+                RECOMMEND_PAGE_DEFAULT += 1;
+                new VideoPresenter(getContext(),null).execute();
             }
         },recyclerView);
 
@@ -206,49 +211,66 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getVideoList(List<Muti_infor> videoList){
-        this.videoList = videoList;
-        //通知adapter内容改变
-        adapter.loadMoreComplete();
+
+    //订阅事件
+    @Subscribe
+    public void getVideoList(EventInfo<String,String,Multi_info> videoEvent){
+        if(videoEvent.isAvailable()){
+            /**
+             *    如果是有效的
+             *      如果当前视频列表已经存在数据
+             */
+            if(this.videoList.size() != 0){
+                for(Multi_info multi_info : videoEvent.getContentList()){
+                    this.videoList.add(multi_info);
+                }
+            }else{
+                this.videoList = videoEvent.getContentList();
+            }
+            //如果的适配器还未初始化，初始化适配器和recyclerView
+            if(adapter == null){
+                //初始化Adapter
+                adapter = initAdapter();
+                //初始化RecyclerView
+                recyclerView = initRecyclerView();
+            }
+            //通知adapter内容改变
+            adapter.loadMoreComplete();
+        }else{
+            //如果返回失败，那么根据map判断状态
+            if("complete".equals(videoEvent.getContentMap().get("status"))){
+                RECOMMEND_PAGE_DEFAULT -= 1;
+                Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+
+
+
+
+
+
+        Log.e("loadMoreComplete","loadMoreComplete");
+        //没有移除粘性事件
     }
 
 
 
 
     @Override
-    public List<Muti_infor> initData(List<Muti_infor> videoList) {
+    public List<Multi_info> initData(List<Multi_info> videoList) {
         //测试
         if(videoList == null){
             videoList = new ArrayList<>();
         }
-        Muti_infor muti_infor1 = new Muti_infor();
-        muti_infor1.setMiPath("http://q1kb2gx86.bkt.clouddn.com/c519a750bbc3d317f9315cdef7db1c72.mp4");
-        muti_infor1.setMiCover("http://q1kb2gx86.bkt.clouddn.com/cover1.png");
-        videoList.add(muti_infor1);
-
-        Muti_infor muti_infor2 = new Muti_infor();
-        muti_infor2.setMiPath("http://q1kb2gx86.bkt.clouddn.com/50d10301117b759c793b4f07ccfbdeca.mp4");
-        muti_infor2.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203009.jpg");
-        videoList.add(muti_infor2);
-
-        Muti_infor muti_infor3 = new Muti_infor();
-        muti_infor3.setMiPath("http://q1kb2gx86.bkt.clouddn.com/765454469a1c2c869749ee68d6a0f8ca.mp4");
-        muti_infor3.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203048.jpg");
-        videoList.add(muti_infor3);
-
-        Muti_infor muti_infor4 = new Muti_infor();
-        muti_infor4.setMiPath("http://q1kb2gx86.bkt.clouddn.com/b48a416cd3047220952f3c0ed320a085.mp4");
-        muti_infor4.setMiCover("http://q1kb2gx86.bkt.clouddn.com/20191127203116.jpg");
-        videoList.add(muti_infor4);
-
-
 
 
         if(firstOpenVideo != false){
             firstOpenVideo = true;
         }else{
-            adapter.loadMoreComplete();
+
         }
         return videoList;
     }
@@ -265,6 +287,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  *
                  */
                 setTextViewColor(tv_subscribed,tv_recommend);
+
+                //如果没有登录
+                startActivity(new Intent(getContext(),PleaseLoginActivity.class));
 
 
 
@@ -299,13 +324,18 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     public void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
+    }
+
+    @Override
+    public void onStop() {
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
     public void onPause() {
         //切换fragment的时候停止播放，释放所有播放视频
-        GSYVideoManager.releaseAllVideos();
+        GSYVideoManager.onPause();
         super.onPause();
     }
 
@@ -313,6 +343,14 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     public void onResume() {
         //每次回来也要自动播放
         firstOpenVideo = true;
+        GSYVideoManager.onResume();
         super.onResume();
     }
+
+    @Override
+    public void onStart() {
+        EventBus.getDefault().register(this);
+        super.onStart();
+    }
+
 }

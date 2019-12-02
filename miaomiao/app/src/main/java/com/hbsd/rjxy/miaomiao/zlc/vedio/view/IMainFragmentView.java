@@ -12,14 +12,15 @@ import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
 
 public interface IMainFragmentView {
 
-    public View initFragment(LayoutInflater inflater, ViewGroup container);
-    public void initPlayPosition(Context context);
+    View initFragment(LayoutInflater inflater, ViewGroup container);
 
-    public RecyclerView initRecyclerView(RecyclerView recyclerView);
-    public MeAdapter initAdapter(MeAdapter adapter);
+    void initPlayPosition(Context context);
 
-    public void setTextViewColor(TextView selectedView, TextView unselectedView);
+    RecyclerView initRecyclerView();
 
+    MeAdapter initAdapter();
+
+    void setTextViewColor(TextView selectedView, TextView unselectedView);
 
 
 }

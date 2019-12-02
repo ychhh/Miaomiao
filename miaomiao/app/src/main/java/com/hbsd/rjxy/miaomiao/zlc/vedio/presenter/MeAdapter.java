@@ -1,20 +1,23 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.Muti_infor;
+
+import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import java.util.List;
 
-public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> implements View.OnClickListener {
+public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> implements View.OnClickListener {
 
     private Context context;
 
@@ -25,14 +28,29 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
 
 
     @Override
-    protected void convert(final MeViewHolder helper, Muti_infor item) {
+    protected void convert(final MeViewHolder helper, Multi_info item) {
 
-        int cid = item.getCatId();
+        //设置视频小鱼干数量  评论数量
+        helper.setText(R.id.tv_video_fish,""+item.getMhot()).setText(R.id.tv_comment_amount,""+item.getMcomment_count());
+
+
+
+        int cid = item.getCid();
         //通过cid请求头像
         helper.getView(R.id.iv_cathead).setOnClickListener(this::onClick);
 
         //设置小鱼干的点击事件
-        helper.getView(R.id.iv_feed).setOnClickListener(this::onClick);
+        helper.getView(R.id.iv_feed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击小鱼干，发送请求  判断是否登录过
+
+                //判断已经登陆过
+                item.setMhot(item.getMhot()+1);
+                helper.setText(R.id.tv_video_fish,""+item.getMhot());
+                new FeedPresenter(context,item).execute();
+            }
+        });
 
         //设置订阅的点击事件
         helper.getView(R.id.iv_subscribe).setOnClickListener(this::onClick);
@@ -41,10 +59,10 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
         helper.getView(R.id.iv_comment).setOnClickListener(this::onClick);
 
         //设置评论数量
-        helper.setTag(R.id.tv_comment_amount,item.getMiCommentCount());
+        helper.setTag(R.id.tv_comment_amount,item.getMcomment_count());
 
 
-        helper.gsyVideoPlayer.setUpLazy(item.getMiPath(),true,null,null,"title");
+        helper.gsyVideoPlayer.setUpLazy(item.getMpath(),true,null,null,"title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //返回摁钮不可见
@@ -66,9 +84,17 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
 
         //加载封面
         Glide.with(context)
-                .load(item.getMiCover())
+                .load(item.getMcover())
                 .into(helper.iv_thumb);
-        helper.gsyVideoPlayer.getImageView(helper.iv_thumb);
+        helper.gsyVideoPlayer.setImageView(helper.iv_thumb);
+
+        //设置双击显示小鱼
+        helper.gsyVideoPlayer.setRelativeLayout(helper.getView(R.id.popFish));
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MeViewHolder holder) {
+        super.onViewRecycled(holder);
     }
 
     @Override
@@ -82,13 +108,12 @@ public class MeAdapter extends BaseQuickAdapter<Muti_infor,MeViewHolder> impleme
             case R.id.iv_cathead:
                 //点击头像  do something
                 Toast.makeText(context,"这是头像",Toast.LENGTH_SHORT).show();
-                break;
 
-            case R.id.iv_feed:
-                //点击小鱼干，发送请求
-                Toast.makeText(context,"这是小鱼干",Toast.LENGTH_SHORT).show();
-                break;
+                //跳转
+                context.startActivity(new Intent(context, InfoAndCommentActivity.class));
 
+
+                break;
             case R.id.iv_subscribe:
                 //点击订阅 do something
                 Toast.makeText(context,"这是订阅",Toast.LENGTH_SHORT).show();

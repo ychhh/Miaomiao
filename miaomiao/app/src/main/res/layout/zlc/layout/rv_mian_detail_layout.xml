@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
 
@@ -11,8 +12,10 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"/>-->
 
-    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
 
+
+
+    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -23,6 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter" />
+
+
+
 
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/iv_cathead"
@@ -41,6 +47,17 @@
         android:id="@+id/iv_feed"
         android:layout_width="50dp"
         android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/tv_video_fish"
+        android:text="0"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="390dp"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
     <ImageView
@@ -80,6 +97,26 @@
 
 
     </FrameLayout>
+
+
+    <TextView
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/tv_videocontent"
+        android:text="我是内容"
+        android:textSize="16dp"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.PopFish
+        android:id="@+id/popFish"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 
 

@@ -12,11 +12,18 @@ import java.util.List;
 public class SubService {
     @Autowired
     private SubDao subDao;
-
     public List<Subscription_record> findall(){
         return subDao.findAll();
     }
-    public List<Subscription_record> findOneByUid(int uid){
+    public List<Subscription_record> findAllByUid(int uid){
         return subDao.findAllByUid(uid);
     }
+    public List<Subscription_record> findAllByCid(int cid){
+        return subDao.findAllByCid(cid);
+    }
+    public List<Subscription_record> findOneByUidAndCid(int uid,int cid){
+        return subDao.findAllByUidAndUid(uid,cid);
+    }
+    public int follow(int uid,int cid){return subDao.follow(uid,cid); };
+    public int unfollow(int uid,int cid){return subDao.unfollow(uid,cid);};
 }

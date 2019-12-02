@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,11 +14,25 @@ import android.widget.TextView;
 
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPreseter;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.SelfFragment;
 
 
+<<<<<<< HEAD
+=======
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
+>>>>>>> cd9d03cb853cbc918e7888ea0814c6afbae7749c
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener{
@@ -34,11 +49,12 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //初始化登录用户   如果未登陆过，传空，如果登陆过，根据id请求获取user信息，创建user实体
 
         if(true){
             //未登录
-           new VideoPreseter(getApplicationContext(),null).execute();
+//           new VideoPresenter(getApplicationContext(),null).execute();
         }else{
 
         }
@@ -46,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
         mTranslucent();//透明状态栏
 
         initTab();
-
-
 
     }
 

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+//短信验证码
+apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -32,6 +33,13 @@ android {
                     , 'src/main/res/layout/zlc']
         }
     }
+}
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey '2d45d50c7d388'
+    appSecret 'b152d4e7d24567158bafea263be11d71'
+    SMSSDK {}
 }
 
 dependencies {

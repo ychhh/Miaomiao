@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack;
 import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
@@ -50,6 +51,15 @@ public class ScrollCalculatorHelper {
         }
     }
 
+    public void isNowPlaying(View view){
+        imageView = view.findViewById(R.id.iv_thumb);
+        //如果当前不是最后一个视频
+        if(imageView != null && imageView.getVisibility() == View.INVISIBLE && imageView != null){
+            imageView.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     public void onScroll(RecyclerView view, int firstVisibleItem, int lastVisibleItem, int visibleItemCount) {
         //如果第一次执行，播放
         if(firstRun){
@@ -86,7 +96,6 @@ public class ScrollCalculatorHelper {
         boolean needPlay = false;
         for (int i = 0; i < visibleCount; i++) {
             if (layoutManager.getChildAt(i) != null && layoutManager.getChildAt(i).findViewById(playId) != null) {
-
                 GSYBaseVideoPlayer player = (GSYBaseVideoPlayer) layoutManager.getChildAt(i).findViewById(playId);
                 Rect rect = new Rect();
                 player.getLocalVisibleRect(rect);
@@ -200,122 +209,11 @@ public class ScrollCalculatorHelper {
         gsyBaseVideoPlayer.startPlayLogic();
 
         //播放过程的回调，开始播放隐藏封面
-        gsyBaseVideoPlayer.setVideoAllCallBack(new VideoAllCallBack() {
+//        gsyBaseVideoPlayer.setVideoAllCallBack( );
 
 
-            @Override
-            public void onStartPrepared(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onPrepared(String url, Object... objects) {
-                Log.e("onPrepared:","onPrepared");
-                //封面在这里消失
-//                imageView.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onClickStartIcon(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickStartError(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickStop(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickStopFullscreen(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickResume(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickResumeFullscreen(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickSeekbar(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickSeekbarFullscreen(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onAutoComplete(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onEnterFullscreen(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onQuitFullscreen(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onQuitSmallWidget(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onEnterSmallWidget(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onTouchScreenSeekVolume(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onTouchScreenSeekPosition(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onTouchScreenSeekLight(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onPlayError(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickStartThumb(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickBlank(String url, Object... objects) {
-
-            }
-
-            @Override
-            public void onClickBlankFullscreen(String url, Object... objects) {
-
-            }
-
-
-        });
     }
+
+
+
 }
