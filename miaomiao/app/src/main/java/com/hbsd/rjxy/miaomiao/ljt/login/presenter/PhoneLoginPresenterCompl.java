@@ -65,18 +65,19 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            String content=o.toString();
-            JSONObject response= null;
-            try {
-                response = new JSONObject(content);
-                String result=response.getString("result");//1.密码正确(附带返回用户id)
-                if (result.equals("true")){
-                    iPhoneLoginView.onLoginResult(result,response.getInt("uid"));
+            if(o!=null){
+                String content=o.toString();
+                JSONObject response= null;
+                try {
+                    response = new JSONObject(content);
+                    String result=response.getString("result");//1.密码正确(附带返回用户id)
+                    if (result.equals("true")){
+                        iPhoneLoginView.onLoginResult(result,response.getInt("uid"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-
         }
     }
 }

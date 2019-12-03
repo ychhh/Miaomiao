@@ -47,9 +47,9 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
+        iPhoneLoginPresenter=new PhoneLoginPresenterCompl(this);
         init();
         findViews();
-        iPhoneLoginPresenter=new PhoneLoginPresenterCompl(this);
     }
 
     private void findViews() {
@@ -72,6 +72,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) { //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码成功
+                        Log.e("验证码","验证成功");
                         iPhoneLoginPresenter.doLogin(etPhone.getText().toString());
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) { //获取验证码成功
                         runOnUiThread(new Runnable() {
@@ -84,14 +85,22 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
 
                     }
                 } else {
-                    int status = 0;
                     try {
                         ((Throwable) data).printStackTrace();
                         Throwable throwable = (Throwable) data;
                         JSONObject object = new JSONObject(throwable.getMessage());
-                        String des = object.optString("detail");
-                        status = object.optInt("status");
-                        if (!TextUtils.isEmpty(des)) {
+                        String des = object.optString("detail");//错误描述
+                        int status = object.optInt("status");
+                        if (status>0 && !TextUtils.isEmpty(des)) {
+                            Log.e("status"+status,des);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (status==468){
+                                        Toast.makeText(PhoneLoginActivity.this,"验证码错误", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                             return;
                         }
                     } catch (Exception e) {

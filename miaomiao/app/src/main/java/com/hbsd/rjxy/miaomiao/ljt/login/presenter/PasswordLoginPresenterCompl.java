@@ -66,24 +66,25 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            String content=o.toString();
-            JSONObject response= null;
-            try {
-                response = new JSONObject(content);
-                String result=response.getString("result");//1.密码正确(附带返回用户id)2.密码错误3.手机号未注册
-                if (result.equals("true")){
-                    iPasswordLoginView.onLoginResult(result,response.getInt("uid"));
-                }else if(result.equals("error")){
-                    iPasswordLoginView.onLoginResult(result,0);
-                }else if (result.equals("false")){
-                    iPasswordLoginView.onLoginResult(result,0);
-                }else if(result.equals("null")){
-                    iPasswordLoginView.onLoginResult(result,0);
+            if(o!=null){
+                String content=o.toString();
+                JSONObject response= null;
+                try {
+                    response = new JSONObject(content);
+                    String result=response.getString("result");//1.密码正确(附带返回用户id)2.密码错误3.手机号未注册
+                    if (result.equals("true")){
+                        iPasswordLoginView.onLoginResult(result,response.getInt("uid"));
+                    }else if(result.equals("error")){
+                        iPasswordLoginView.onLoginResult(result,0);
+                    }else if (result.equals("false")){
+                        iPasswordLoginView.onLoginResult(result,0);
+                    }else if(result.equals("null")){
+                        iPasswordLoginView.onLoginResult(result,0);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-
         }
     }
 }
