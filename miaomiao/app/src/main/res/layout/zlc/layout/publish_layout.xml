@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+
+    <EditText
+        android:id="@+id/et_edit"
+        android:textColor="@color/black"
+        android:background="#fff"
+        android:text="斯柯达哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空哈萨克大家啊塑料袋静安寺来得及啊阿胜利大街爱丽丝肯德基埃里克森奥速度垃圾啊杀戮空速度垃圾啊杀戮空间"
+        android:maxLines="5"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</FrameLayout>
