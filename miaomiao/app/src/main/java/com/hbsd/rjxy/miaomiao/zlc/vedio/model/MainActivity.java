@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.SelfFragment;
 

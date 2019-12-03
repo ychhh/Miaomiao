@@ -1,87 +1,116 @@
 package com.hbsd.rjxy.miaomiao.zsh.setting.model;
 
-import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.hbsd.rjxy.miaomiao.R;
 
+
 public class SelfFragment extends Fragment {
-    private ActionBarDrawerToggle drawerbar;
-    private DrawerLayout main_drawer_layout;
-    private LinearLayout main_right_drawer_layout;
-    private View view;
-    private Button btn_setting;
+    public View view;
+    public static final String[] TITLES = { "First", "Second" };
+    private DrawerLayout mDrawer_layout;//DrawerLayout容器
+    private RelativeLayout mMenu_layout_left;//左边抽屉
+    private RelativeLayout mMenu_layout_right;//右边抽屉
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       view = inflater.inflate(
-                R.layout.activity_main_setting,
+        view = inflater.inflate(
+                R.layout.self_main,
                 container,
                 false
         );
-
         return view;
-
     }
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mDrawer_layout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
+        mMenu_layout_left = (RelativeLayout) view.findViewById(R.id.menu_layout_left);
+        mMenu_layout_right = (RelativeLayout) view.findViewById(R.id.menu_layout_right);
+        ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
+        ListView menu_listview_r = (ListView) mMenu_layout_right.findViewById(R.id.menu_listView_r);
 
-        initView();
-        initEvent();
+
+        menu_listview_l.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_expandable_list_item_1, TITLES));
+        menu_listview_r.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_expandable_list_item_1, TITLES));
+
+        //监听菜单
+        menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
+        menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
+
+
+
+
     }
-    private void initView(){
-        //'我的'界面
-        main_drawer_layout= view.findViewById(R.id.main_self_drawer_setting);
-        //右边菜单
-        main_right_drawer_layout=view.findViewById(R.id.main_self_Right_drawer_layout);
+    public class DrawerItemClickListenerLeft implements AdapterView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Fragment fragment = null;
 
-        //设置菜单内容之外其他区域的背景色
-       // main_drawer_layout.setScrimColor(Color.rgb(0,0,0));
-        //setting键
-        btn_setting=view.findViewById(R.id.btn_setting);
-        btn_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRightLayout(v);
+            //根据item点击行号判断启用哪个Fragment
+            switch (position)
+            {
+                case 0:
+                    fragment = new FirstFragment();
+                    break;
+                case 1:
+                    fragment = new SecondFragment();
+                    break;
+                default:
+                    break;
             }
-        });
+            ft.replace(R.id.fragment_layout, fragment);
+            ft.commit();
+            mDrawer_layout.closeDrawer(mMenu_layout_left);//关闭mMenu_layout
+        }
 
     }
-    private void initEvent(){
-        drawerbar=new ActionBarDrawerToggle(getActivity(),main_drawer_layout,R.string.open,R.string.close);
+    /**
+     * 右侧列表点击事件
+     * @author busy_boy
+     *
+     */
+    private class DrawerItemClickListenerRight implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Fragment fragment = null;
 
-    }
-    public void openRightLayout(View view){
-        if(main_drawer_layout.isDrawerOpen(main_right_drawer_layout)){
-            main_drawer_layout.closeDrawer(main_right_drawer_layout);
-        }else{
-            main_drawer_layout.openDrawer(main_right_drawer_layout);
+            //根据item点击行号判断启用哪个Fragment
+            switch (position)
+            {
+                case 0:
+                    fragment = new FirstFragment();
+                    break;
+                case 1:
+                    fragment = new SecondFragment();
+                    break;
+                default:
+                    break;
+            }
+            ft.replace(R.id.fragment_layout, fragment);
+            ft.commit();
+            mDrawer_layout.closeDrawer(mMenu_layout_right);//关闭mMenu_layout
         }
     }
 
 
-
-
-
-
-    }
-
-
+}
