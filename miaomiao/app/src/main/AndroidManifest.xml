@@ -26,10 +26,6 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:theme">
         <activity
-            android:name=".zsh.setting.model.SelfFragment"
-            android:label="@string/title_activity_self_fragment"
-            android:theme="@style/NoActionBar"></activity>
-        <activity
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
@@ -38,8 +34,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity" />
+        <activity android:name=".ljt.login.PhoneLoginActivity" >
+
+        </activity>
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ProblemsLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
