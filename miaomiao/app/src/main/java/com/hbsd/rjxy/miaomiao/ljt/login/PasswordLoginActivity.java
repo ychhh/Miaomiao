@@ -22,6 +22,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPasswordLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PasswordLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
 
 //注意协议部分的设置
@@ -79,7 +80,7 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
     /**
      * 对登录请求的结果进行操作
      *
-     * @param result 结果（1.true 登录成功，uid值有效 2.error登录密码错误 3.false 未注册）
+     * @param result 结果（1.true 登录成功，uid值有效 2.error登录密码错误 3.false 未注册 4.null 未设置密码）
      * @param uid    用户id
      */
     @Override
@@ -91,6 +92,7 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
             editor.putString("uid", uid + "");
             editor.commit();
             Log.e("用户登录的id", uid + "");
+            startActivity(new Intent(PasswordLoginActivity.this, MainActivity.class));
         } else if (result.equals("error")) {
             Toast.makeText(this, "密码错误！", Toast.LENGTH_SHORT).show();
         } else if (result.equals("false")) {
