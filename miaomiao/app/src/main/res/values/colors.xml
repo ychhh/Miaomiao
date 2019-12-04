@@ -10,8 +10,8 @@
     <color name="mainuptextselected">#FFFFFF</color>
     <color name="servicetext">#fff</color>
     <!--背景色-->
-    <color name="bgcolor">#ff8800</color>
-    <!--#CA7945-->
+    <color name="bgcolor">#ff8800</color><!--#CA7945-->
+
     <color name="white">#ffffff</color>
     <!--摁钮颜色-->
     <color name="btnLogin">#FF1B1B</color>
