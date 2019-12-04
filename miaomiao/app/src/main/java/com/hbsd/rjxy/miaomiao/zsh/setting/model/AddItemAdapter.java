@@ -1,4 +1,4 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting.presenter;
+package com.hbsd.rjxy.miaomiao.zsh.setting.model;
 
 import android.content.Context;
 import android.content.res.Resources;

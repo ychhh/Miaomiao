@@ -16,14 +16,10 @@ import android.widget.TextView;
 
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
-import com.hbsd.rjxy.miaomiao.zsh.setting.model.SelfFragment;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
 
-import java.util.List;
 
-import pub.devrel.easypermissions.EasyPermissions;
+import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfFragment;
+
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
