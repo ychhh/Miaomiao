@@ -30,7 +30,8 @@ android {
             res.srcDirs = [
                     'src/main/res',
                     'src/main/res/layout/ljt'
-                    , 'src/main/res/layout/zlc']
+                    , 'src/main/res/layout/zlc'
+                    , 'src/main/res/layout/zsh']
         }
     }
 }

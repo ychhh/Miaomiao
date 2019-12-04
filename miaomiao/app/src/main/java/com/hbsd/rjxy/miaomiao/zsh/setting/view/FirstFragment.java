@@ -1,4 +1,4 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting.model;
+package com.hbsd.rjxy.miaomiao.zsh.setting.view;
 
 
 import android.os.Bundle;
