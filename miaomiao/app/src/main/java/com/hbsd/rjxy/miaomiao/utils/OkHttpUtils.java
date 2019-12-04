@@ -95,9 +95,9 @@ public class OkHttpUtils {
 
         for(LocalMedia localMedia : files){
             RequestBody fileBody = RequestBody.Companion.create(new File(localMedia.getPath()),FILE);
-            if(localMedia.getPictureType().equals("image/jpeg")){
+            if(localMedia.getMimeType().equals("image/jpeg")){
                 builder.addFormDataPart("type","jpeg");
-            }else if(localMedia.getPictureType().equals("video/mp4")){
+            }else if(localMedia.getMimeType().equals("video/mp4")){
                 builder.addFormDataPart("type","mp4");
             }else{
                 return;

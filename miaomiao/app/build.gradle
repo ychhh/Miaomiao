@@ -72,7 +72,7 @@ dependencies {
     //动态权限申请框架   https://github.com/googlesamples/easypermissions
     implementation 'pub.devrel:easypermissions:0.3.0'
     //图片选择器  https://github.com/LuckSiege/PictureSelector
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.3.8'
     //Butterknife注解
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'

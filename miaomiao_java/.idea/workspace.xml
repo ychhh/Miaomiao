@@ -2,11 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635dadab-9047-4c67-84fa-b08a167c81d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/publish/model/PublishActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/publish_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/GlideEngine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/color/picture_list_sina_text_color.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/color/picture_preview_sina_text_color.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/checkbox_num_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/checkbox_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/custom_qq_cb.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_add_image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_back_arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_check.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_delete_menu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_minus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_orange_arrow_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_orange_arrow_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/ic_plus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/message_oval_orange.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/message_oval_white.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/num_oval_blue.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/num_oval_blue_def.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable-v24/num_oval_orange.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable/btn_normal.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable/btn_pressed.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable/btn_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/publishpopupwindow_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/OkHttpUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/OkHttpUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CatinfoFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CatinfoFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CommentFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CommentFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/catinfo_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/catinfo_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/InfoAndCommentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/InfoAndCommentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/publish_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/publish_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/values/styles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,6 +72,7 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="ProjectId" id="1UVaFwF3VF4FYeiItWaI6d3ecSD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -133,6 +165,7 @@
       <workItem from="1575193781796" duration="992000" />
       <workItem from="1575277541737" duration="5500000" />
       <workItem from="1575340274478" duration="322000" />
+      <workItem from="1575444147800" duration="2490000" />
     </task>
     <servers />
   </component>
@@ -147,6 +180,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add java and ui" />

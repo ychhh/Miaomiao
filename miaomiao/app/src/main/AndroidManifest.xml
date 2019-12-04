@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hbsd.rjxy.miaomiao">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -29,11 +33,6 @@
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".ljt.login.PhoneLoginActivity" >
@@ -46,9 +45,16 @@
         <activity android:name=".zlc.vedio.model.PleaseLoginActivity"/>
 
         <!--点击猫头像或评论跳转到额activity-->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/>
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--发布页面-->
         <activity android:name=".zlc.publish.model.PublishActivity"/>
+
 
         <!--短信验证码-->
         <activity
