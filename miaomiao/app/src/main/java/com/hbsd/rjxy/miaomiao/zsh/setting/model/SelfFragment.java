@@ -16,14 +16,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.AddItemAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SelfFragment extends Fragment {
     public View view;
     public static final String[] TITLES = { "First", "Second" };
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
-    private RelativeLayout mMenu_layout_left;//左边抽屉
     private RelativeLayout mMenu_layout_right;//右边抽屉
+    private ArrayList<Map<String, Object>> listItems=null;
+    private AddItemAdapter adapter =null;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,48 +45,35 @@ public class SelfFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mDrawer_layout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
-        mMenu_layout_left = (RelativeLayout) view.findViewById(R.id.menu_layout_left);
-        mMenu_layout_right = (RelativeLayout) view.findViewById(R.id.menu_layout_right);
-        ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
-        ListView menu_listview_r = (ListView) mMenu_layout_right.findViewById(R.id.menu_listView_r);
 
+        mDrawer_layout = view.findViewById(R.id.drawer_layout);
 
-        menu_listview_l.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_expandable_list_item_1, TITLES));
-        menu_listview_r.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_expandable_list_item_1, TITLES));
+        mMenu_layout_right =  view.findViewById(R.id.menu_layout_right);
+        ListView menu_listview_r = mMenu_layout_right.findViewById(R.id.menu_listView_r);
+
+        initDrawerList();
+        adapter=new AddItemAdapter(this.getContext(),listItems,R.layout.self_setting_item);
+        menu_listview_r.setAdapter(adapter);
 
         //监听菜单
-        menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
         menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
 
 
 
 
     }
-    public class DrawerItemClickListenerLeft implements AdapterView.OnItemClickListener
-    {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-        {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Fragment fragment = null;
+    public void initDrawerList(){
+        String[] titles={"个人名片","我的订阅","修改密码","小程序"};
 
-            //根据item点击行号判断启用哪个Fragment
-            switch (position)
-            {
-                case 0:
-                    fragment = new FirstFragment();
-                    break;
-                case 1:
-                    fragment = new SecondFragment();
-                    break;
-                default:
-                    break;
-            }
-            ft.replace(R.id.fragment_layout, fragment);
-            ft.commit();
-            mDrawer_layout.closeDrawer(mMenu_layout_left);//关闭mMenu_layout
+        listItems=new ArrayList<Map<String, Object>>();
+        for(int i=0;i<titles.length;i++){
+            Map<String ,Object> map=new HashMap<>();
+            map.put("title",titles[i]);
+            map.put("map",titles[i]);
+            listItems.add(map);
         }
+
+
 
     }
     /**
