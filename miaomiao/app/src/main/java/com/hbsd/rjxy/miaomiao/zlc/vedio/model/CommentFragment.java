@@ -18,6 +18,8 @@ public class CommentFragment extends Fragment {
         View view = inflater.inflate(R.layout.comment_fragment,null);
 
 
+
+
         return view;
 
 

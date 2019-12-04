@@ -47,6 +47,9 @@
 
         <!--点击猫头像或评论跳转到额activity-->
         <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/>
+        <!--发布页面-->
+        <activity android:name=".zlc.publish.model.PublishActivity"/>
+
         <!--短信验证码-->
         <activity
             android:name="com.mob.tools.MobUIShell"
