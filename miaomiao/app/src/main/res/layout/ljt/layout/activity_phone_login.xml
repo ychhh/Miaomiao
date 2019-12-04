@@ -6,44 +6,75 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <Button
-        android:id="@+id/btn_pwdLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@color/bgcolor"
-        android:onClick="onClicked"
-        android:text="密码登录"
-        android:textSize="18sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_rtn"
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            android:onClick="onClicked"
+            android:src="@drawable/left" />
+
+        <Button
+            android:id="@+id/btn_pwdLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="#00000000"
+            android:onClick="onClicked"
+            android:text="密码登录"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
+        android:layout_weight="1"
         android:text="手机号登录"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/et_phone"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        android:hint="请输入手机号"
-        android:textSize="23sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:hint="请输入手机号"
+            android:textSize="23sp" />
+
+        <ImageView
+            android:id="@+id/iv_clear"
+            android:layout_gravity="center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/clear" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_phoneCode"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
             android:layout_marginRight="6dp"
             android:layout_weight="3"
             android:hint="请输入验证码"
@@ -54,49 +85,71 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:textColor="#fff"
             android:background="@color/bgcolor"
             android:hint="获取验证码"
-            android:onClick="onClicked"/>
+            android:onClick="onClicked"
+            android:textColor="#fff"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_login"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:layout_weight="3"
         android:onClick="onClicked"
         android:src="@drawable/login_main" />
 
     <Button
         android:id="@+id/btn_loginProblems"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:background="@color/bgcolor"
+        android:layout_weight="1"
+        android:background="#000000"
         android:onClick="onClicked"
+        android:padding="10dp"
         android:text="登录遇到问题"
         android:textColor="#99ffff"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="bottom">
 
-        <RadioButton
-            android:id="@+id/rb_agree"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/rb_agree"
-            android:text="我已阅读并同意用户协议与隐私政策"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/rb_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:gravity="center_vertical"
+                android:text="我已阅读并同意"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_showService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:gravity="center_vertical"
+                android:onClick="onClicked"
+                android:text="服务协议与隐私政策"
+                android:textColor="#00f"
+                android:textSize="18sp" />
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

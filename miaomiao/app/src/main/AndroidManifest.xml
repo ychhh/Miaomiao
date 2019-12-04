@@ -3,12 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hbsd.rjxy.miaomiao">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -37,36 +34,27 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity" >
-
-
+        <activity android:name=".ljt.login.PhoneLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
+        <activity android:name=".ljt.login.ShowServiceActivity"/>
         <activity android:name=".ljt.login.PasswordLoginActivity" />
-        <activity android:name=".ljt.login.ProblemsLoginActivity" />
+        <activity android:name=".ljt.login.ShowProblemActivity" />
+        <activity android:name=".ljt.login.LoginProblemsActivity" />
 
 
-
-
-
+        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /><!-- 提示登陆页面 -->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity" /> <!-- 点击猫头像或评论跳转到额activity -->
+        <activity android:name=".zlc.publish.model.PublishActivity" /> <!-- 发布页面 -->
         <!--短信验证码-->
-        <activity android:name=".ljt.login.ShowProblemActivity" /> <!-- 提示登陆页面 -->
-        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /> <!-- 点击猫头像或评论跳转到额activity -->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity" /> <!-- 发布页面 -->
-        <activity android:name=".zlc.publish.model.PublishActivity" /> <!-- 短信验证码 -->
-
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <meta-data
             android:name="Mob-AppKey"
             android:value="2d45d50c7d388" />

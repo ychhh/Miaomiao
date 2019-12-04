@@ -22,7 +22,11 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPasswordLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PasswordLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
+import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 //注意协议部分的设置
@@ -31,6 +35,9 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
     private EditText etPhone;
     private EditText etPwd;
     private ImageView ivLogin;
+    private ImageView ivEye;
+    private ImageView ivClearPhone;
+    private ImageView ivClearPwd;
     private Button btnLoginProblems;
     private RadioButton rbAgree;
     private IPasswordLoginPresenter passwordLoginPresenter;
@@ -45,14 +52,21 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
         //init
         popupView = LayoutInflater.from(this).inflate(R.layout.popup_window, null);
         passwordLoginPresenter = new PasswordLoginPresenterCompl(this);
+        EditTextUtils.clearButtonListener(etPhone, ivClearPhone);
+        EditTextUtils.clearAndShowButtonListener(etPwd, ivClearPwd,ivEye);
     }
 
     private void findViews() {
         etPhone = findViewById(R.id.et_phone);
         etPwd = findViewById(R.id.et_pwd);
         ivLogin = findViewById(R.id.iv_login);
+        ivEye=findViewById(R.id.iv_eye);
+        ivEye.setImageResource(R.drawable.eye_close);
+        ivClearPhone=findViewById(R.id.iv_clearPhone);
+        ivClearPwd=findViewById(R.id.iv_clearPwd);
         btnLoginProblems = findViewById(R.id.btn_loginProblems);
         rbAgree = findViewById(R.id.rb_agree);
+
     }
 
     public void onClick(View v) {
@@ -61,20 +75,43 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
                 if (etPwd.getText().length() == 0 || etPhone.getText().length() == 0) {
                     Toast.makeText(this, "手机号或密码不能为空！", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (rbAgree.isChecked()) {
-                        String tel = etPhone.getText().toString();
-                        String pwd = etPwd.getText().toString();
-                        passwordLoginPresenter.doLogin(tel, pwd);
-                    } else {
-                        Toast.makeText(this, "请阅读并同意用户协议！", Toast.LENGTH_SHORT).show();
+                    if (checkTel(etPhone.getText().toString().trim())){
+                        if (rbAgree.isChecked()) {
+                            String tel = etPhone.getText().toString();
+                            String pwd = etPwd.getText().toString();
+                            passwordLoginPresenter.doLogin(tel, pwd);
+                        } else {
+                            Toast.makeText(this, "请阅读并同意用户协议！", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(PasswordLoginActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             case R.id.btn_loginProblems:
-                Intent intent = new Intent(PasswordLoginActivity.this, ProblemsLoginActivity.class);
+                Intent intent = new Intent(PasswordLoginActivity.this, LoginProblemsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.iv_rtn:
+                finish();
+                break;
+            case R.id.btn_showService:
+                Intent intent1=new Intent(this,ShowServiceActivity.class);
+                startActivity(intent1);
+                break;
         }
+    }
+
+    /**
+     * 正则匹配手机号码
+     *
+     * @param tel
+     * @return
+     */
+    public boolean checkTel(String tel) {
+        Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
+        Matcher matcher = p.matcher(tel);
+        return matcher.matches();
     }
 
     /**

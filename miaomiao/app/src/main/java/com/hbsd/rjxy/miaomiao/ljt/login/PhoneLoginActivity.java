@@ -19,6 +19,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPhoneLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PhoneLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
+import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     private EditText etPhoneCode;
     private Button btnGetPhoneCode;
     private ImageView ivLogin;
+    private ImageView ivClear;
     private Button btnLoginProblems;
     private RadioButton rbAgree;
     public EventHandler eh; //事件接收器
@@ -50,6 +52,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
         iPhoneLoginPresenter=new PhoneLoginPresenterCompl(this);
         init();
         findViews();
+        EditTextUtils.clearButtonListener(etPhone, ivClear);
     }
 
     private void findViews() {
@@ -61,6 +64,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
         btnLoginProblems = findViewById(R.id.btn_loginProblems);
         rbAgree = findViewById(R.id.rb_agree);
         mTimeCount = new TimeCount(60000, 1000);
+        ivClear=findViewById(R.id.iv_clear);
     }
 
     /**
@@ -119,7 +123,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
                 startActivity(intent);
                 break;
             case R.id.btn_loginProblems://登录遇到问题
-                Intent intent1 = new Intent(PhoneLoginActivity.this, ProblemsLoginActivity.class);
+                Intent intent1 = new Intent(PhoneLoginActivity.this, LoginProblemsActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.btn_getPhoneCode://获取验证码
@@ -153,6 +157,10 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
                 }else {
                     Toast.makeText(PhoneLoginActivity.this, "请输入手机号码", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.btn_showService:
+                Intent intent2=new Intent(this,ShowServiceActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

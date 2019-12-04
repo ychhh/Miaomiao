@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fadingEdge="vertical"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:scrollbars="vertical">
+
+        <ImageView
+            android:id="@+id/iv_rtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="onClicked"
+            android:src="@drawable/left" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提示条款"
+            android:textColor="@color/servicetext"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   您的信任对我们非常重要，我们深知用户信息安全的重要性
+，我们将按照法律法规要求，采取安全保护措施，保护您的用户信息安全可控。
+鉴此，miaomiao（或简称“我们”）制定本《法律声明及隐私权政策》（以下或简称“声明和政策”）并提醒您：
+在使用miaomiao应用的各项服务前，请您务必仔细阅读并透彻理解本
+《法律声明和隐私权政策》，在确认充分理解并同意后方使用相关产品和服务。
+一旦您开始使用miaomiao服务，将被视为对本声明和政策内容的接受和认可。"
+            android:textColor="@color/servicetext"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="法律声明"
+            android:textColor="@color/servicetext"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   miaomiao的Logo、miaomiao等文字、图形及其组合，以及miaomiao的其他标识、徽记名称等为miaomiao及其关联公司在中国和其他国家的注册商标。未经miaomiao书面授权，任何人不得以任何方式展示、使用或做其他处理（包括但不限于复制、传播、展示、镜像、上传、下载），也不得向他人表明您有权展示、使用或做其他处理"
+            android:textColor="@color/servicetext"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   miaomiao在此提示，您在使用miaomiao服务期间应当遵守中华人民共和国的法律，不得危害网络安全，不得利用miaomiao的服务从事他人侵犯名誉、隐私、知识产权和其他合法权益的活动。尽管有前述提示，miaomiao不对您使用miaomiao服务的用途和目的承担任何责任"
+            android:textColor="@color/servicetext"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="隐私权政策"
+            android:textColor="@color/servicetext"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   miaomiao（以下或称为“我们”）尊重并保护用户信息，并且将以高度勤勉和审慎的义务对待这些信息。在您使用了阿里云网站提供的服务时，我们将按照本隐私权政策收集、处理及披露您的信息。我们希望通过本隐私权政策向您清晰地介绍我们对您信息的处理方式，因此我们建议您完整地阅读本隐私权政策，以帮助您了解维护自己隐私权的方式。
+如果您有任何疑问、意见或建议，请通过阿里云提供的各种联系方式与我们联系"
+            android:textColor="@color/servicetext"
+            android:textSize="20sp" />
+    </LinearLayout>
+</ScrollView>

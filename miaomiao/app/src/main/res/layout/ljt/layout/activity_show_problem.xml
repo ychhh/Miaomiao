@@ -2,11 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bgcolor">
+
+    <ImageView
+        android:id="@+id/iv_rtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="onClicked"
+        android:src="@drawable/left" />
 
     <TextView
+        android:id="@+id/tv_showProblem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:text="抱歉，暂无解决方法"
+        android:textColor="#fff"
+        android:textSize="25sp" />
 
 </LinearLayout>
