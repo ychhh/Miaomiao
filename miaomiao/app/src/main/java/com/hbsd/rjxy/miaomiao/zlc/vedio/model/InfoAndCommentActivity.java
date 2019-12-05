@@ -31,7 +31,10 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,20 +116,25 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         if(requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK){
             selectResultList = PictureSelector.obtainMultipleResult(data);
             for(LocalMedia localMedia : selectResultList){
-                Log.e("Path:",""+localMedia.getPath());
+
             }
-            Map<String,String> map = new HashMap<>();
-            map.put("uid","10029");
-            OkHttpUtils.getInstance().postFormWithFile("http://47.94.171.160:8080/user/uploadhead", map, selectResultList, new Callback() {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("uid","1");
+                jsonObject.put("cid","1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    Log.e("onFailure","onFailure");
 
                 }
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Log.e("onResponse",""+response.body().string());
+                    new UploadUtils(response.body().string(),selectResultList.get(0).getPath(),new File(selectResultList.get(0).getPath()).getName()).upload();
                 }
             });
 

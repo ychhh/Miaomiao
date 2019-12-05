@@ -3,6 +3,7 @@ package com.hbsd.rjxy.miaomiao.zlc.video.video;
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.zlc.constant.VideoConstant;
+import com.hbsd.rjxy.miaomiao.zlc.utils.QiniuUtils;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,15 @@ public class VideoService {
         return videoDao.findVideoPaging((page-1)*PAGING_STEP,PAGING_STEP);
     }
 
+
+    /**
+     *
+     * 获取token
+     * @return
+     */
+    public String getToken(){
+        return new QiniuUtils().getUpToken();
+    }
 
 
 
