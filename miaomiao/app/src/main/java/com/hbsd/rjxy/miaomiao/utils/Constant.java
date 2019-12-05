@@ -23,4 +23,6 @@ public class Constant {
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
+    public static String QINIU_URL = "q20jftoug.bkt.clouddn.com";
+
 }

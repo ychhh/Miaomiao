@@ -25,7 +25,8 @@ public class UploadUtils {
                 3.key       文件的完整文件名
 l
                (简单上传)
-             2.调用upload()方法     取消上传，调用setCancelled()方法
+             2.调用upload()方法    取消上传，调用setCancelled()方法
+             想要获取文件url请用  QINIU_URL+"/"+key
 
              （有额外需求的如获取 上传进度，上传完成，取消上传）     这里取消上传怎么用请看这个类的UpCancellationSignal如何做的就行了
              3.调用upload(UpCompletionHandler ch,UpProgressHandler ph,UpCancellationSignal cs)方法
@@ -93,7 +94,7 @@ l
      * 不需要回调的上传调用这个方法
      */
     public void upload(){
-        uploadManager.put(
+         uploadManager.put(
                 dataPath,
                 key,
                 token,
@@ -128,7 +129,7 @@ l
             public void complete(String key, ResponseInfo info, JSONObject response) {
                 if(info.isOK()){
                     Log.e("qiniu","upload success");
-                    Log.e("qiniu","文件地址:"+key);
+                    Log.e("qiniu","文件名:"+key);
                 }else{
                     //上传服务器
                     Log.e("qiniu","upload fail");
