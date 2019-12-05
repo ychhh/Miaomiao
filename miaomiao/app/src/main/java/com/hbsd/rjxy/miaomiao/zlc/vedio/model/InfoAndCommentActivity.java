@@ -23,22 +23,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCancellationSignal;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UpProgressHandler;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,9 +56,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     @BindView(R.id.tv_videocomment)
     TextView tvComment;
 
-    @BindView(R.id.pb_upload)
-    NumberProgressBar progressBar;
-
     List<Fragment> fragments;
     List<LocalMedia> selectResultList;
 
@@ -75,23 +63,11 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     View popupView;
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void receive(EventInfo eventInfo){
-        progressBar.setProgress((int)Math.round((double)eventInfo.getContentMap().get("progress")*100));
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.catinfo_comment_layout);
-
-        EventBus.getDefault().register(this);
 
         ButterKnife.bind(this);
         fragments = new ArrayList<>();
@@ -150,9 +126,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 e.printStackTrace();
             }
 
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setMax(100);
-            progressBar.setProgress(0);
             OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -161,35 +134,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    String token = response.body().string();
-                    String dataPath = selectResultList.get(0).getPath();
-                    String key = new File(selectResultList.get(0).getPath()).getName();
-                    new UploadUtils(token, dataPath, key).upload(new UpCompletionHandler() {
-                        @Override
-                        public void complete(String key, ResponseInfo info, JSONObject response) {
-                            if(info.isOK()){
-                                Toast.makeText(InfoAndCommentActivity.this,"上传完成",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(InfoAndCommentActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
-                                Log.e("erro","upload fail info:"+info);
-                            }
-                        }
-                    }, new UpProgressHandler() {
-                        @Override
-                        public void progress(String key, double percent) {
-                            Log.e("progress",":"+percent);
-                            Map<String,Double> map = new HashMap<>();
-                            map.put("progress",percent);
-                            EventInfo eventInfo = new EventInfo();
-                            eventInfo.setContentMap(map);
-                            EventBus.getDefault().post(eventInfo);
-                        }
-                    }, new UpCancellationSignal() {
-                        @Override
-                        public boolean isCancelled() {
-                            return false;
-                        }
-                    });
+                    new UploadUtils(response.body().string(),selectResultList.get(0).getPath(),new File(selectResultList.get(0).getPath()).getName()).upload();
                 }
             });
 

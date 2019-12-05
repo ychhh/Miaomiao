@@ -23,7 +23,7 @@ public class UploadUtils {
                 1.token     从服务器端获取，接口自己写，调用VideoService.getToken()
                 2.dataPath  需要上传的文件的路径
                 3.key       文件的完整文件名
-
+l
                (简单上传)
              2.调用upload()方法    取消上传，调用setCancelled()方法
              想要获取文件url请用  QINIU_URL+"/"+key

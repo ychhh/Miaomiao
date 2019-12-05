@@ -79,8 +79,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //七牛云sdk
     implementation 'com.qiniu:qiniu-android-sdk:7.5.0'
-    //progressBar
-    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
 
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
