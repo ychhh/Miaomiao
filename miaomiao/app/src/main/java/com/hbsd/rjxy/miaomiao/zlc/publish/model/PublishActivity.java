@@ -1,7 +1,9 @@
 package com.hbsd.rjxy.miaomiao.zlc.publish.model;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -25,6 +27,11 @@ public class PublishActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         etEdit.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Log.e("type",""+bundle.getSerializable("type"));
+        Log.e("url",""+bundle.getSerializable("url"));
 
 
     }
