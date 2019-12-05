@@ -15,7 +15,6 @@ import java.util.Date;
 public class LoginService {
     @Autowired
     private LoginDao loginDao;
-
     /**
      * 增加用户
      * @param tel
@@ -39,10 +38,21 @@ public class LoginService {
     }
 
     /**
-     *
+     * 根据uid查询user
+     * @param uid
+     * @return user
      */
     @Transactional
-    public void updateUserUlast_LoginById(Date lastLoginTime,Integer uid){
-        loginDao.updateUserUlast_LoginById(lastLoginTime,uid);
+    public User findUserById(Integer uid){
+        User user=loginDao.findUserByUid(uid);
+        return user;
     }
+
+//    /**
+//     *
+//     */
+//    @Transactional
+//    public void updateUserUlast_LoginById(Date lastLoginTime,Integer uid){
+//        loginDao.updateUserUlast_LoginById(lastLoginTime,uid);
+//    }
 }

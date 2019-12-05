@@ -19,6 +19,12 @@ public interface LoginDao extends JpaRepository<User,Integer> {
     User findUserByTel(String tel);
 
     /**
+     * 根据uid查询user
+     */
+    @Query
+    User findUserByUid(Integer uid);
+
+    /**
      * 根据id修改上一次登陆时间
      * @param time
      * @param uid
