@@ -50,7 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".zlc.publish.model.PublishActivity" /> <!-- 发布页面 -->
+        <activity android:name=".zlc.publish.model.PublishActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 发布页面 -->
         <!--短信验证码-->
         <activity
             android:name="com.mob.tools.MobUIShell"

@@ -165,50 +165,56 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            Intent intent = new Intent(InfoAndCommentActivity.this, PublishActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("type",type);
+            bundle.putSerializable("url",selectResultList.get(0).getPath());
+            intent.putExtras(bundle);
+            startActivity(intent);
 
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setMax(100);
-            progressBar.setProgress(0);
-            OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    String token = response.body().string();
-                    String dataPath = selectResultList.get(0).getPath();
-                    String key = new File(selectResultList.get(0).getPath()).getName();
-                    new UploadUtils(token, dataPath, key).upload(new UpCompletionHandler() {
-                        @Override
-                        public void complete(String key, ResponseInfo info, JSONObject response) {
-                            if(info.isOK()){
-                                Toast.makeText(InfoAndCommentActivity.this,"上传完成",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(InfoAndCommentActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
-                                Log.e("erro","upload fail info:"+info);
-                            }
-                        }
-                    }, new UpProgressHandler() {
-                        @Override
-                        public void progress(String key, double percent) {
-                            Log.e("progress",":"+percent);
-                            Map<String,Double> map = new HashMap<>();
-                            map.put("progress",percent);
-                            EventInfo eventInfo = new EventInfo();
-                            eventInfo.setContentMap(map);
-                            eventInfo.setContentString(QINIU_URL+"/"+key);
-                            EventBus.getDefault().post(eventInfo);
-                        }
-                    }, new UpCancellationSignal() {
-                        @Override
-                        public boolean isCancelled() {
-                            return false;
-                        }
-                    });
-                }
-            });
+//            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setMax(100);
+//            progressBar.setProgress(0);
+//            OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
+//                @Override
+//                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//
+//                }
+//
+//                @Override
+//                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//                    String token = response.body().string();
+//                    String dataPath = selectResultList.get(0).getPath();
+//                    String key = new File(selectResultList.get(0).getPath()).getName();
+//                    new UploadUtils(token, dataPath, key).upload(new UpCompletionHandler() {
+//                        @Override
+//                        public void complete(String key, ResponseInfo info, JSONObject response) {
+//                            if(info.isOK()){
+//                                Toast.makeText(InfoAndCommentActivity.this,"上传完成",Toast.LENGTH_SHORT).show();
+//                            }else{
+//                                Toast.makeText(InfoAndCommentActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
+//                                Log.e("erro","upload fail info:"+info);
+//                            }
+//                        }
+//                    }, new UpProgressHandler() {
+//                        @Override
+//                        public void progress(String key, double percent) {
+//                            Log.e("progress",":"+percent);
+//                            Map<String,Double> map = new HashMap<>();
+//                            map.put("progress",percent);
+//                            EventInfo eventInfo = new EventInfo();
+//                            eventInfo.setContentMap(map);
+//                            eventInfo.setContentString(QINIU_URL+"/"+key);
+//                            EventBus.getDefault().post(eventInfo);
+//                        }
+//                    }, new UpCancellationSignal() {
+//                        @Override
+//                        public boolean isCancelled() {
+//                            return false;
+//                        }
+//                    });
+//                }
+//            });
 
         }
     }
