@@ -23,13 +23,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
+import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCancellationSignal;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +58,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
+
 public class InfoAndCommentActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     @BindView(R.id.cc_viewPager)
@@ -62,6 +74,32 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     PopupWindow popupWindow;
     View popupView;
 
+    @BindView(R.id.pb_upload)
+    NumberProgressBar progressBar;
+
+    private int type = -1;  //0：视频，1：图片，2：纯文字
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receive(EventInfo eventInfo){
+        progressBar.setProgress((int)Math.round((double)eventInfo.getContentMap().get("progress")*100));
+        if((int)Math.round((double)eventInfo.getContentMap().get("progress")*100) == 100){
+            progressBar.setVisibility(View.INVISIBLE);
+            Log.e("url",""+eventInfo.getContentString());
+            Intent intent = new Intent(InfoAndCommentActivity.this, PublishActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("type",type);
+            bundle.putSerializable("url",eventInfo.getContentString());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 
 
     @Override
@@ -74,6 +112,8 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         fragments.add(new CatinfoFragment());
         fragments.add(new CommentFragment());
         viewPager.setAdapter(new CustomPageAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+
+        EventBus.getDefault().register(this);
 
 
         tvComment.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +166,9 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 e.printStackTrace();
             }
 
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setMax(100);
+            progressBar.setProgress(0);
             OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -134,7 +177,36 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    new UploadUtils(response.body().string(),selectResultList.get(0).getPath(),new File(selectResultList.get(0).getPath()).getName()).upload();
+                    String token = response.body().string();
+                    String dataPath = selectResultList.get(0).getPath();
+                    String key = new File(selectResultList.get(0).getPath()).getName();
+                    new UploadUtils(token, dataPath, key).upload(new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo info, JSONObject response) {
+                            if(info.isOK()){
+                                Toast.makeText(InfoAndCommentActivity.this,"上传完成",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(InfoAndCommentActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
+                                Log.e("erro","upload fail info:"+info);
+                            }
+                        }
+                    }, new UpProgressHandler() {
+                        @Override
+                        public void progress(String key, double percent) {
+                            Log.e("progress",":"+percent);
+                            Map<String,Double> map = new HashMap<>();
+                            map.put("progress",percent);
+                            EventInfo eventInfo = new EventInfo();
+                            eventInfo.setContentMap(map);
+                            eventInfo.setContentString(QINIU_URL+"/"+key);
+                            EventBus.getDefault().post(eventInfo);
+                        }
+                    }, new UpCancellationSignal() {
+                        @Override
+                        public boolean isCancelled() {
+                            return false;
+                        }
+                    });
                 }
             });
 
@@ -153,7 +225,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             @Override
             public void onClick(View v) {
                 askPermissionForVideo();
-
+                type = 0;
                 popupWindow.dismiss();
 
             }
@@ -163,7 +235,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             public void onClick(View v) {
 
                 askPermissionForPic();
-
+                type = 1;
                 popupWindow.dismiss();
             }
         });
@@ -223,14 +295,14 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                 .videoQuality(1)// 视频录制质量 0 or 1 int
                 .videoMaxSecond(30)// 显示多少秒以内的视频or音频也可适用 int
-                .videoMinSecond(5)// 显示多少秒以内的视频or音频也可适用 int
+                .videoMinSecond(2)// 显示多少秒以内的视频or音频也可适用 int
                 .recordVideoSecond(30)//视频秒数录制 默认60s int
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
     private void startSelectPic(){
         PictureSelector.create(InfoAndCommentActivity.this)
-                .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .isWeChatStyle(true)// 是否开启微信图片选择风格，此开关开启了才可使用微信主题！！！
                 .theme(R.style.picture_WeChat_style)
                 .loadImageEngine(GlideEngine.createGlideEngine())
@@ -251,7 +323,14 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        startSelectPic();
+        if(type == 0){
+            startSelectVideo();
+        }else if(type == 1){
+            startSelectPic();
+        }else{
+            //TODO
+        }
+
     }
 
     @Override
