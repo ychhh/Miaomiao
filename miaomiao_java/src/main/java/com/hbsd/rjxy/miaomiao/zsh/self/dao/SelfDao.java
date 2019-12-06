@@ -36,14 +36,32 @@ public interface SelfDao extends JpaRepository<User,Integer> {
      * @param name
      * @param uid
      */
-    @Query(value = "update user set username=:name where uid =:uid",nativeQuery = true)
+    @Modifying
+    @Query(value = "update user set username=:name where uid=:uid",nativeQuery = true)
     void updateUserNameById(@Param("name") String name,@Param("uid")Integer uid);
     /**
      * 根据id修改性别
      * @Param sex;
      * @Param uid
      */
+    @Modifying
     @Query(value = "update user set usex=:sex where uid =:uid",nativeQuery = true)
     void updateUserSexById(@Param("sex")String sex,@Param("uid") Integer uid);
+    /**
+     * 根据id修改简介
+     * @Param intro;
+     * @Param uid
+     */
+    @Modifying
+    @Query(value = "update user set uintro=:intro where uid =:uid",nativeQuery = true)
+    void updateUserIntroById(@Param("intro")String intro,@Param("uid") Integer uid);
+    /**
+     * 根据id修改密码
+     * @Param pwd;
+     * @Param uid
+     */
+    @Modifying
+    @Query(value = "update user set pwd=:pwd where uid =:uid",nativeQuery = true)
+    void updateUserPwdById(@Param("pwd")String pwd,@Param("uid") Integer uid);
 
 }
