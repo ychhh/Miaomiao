@@ -2,6 +2,8 @@ package com.hbsd.rjxy.miaomiao.zlc.publish.model;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +22,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublishActivity extends AppCompatActivity implements View.OnClickListener{
+public class PublishActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     @BindView(R.id.et_edit)
     EditText etEdit;            //编辑内容EditText
@@ -35,10 +37,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     private boolean isUploadComplete = false ;  // 判断当前activity的状态是否已经完成了上传（只有在type=0/1的时候判断）
     private boolean isCanceled = false ; //取消上传的参数，onDestroy和返回的点击事件（判断是否已经上传完成）中都要修改这个变量
-
+    private boolean etEmpty = true;     //et是否是空的
+    private int type = -1;  //当前编辑的模式  0  1  2
     /*
         TODO
             在点击发布时先判断是否存在草稿，sp中的have_draft是否为true（default="false"）
+            纯文本方式的
             (1)如果存在草稿，直接跳转到这个activity并且bundle中的isdraft为true，其他跳转方式的isdraft都是false
             <----存在草稿的情况--->
             先转成multi_info，如果是文本形式，那么直接拿到内容然后修改et就行了
@@ -71,6 +75,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             <------视频，图片的展示，最后再做------>
             放在下面，因为会弹出键盘，所以在键盘之上，et之下，图片限制只能上传一张
             （多图上传，断点续传，后续完善）
+            <----存草稿--->
+            sp存type
+            纯文本的multi_info  存 textdraftbody
+            视频/图片的multi_info 存 draftbody
+            未上传文件的时候have_canceled_file  （boolean）true
+            canceled_file_path  （string）文件路径
 
      */
 
@@ -86,16 +96,30 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         ButterKnife.bind(this);
 
 
-
-
+        etEdit.addTextChangedListener(this);
         etEdit.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        type = bundle.getInt("type");
+
+        Log.e("isdraft",""+bundle.getSerializable("isdraft"));
         Log.e("type",""+bundle.getSerializable("type"));
-        Log.e("url",""+bundle.getSerializable("url"));
+        Log.e("path",""+bundle.getSerializable("path"));
+        Log.e("dasdas","type:"+type+"etEmpty:"+etEmpty);
+
+        initButton();
 
 
+    }
+
+    public void initButton(){
+        if(type == 2){
+            if(etEmpty){
+                btnPublish.setBackground(getResources().getDrawable(R.drawable.btn_invalid));
+                btnPublish.setTextColor(getResources().getColor(R.color.btnInvalidText));
+            }
+        }
     }
 
 
@@ -105,8 +129,31 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
 
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(etEdit.getText().toString().equals("")){
+            etEmpty = true;
+        }else{
+            etEmpty = false;
+            if(type == 2){
+                btnPublish.setBackground(getResources().getDrawable(R.drawable.btn_selector));
+                btnPublish.setTextColor(getResources().getColor(R.color.white));
+            }
+        }
+        if(type == 2 && etEmpty){
+            btnPublish.setBackground(getResources().getDrawable(R.drawable.btn_invalid));
+            btnPublish.setTextColor(getResources().getColor(R.color.btnInvalidText));
+        }
+        Log.e("whatch","sssss");
+    }
 
+    @Override
+    public void afterTextChanged(Editable s) {
 
+    }
 }

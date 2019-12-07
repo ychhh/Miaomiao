@@ -3,41 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:gravity="center"
-    android:orientation="vertical"
-    android:background="#959595">
+    android:orientation="vertical">
 
+    <Button
+        android:id="@+id/btn_video"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:background="@drawable/btn_selector_camera"
+        android:text="拍摄视频"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="选择发布方式"
-        android:textColor="#000"
+        android:layout_height="1dp"
+        android:background="@color/smssdk_gray" />
+
+    <Button
+        android:id="@+id/btn_album"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/btn_selector_album"
+        android:text="从相册选择"
+        android:textColor="@color/black"
         android:textSize="18dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_shortvideo"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="短视频"
-            android:textColor="#000"
-            android:textSize="16dp" />
-
-        <Button
-            android:id="@+id/btn_pic"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="图片"
-            android:textColor="#000"
-            android:textSize="16dp" />
-    </LinearLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@
     <color name="black">#000000</color>
 
     <!--字体颜色-->
+    <color name="btnInvalidText">#B0B0B0</color>
     <color name="mainuptextnormal">#727272</color>
     <color name="mainuptextselected">#FFFFFF</color>
     <color name="servicetext">#fff</color>
@@ -15,6 +16,7 @@
     <color name="white">#ffffff</color>
     <!--摁钮颜色-->
     <color name="btnLogin">#FF1B1B</color>
+    <color name="btnInvalid">#E4E4E4</color>
 
 
 

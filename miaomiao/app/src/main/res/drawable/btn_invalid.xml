@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--圆角弧度-->
     <corners android:radius="5dp"/>
-
-    <!--填充色-->
-    <solid android:color="#315B15"/>
-
-    <!--边框-->
-
-
+    <solid android:color="@color/btnInvalid"/>
 </shape>

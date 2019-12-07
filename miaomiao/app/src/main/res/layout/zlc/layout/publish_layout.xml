@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/btn_publish"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:background="@drawable/btn_selector"
         android:textSize="14dp"
         android:text="发表"
@@ -61,7 +61,7 @@
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/pb_publish"
         app:progress_text_visibility="invisible"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         style="@style/NumberProgressBar_Passing_Green"
         android:layout_height="wrap_content" />
