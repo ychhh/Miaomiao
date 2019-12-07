@@ -146,19 +146,14 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 }else{
                     //直接调用
                     if(checkHaveTextDraft(sp)){
-                        int type = sp.getInt("type",-1);
-                        if(type == 2){
-                            Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("type",type);
-                            bundle.putSerializable("isdraft","true");
-                            bundle.putSerializable("draftbody",sp.getString("textdraftbody",""));
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }else{
-                            Log.e("纯文本草稿的type怎么回事？？？？",""+type);
 
-                        }
+                        Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("type",2);
+                        bundle.putSerializable("isdraft","true");
+                        bundle.putSerializable("draftbody",sp.getString("textdraftbody",""));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }else{
                         startPublishActivity(2,null);
                     }
@@ -183,7 +178,11 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         }
         return false;
 
+
     }
+
+
+
     /*
         TODO    检查石头存在纯文本形式的草稿
      */
