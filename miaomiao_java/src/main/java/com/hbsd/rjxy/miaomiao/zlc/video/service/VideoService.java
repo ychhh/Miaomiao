@@ -53,6 +53,13 @@ public class VideoService {
     }
 
 
+    /*
+        发布
+    
+     */
+    public int publishMulti(Multi_info multi_info){
+        return videoDao.publishMulti(multi_info.getType(),multi_info.getCid(),multi_info.getUid(),multi_info.getMpath(),multi_info.getMupload_time(),multi_info.getMcontent(),multi_info.getMformat(),multi_info.getMcover());
+    }
 
 
 

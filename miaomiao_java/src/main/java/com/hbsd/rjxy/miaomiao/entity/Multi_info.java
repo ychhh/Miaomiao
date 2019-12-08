@@ -2,7 +2,7 @@ package com.hbsd.rjxy.miaomiao.entity;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "multi_info")
@@ -15,7 +15,7 @@ public class Multi_info {
     private int cid;
     private int uid;
     private String mpath;  //图片或视频的路径
-    private Date mupload_time;  //发布时间
+    private String mupload_time;  //发布时间
     private String mcontent;   //文字内容
     private int mvisited;  //只有视频才有观看次数
     private int mstatus;//0：正常，1：锁定，2：删除，3：封禁
@@ -67,11 +67,11 @@ public class Multi_info {
         this.mpath = mpath;
     }
 
-    public Date getMupload_time() {
+    public String getMupload_time() {
         return mupload_time;
     }
 
-    public void setMupload_time(Date mupload_time) {
+    public void setMupload_time(String mupload_time) {
         this.mupload_time = mupload_time;
     }
 
