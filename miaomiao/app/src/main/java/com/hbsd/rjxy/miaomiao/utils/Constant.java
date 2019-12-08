@@ -44,6 +44,9 @@ public class Constant {
     public static final String REMIND_PUBLISH_ONCE = "REMIND_PUBLISH_ONCE";
 
     public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8080/publish/getToken";//发布获取token
+    public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8080/publish/publish";//发布
+
+
 
 
 

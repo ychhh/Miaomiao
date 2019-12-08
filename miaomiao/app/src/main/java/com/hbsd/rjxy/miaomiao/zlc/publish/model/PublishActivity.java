@@ -44,6 +44,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_SP_NAME;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_PUBLISH;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_TOKEN;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
 
@@ -197,6 +199,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             tvLog.setText(progressNum+"%");
             progressBar.setProgress(progressNum);
         }
+        if("finishPublishing".equals(eventInfo.getContentString())){
+            finish();
+        }
 
 
     }
@@ -224,7 +229,44 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         Bundle bundle = intent.getExtras();
 
         checkDraft(bundle);
+
         initButton();
+        btnPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //发布的逻辑
+                /*
+                    TODO    如果是视频/图片发布，修改have_draft属性，如果是纯文本，修改haveTextDraft
+                 */
+                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
+                if(type != 2){
+                    sp.edit().putBoolean("have_draft",false).commit();
+                }else{
+                    sp.edit().putBoolean("have_text_draft",false).commit();
+                }
+                multi_info.setType(type);
+                multi_info.setCid(1);
+                multi_info.setUid(1);
+                multi_info.setMcontent(etEdit.getText().toString());
+                SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+                multi_info.setMupload_time(sdf.format(System.currentTimeMillis()));
+                OkHttpUtils.getInstance().postJson(PUBLISH_URL_PUBLISH, gson.toJson(multi_info), new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        Log.e("....finish publish",""+response.body().string());
+                        EventInfo eventInfo = new EventInfo();
+                        eventInfo.setContentString("finishPublishing");
+                        EventBus.getDefault().post(eventInfo);
+                    }
+                });
+            }
+        });
+
         initProgressbar();
         if(type != 2 && needToUpload && !isUploadComplete){
             startUploadProgress();
