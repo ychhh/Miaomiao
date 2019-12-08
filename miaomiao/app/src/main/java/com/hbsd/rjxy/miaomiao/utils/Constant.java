@@ -19,7 +19,7 @@ public class Constant {
     public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
 
 
-    public static String LOGIN_URL="http://10.7.89.23:8080/login/";//登录的URL
+    public static String LOGIN_URL="http://10.7.90.209:8080/login/";//登录的URL
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
@@ -32,6 +32,9 @@ public class Constant {
     public static final int PICTURESELECT_CAMERA = 122;
 
     public static final String PUBLISH_SP_NAME = "PUBLISH_PREFERENCE";  //草稿，以及其他和用户发布相关的sharepreference
+    public static final String LOGIN_SP_NAME="loginInfo";//与登录有关的sp,存储用户id（uid），是否有密码（hasPassword）
+    public static final String HAS_PASSWORD="hasPassword";// 登录后用户是否有密码，true：有，false：无
+
 
     /*
             TODO    是否提醒过用户请减少使用纯文本发布功能的提示

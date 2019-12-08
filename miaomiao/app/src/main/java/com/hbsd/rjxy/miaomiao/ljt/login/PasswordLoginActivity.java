@@ -22,6 +22,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPasswordLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PasswordLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
+import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
@@ -124,12 +125,17 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
     public void onLoginResult(String result, int uid) {
         if (result.equals("true")) {
             //登录成功后将用户id进行存储
-            SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid + "");
             editor.commit();
+            SharedPreferences sp=getSharedPreferences(Constant.PUBLISH_SP_NAME,MODE_PRIVATE);
+            sp.edit().putString(Constant.REMIND_PUBLISH_ONCE,"NEEDREMIND").commit();
             Log.e("用户登录的id", uid + "");
-            startActivity(new Intent(PasswordLoginActivity.this, MainActivity.class));
+            Intent intent=new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setClass(PasswordLoginActivity.this, MainActivity.class);
+            startActivity(intent); //页面跳转
         } else if (result.equals("error")) {
             Toast.makeText(this, "密码错误！", Toast.LENGTH_SHORT).show();
         } else if (result.equals("false")) {

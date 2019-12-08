@@ -96,7 +96,7 @@ public class LoginController {
                 User user=loginService.findUserByTel(phone);
                 if (user==null){
                     //user 为空，表示未注册， 进行注册
-                    System.out.println("新用户注册!");
+                    System.out.println(phone+"新用户注册!");
                     Date date=new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String temp=sdf.format(date);

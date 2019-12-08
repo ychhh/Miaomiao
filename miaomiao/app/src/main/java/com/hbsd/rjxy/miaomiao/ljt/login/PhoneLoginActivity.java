@@ -19,6 +19,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.IPhoneLoginPresenter;
 import com.hbsd.rjxy.miaomiao.ljt.login.presenter.PhoneLoginPresenterCompl;
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
+import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
@@ -193,13 +194,18 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     public void onLoginResult(String result, int uid,String hasPassword) {
         if (result.equals("true")) {
             //登录成功后将用户id进行存储,是否有密码进行存储
-            SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid + "");
-            editor.putString("hasPassword",hasPassword);
+            editor.putString(Constant.HAS_PASSWORD,hasPassword);
             editor.commit();
+            SharedPreferences sp=getSharedPreferences(Constant.PUBLISH_SP_NAME,MODE_PRIVATE);
+            sp.edit().putString(Constant.REMIND_PUBLISH_ONCE,"NEEDREMIND").commit();
             Log.e("用户登录的id", uid + "");
-            startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class)); //页面跳转
+            Intent intent=new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setClass(PhoneLoginActivity.this, MainActivity.class);
+            startActivity(intent); //页面跳转
         }
     }
 
