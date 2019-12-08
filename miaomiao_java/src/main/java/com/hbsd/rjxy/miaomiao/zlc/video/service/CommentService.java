@@ -1,4 +1,4 @@
-package com.hbsd.rjxy.miaomiao.zlc.video.video;
+package com.hbsd.rjxy.miaomiao.zlc.video.service;
 
 
 import com.hbsd.rjxy.miaomiao.entity.Comment;

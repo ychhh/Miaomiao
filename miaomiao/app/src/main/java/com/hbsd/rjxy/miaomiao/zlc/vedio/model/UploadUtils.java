@@ -55,7 +55,7 @@ l
      * @param dataPath  文件路径        其实也可以传一个文件，但我还没写
      * @param key       文件名（带后缀）
      */
-    UploadUtils(String token,String dataPath,String key){
+    public UploadUtils(String token,String dataPath,String key){
         this.token = token;
         this.dataPath = dataPath;
         //生成在七牛服务器的文件名
@@ -164,6 +164,11 @@ l
 
     public void setCancelled(){
         isCancelled = true;
+    }
+
+
+    public String getKey(){
+        return key;
     }
 
 

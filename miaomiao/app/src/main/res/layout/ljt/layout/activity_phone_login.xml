@@ -108,7 +108,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="#000000"
+        android:background="#00000000"
         android:onClick="onClicked"
         android:padding="10dp"
         android:text="登录遇到问题"

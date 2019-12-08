@@ -2,6 +2,7 @@ package com.hbsd.rjxy.miaomiao.ljt.Login.controller;
 
 import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.ljt.Login.service.LoginService;
+import com.hbsd.rjxy.miaomiao.ljt.Login.util.DecodeUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
 @Controller
@@ -41,8 +43,8 @@ public class LoginController {
             JSONObject object=new JSONObject(param);
             JSONObject res=new JSONObject();
             if(object.length()!=0){
-                String phone = object.getString("tel");
-                String password=object.getString("pwd");
+                String phone = DecodeUtil.decodeToString(object.getString("tel"));
+                String password=DecodeUtil.decodeToString(object.getString("pwd"));
                 System.out.println(phone+"====="+password);
                 User user=loginService.findUserByTel(phone);
                 if (user==null){
@@ -90,7 +92,7 @@ public class LoginController {
             JSONObject object=new JSONObject(param);
             JSONObject res=new JSONObject();
             if(object.length()!=0){
-                String phone = object.getString("tel");
+                String phone = DecodeUtil.decodeToString(object.getString("tel"));
                 User user=loginService.findUserByTel(phone);
                 if (user==null){
                     //user 为空，表示未注册， 进行注册
@@ -108,9 +110,15 @@ public class LoginController {
                     User userSave=loginService.findUserByTel(phone);
                     res.put("result","true");
                     res.put("uid",userSave.getUid());
+                    res.put("hasPasswod","false");
                 }else {
                     res.put("result","true");
                     res.put("uid",user.getUid());
+                    if (user.getPwd()==null){
+                        res.put("hasPasswod","false");
+                    }else {
+                        res.put("hasPasswod","true");
+                    }
                 }
             }
             is.close();

@@ -4,6 +4,7 @@
     package="com.hbsd.rjxy.miaomiao">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -50,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".zlc.publish.model.PublishActivity" /> <!-- 发布页面 -->
+        <activity android:name=".zlc.publish.model.PublishActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 发布页面 -->
         <!--短信验证码-->
         <activity
             android:name="com.mob.tools.MobUIShell"

@@ -184,17 +184,19 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     }
 
     /**
-     * 登录成功之后
+     *
      * @param result
-     * @param uid
+     * @param uid 用户的id
+     * @param hasPassword  1.true 代表有密码 2.false 代表无密码
      */
     @Override
-    public void onLoginResult(String result, int uid) {
+    public void onLoginResult(String result, int uid,String hasPassword) {
         if (result.equals("true")) {
-            //登录成功后将用户id进行存储
+            //登录成功后将用户id进行存储,是否有密码进行存储
             SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid + "");
+            editor.putString("hasPassword",hasPassword);
             editor.commit();
             Log.e("用户登录的id", uid + "");
             startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class)); //页面跳转
