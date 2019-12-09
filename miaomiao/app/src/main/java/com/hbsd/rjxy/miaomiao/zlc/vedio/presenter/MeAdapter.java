@@ -2,6 +2,8 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,7 +39,12 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
 
         int cid = item.getCid();
         //通过cid请求头像
-        helper.getView(R.id.iv_cathead).setOnClickListener(this::onClick);
+        helper.getView(R.id.iv_cathead).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(createIntent(item,0));
+            }
+        });
 
         //设置小鱼干的点击事件
         helper.getView(R.id.iv_feed).setOnClickListener(new View.OnClickListener() {
@@ -56,10 +63,15 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         helper.getView(R.id.iv_subscribe).setOnClickListener(this::onClick);
 
         //设置评论的点击事件
-        helper.getView(R.id.iv_comment).setOnClickListener(this::onClick);
+        helper.getView(R.id.iv_comment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(createIntent(item,1));
+            }
+        });
 
         //设置评论数量
-        helper.setTag(R.id.tv_comment_amount,item.getMcomment_count());
+        helper.setText(R.id.tv_comment_amount,item.getMcomment_count()+"");
 
 
         helper.gsyVideoPlayer.setUpLazy(item.getMpath(),true,null,null,"title");
@@ -92,6 +104,23 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         helper.gsyVideoPlayer.setRelativeLayout(helper.getView(R.id.popFish));
     }
 
+    /*
+        TODO    type传0是点击头像，1点击评论图片
+     */
+    private Intent createIntent(Multi_info item , int type) {
+        Intent intent = new Intent(context,InfoAndCommentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("miid",item.getMiid());
+        bundle.putSerializable("cid",item.getCid());
+        if(type == 0){
+            bundle.putSerializable("from","head");
+        }else if(type == 1){
+            bundle.putSerializable("from","commentPic");
+        }
+        intent.putExtras(bundle);
+        return intent;
+    }
+
     @Override
     public void onViewRecycled(@NonNull MeViewHolder holder) {
         super.onViewRecycled(holder);
@@ -105,24 +134,12 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_cathead:
-                //点击头像  do something
-                Toast.makeText(context,"这是头像",Toast.LENGTH_SHORT).show();
-
-                //跳转
-                context.startActivity(new Intent(context, InfoAndCommentActivity.class));
-
-
-                break;
             case R.id.iv_subscribe:
                 //点击订阅 do something
                 Toast.makeText(context,"这是订阅",Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.iv_comment:
-                //点击评论，跳转
-                Toast.makeText(context,"这是评论",Toast.LENGTH_SHORT).show();
-                break;
+
         }
     }
 }

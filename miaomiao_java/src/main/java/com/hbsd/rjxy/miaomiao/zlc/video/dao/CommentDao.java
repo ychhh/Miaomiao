@@ -33,8 +33,30 @@ public interface CommentDao extends JpaRepository<Comment,Integer> {
      */
     @Modifying
     @Transactional(readOnly = false)
-    @Query(value = "INSERT INTO comment(miid,colike,costatus,uid,cocontent) VALUES(?,?,?,?,?)",nativeQuery = true)
-    int addComment(int miid,int colike,int costatus,int uid,String cocontent);
+    @Query(value = "INSERT INTO comment(miid,colike,costatus,uid,cocontent,publishTime) VALUES(?,?,?,?,?,?)",nativeQuery = true)
+    int addComment(int miid,int colike,int costatus,int uid,String cocontent,String publishTime);
+
+
+    @Transactional(readOnly = false)
+    @Query(value = "SELECT coid FROM comment WHERE uid=? AND publishTime=?",nativeQuery = true)
+    int findId(int uid,String publishTime);
+
+
+    /**
+     * 点赞评论
+     */
+    @Modifying
+    @Transactional(readOnly = false)
+    @Query(value = "UPDATE comment SET colike=colike+1 WHERE coid=?",nativeQuery = true)
+    int likeComment(int coid);
+
+    /**
+     * 取消点赞评论
+     */
+    @Modifying
+    @Transactional(readOnly = false)
+    @Query(value = "UPDATE comment SET colike=colike-1 WHERE coid=?",nativeQuery = true)
+    int dislikeComment(int coid);
 
 
     /**
