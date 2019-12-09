@@ -10,7 +10,7 @@ public class Cat {
     private int cid;
     private int uid;
     private int miid;
-    private int hid;
+    private int hpath;
     private int chot;
     private int is_ste;
     private Date cregist;
@@ -50,11 +50,11 @@ public class Cat {
     }
 
     public int getHid() {
-        return hid;
+        return hpath;
     }
 
-    public void setHid(int hid) {
-        this.hid = hid;
+    public void setHid(int hpath) {
+        this.hpath = hpath;
     }
 
     public int getChot() {

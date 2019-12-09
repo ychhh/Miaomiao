@@ -42,6 +42,4 @@ public class SubController {
     public int unfollow(int uid,int cid){
         return subService.unfollow(uid,cid);
     }
-
-
 }
