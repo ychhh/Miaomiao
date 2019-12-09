@@ -14,12 +14,18 @@ public class SelfTest {
     @RequestMapping("/update")
     @ResponseBody
     public void updateUser(){
-        //Test test=new Test();
-       // test.save();
-        String name="zsh";
-        int uid=4;
 
-        selfService.updateUserNameById(name,uid);
+        String name="zsh";
+        String intro="王奇垃圾";
+        String sex="nannan";
+        int uid=4;
+        /*测试根据uid修改姓名*/
+        //selfService.updateUserNameById(name,uid);
+        /*根据uid修改性别*/
+        //selfService.updateUserSexById(sex,uid);
+        /*根据uid修改简介*/
+        selfService.updateUserIntroById(intro,uid);
+
     }
 
 

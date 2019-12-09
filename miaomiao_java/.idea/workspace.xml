@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635dadab-9047-4c67-84fa-b08a167c81d8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/view/SelfFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/view/SelfFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/view/ShowCardActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/view/ShowCardActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zsh/layout/self_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zsh/layout/self_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.class" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +41,77 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+            <state relative-caret-position="1691">
+              <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1463">
+              <caret line="89" column="9" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+              <folding>
+                <element signature="e#256#257#0" expanded="true" />
+                <element signature="e#326#327#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/controller/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1349">
+              <caret line="85" column="42" selection-start-line="85" selection-start-column="12" selection-end-line="85" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+              <folding>
+                <element signature="e#1147#1148#0" expanded="true" />
+                <element signature="e#1201#1202#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -51,6 +127,17 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java" />
+      </list>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -92,11 +179,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="175" />
-    <option name="y" value="126" />
-    <option name="width" value="1180" />
-    <option name="height" value="610" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-9" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -106,6 +192,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -118,12 +205,254 @@
               <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="ljt" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="ljt" type="462c0819:PsiDirectoryNode" />
+              <item name="Login" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="ljt" type="462c0819:PsiDirectoryNode" />
+              <item name="Login" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="ljt" type="462c0819:PsiDirectoryNode" />
+              <item name="Login" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+              <item name="self" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+              <item name="self" type="462c0819:PsiDirectoryNode" />
+              <item name="control" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+              <item name="self" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+              <item name="self" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+              <item name="zsh" type="462c0819:PsiDirectoryNode" />
+              <item name="self" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaomiao_java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="hbsd" type="462c0819:PsiDirectoryNode" />
+              <item name="rjxy" type="462c0819:PsiDirectoryNode" />
+              <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -134,10 +463,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../DictationHelper/dictation_helper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../repository/org/springframework/boot/spring-boot-autoconfigure/2.2.1.RELEASE/spring-boot-autoconfigure-2.2.1.RELEASE.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -151,6 +480,11 @@
     </key>
   </component>
   <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
     <option name="ruleStates">
       <list>
         <RuleState>
@@ -161,8 +495,9 @@
         </RuleState>
       </list>
     </option>
+    <option name="contentProportion" value="0.086330935" />
   </component>
-  <component name="RunManager" selected="Spring Boot.MiaomiaoApplication (1)">
+  <component name="RunManager">
     <configuration name="MiaomiaoApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="miaomiao_java" />
       <extension name="coverage">
@@ -171,13 +506,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hbsd.rjxy.miaomiao.MiaomiaoApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MiaomiaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="miaomiao" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.hbsd.rjxy.miaomiao.MiaomiaoApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -219,11 +547,14 @@
       <workItem from="1575277541737" duration="5500000" />
       <workItem from="1575340274478" duration="4512000" />
       <workItem from="1575418031518" duration="940000" />
+      <workItem from="1575682467789" duration="2389000" />
+      <workItem from="1575688349825" duration="7971000" />
+      <workItem from="1575871200677" duration="1148000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59000" />
+    <option name="totallyTimeSpent" value="15429000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -235,41 +566,80 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="0" width="782" height="831" extended-state="1" />
+    <editor active="true" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info id="Capture Tool" />
-      <window_info id="Web" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.42962468" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Java Enterprise" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8188105" weight="0.33094555" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="right" id="Maven" visible="true" weight="0.3297587" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Database" weight="0.3297587" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.18118949" side_tool="true" weight="0.33094555" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" />
+      <window_info active="true" anchor="bottom" id="Run Dashboard" order="15" visible="true" weight="0.32904148" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.4966488" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" weight="0.3297587" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.42962468" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Run Dashboard" order="0" weight="0.3295129" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.8188105" visible="true" weight="0.33094555" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Spring" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.18118949" side_tool="true" weight="0.33094555" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Java Enterprise" order="13" />
+      <window_info anchor="bottom" id="Database Changes" order="14" />
+      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.4966488" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" weight="0.3297587" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -310,6 +680,103 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add java and ui" />
     <option name="LAST_COMMIT_MESSAGE" value="add java and ui" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/service/LoginService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../repository/org/springframework/boot/spring-boot-autoconfigure/2.2.1.RELEASE/spring-boot-autoconfigure-2.2.1.RELEASE.jar!/org/springframework/boot/autoconfigure/orm/jpa/JpaBaseConfiguration.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="100" column="5" lean-forward="true" selection-start-line="100" selection-start-column="5" selection-end-line="100" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../repository/org/springframework/spring-orm/5.2.1.RELEASE/spring-orm-5.2.1.RELEASE.jar!/org/springframework/orm/jpa/AbstractEntityManagerFactoryBean.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="232" selection-start-line="232" selection-end-line="232" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplicationTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1691">
+          <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1463">
+          <caret line="89" column="9" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/test/SelfTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1349">
+          <caret line="85" column="42" selection-start-line="85" selection-start-column="12" selection-end-line="85" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding>
+            <element signature="e#1147#1148#0" expanded="true" />
+            <element signature="e#1201#1202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/MiaomiaoApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#256#257#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
@@ -367,6 +834,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
