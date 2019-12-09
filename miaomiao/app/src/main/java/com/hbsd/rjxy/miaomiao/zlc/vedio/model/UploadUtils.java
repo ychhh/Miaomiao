@@ -167,5 +167,10 @@ l
     }
 
 
+    public String getKey(){
+        return key;
+    }
+
+
 
 }

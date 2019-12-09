@@ -1,9 +1,9 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,44 +21,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.EventInfo;
-import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCancellationSignal;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UpProgressHandler;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
-
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PERMISSION_NECESSARY;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_CAMERA;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_VIDEO;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.REMIND_PUBLISH_ONCE;
 
+
+/*
+    TODO    用户退出登录一定要删除sp中的草稿信息
+ */
 public class InfoAndCommentActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     @BindView(R.id.cc_viewPager)
@@ -74,32 +58,16 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     PopupWindow popupWindow;
     View popupView;
 
+    PopupWindow popupConfirmWindow;
+    View popupConfirmView;
+
     @BindView(R.id.pb_upload)
     NumberProgressBar progressBar;
 
     private int type = -1;  //0：视频，1：图片，2：纯文字
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void receive(EventInfo eventInfo){
-        progressBar.setProgress((int)Math.round((double)eventInfo.getContentMap().get("progress")*100));
-        if((int)Math.round((double)eventInfo.getContentMap().get("progress")*100) == 100){
-            progressBar.setVisibility(View.INVISIBLE);
-            Log.e("url",""+eventInfo.getContentString());
-            Intent intent = new Intent(InfoAndCommentActivity.this, PublishActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("type",type);
-            bundle.putSerializable("url",eventInfo.getContentString());
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-    }
 
 
     @Override
@@ -113,19 +81,119 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         fragments.add(new CommentFragment());
         viewPager.setAdapter(new CustomPageAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
 
-        EventBus.getDefault().register(this);
-
+        SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
 
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupwindow(v);
+                /*
+                    TODO    （文件草稿）
+                        判断sp中have_draft是否为true（default = "false"）
+                        从sp中拿这次draft的type（int）
+                        bundel里面添加type（0，1）  isdraft（true，false）
+                        检查是否存在未上传完成的文件  have_canceled_file（default = false）
+                        如果存在，去canceled_file_path拿文件path
+                        bundel添加iscanceled（true，false）  canceled_file_path
+                        bundel添加draftbody
+                        跳转
+
+                 */
+                if(checkHaveDraft(sp)){
+                    int type = sp.getInt("type",-1);
+                    if(type == 0 || type == 1){
+                        Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("type",type);
+                        bundle.putSerializable("isdraft","true");
+                        //检查是否有未上传完成的图片
+                        if(sp.getBoolean("have_canceled_file",false)){
+                            String path = sp.getString("canceled_file_path","");
+                            bundle.putSerializable("iscanceled","true");
+                            bundle.putSerializable("canceled_file_path",path);
+                        }else{
+                            bundle.putSerializable("iscanceled","false");
+                        }
+                        bundle.putSerializable("draftbody",sp.getString("draftbody",""));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }else{
+                    popupwindow(v);
+                }
+
+            }
+        });
+        /*
+            TODO    纯文本草稿
+
+         */
+        tvComment.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                /*
+                    TODO    用户第一次点击会提示用户这个功能还在测试中，请尽量分享图片或视频
+                            （用户第一次登录后在sp中写一个REMIND_PUBLISH_ONCE = "NEEDREMIND"）
+
+                 */
+                if(sp.getString(REMIND_PUBLISH_ONCE,"NEEDREMIND").equals("NEEDREMIND")){
+                    /*
+                        TODO    提醒用户
+                            修改sp，不再提醒
+                     */
+                    popupConfirmWindow(v);
+                    sp.edit().putString(REMIND_PUBLISH_ONCE,"DONTREMIND").commit();
+
+                }else{
+                    //直接调用
+                    if(checkHaveTextDraft(sp)){
+
+                        Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("type",2);
+                        bundle.putSerializable("isdraft","true");
+                        bundle.putSerializable("draftbody",sp.getString("textdraftbody",""));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }else{
+                        startPublishActivity(2,null);
+                    }
+
+                }
+                //不传递点击事件
+                return true;
             }
         });
 
 
 
     }
+
+    /*
+        TODO    检查是否存在视频/图片形式的草稿
+     */
+    private boolean checkHaveDraft(SharedPreferences sp) {
+        boolean have_draft = sp.getBoolean("have_draft",false);
+        if(have_draft){
+            return true;
+        }
+        return false;
+
+
+    }
+
+
+
+    /*
+        TODO    检查石头存在纯文本形式的草稿
+     */
+    private boolean checkHaveTextDraft(SharedPreferences sp){
+        boolean have_text_draft = sp.getBoolean("have_text_draft",false);
+        if(have_text_draft){
+            return true;
+        }
+        return false;
+    }
+
 
     private class CustomPageAdapter extends FragmentPagerAdapter {
 
@@ -149,96 +217,125 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
 
 
-    //回调
+    /*
+        TODO
+            三种方式
+            （1）拍摄视频过来的
+            （2）相册选择了视频
+            （3）相册选择了图片
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK){
+
+        if(requestCode == PICTURESELECT_VIDEO && resultCode == Activity.RESULT_OK){
+            Log.e("这是","拍摄视频");
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            for(LocalMedia localMedia : selectResultList){
+            int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
+            String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
+            Log.e("选择的类型是",""+fileExt);
+            type = 0;
+            startPublishActivity(type,selectResultList.get(0).getPath());
 
+        }else if(requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK){
+            Log.e("这是","相册选择");
+
+            selectResultList = PictureSelector.obtainMultipleResult(data);
+            int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
+            String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
+            Log.e("选择的类型是",""+fileExt);
+            if("mp4".equals(fileExt)){
+                type = 0;
+            }else if("jpg".equals(fileExt) || "png".equals(fileExt) || "jpeg".equals(fileExt)){
+                type = 1;
+            }else{
+                Log.e("未能识别的文件格式",""+fileExt);
             }
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("uid","1");
-                jsonObject.put("cid","1");
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(type != -1){
+                startPublishActivity(type,selectResultList.get(0).getPath());
             }
-
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setMax(100);
-            progressBar.setProgress(0);
-            OkHttpUtils.getInstance().postJson("http://10.7.87.224:8080/publish/getToken", jsonObject.toString(), new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    String token = response.body().string();
-                    String dataPath = selectResultList.get(0).getPath();
-                    String key = new File(selectResultList.get(0).getPath()).getName();
-                    new UploadUtils(token, dataPath, key).upload(new UpCompletionHandler() {
-                        @Override
-                        public void complete(String key, ResponseInfo info, JSONObject response) {
-                            if(info.isOK()){
-                                Toast.makeText(InfoAndCommentActivity.this,"上传完成",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(InfoAndCommentActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
-                                Log.e("erro","upload fail info:"+info);
-                            }
-                        }
-                    }, new UpProgressHandler() {
-                        @Override
-                        public void progress(String key, double percent) {
-                            Log.e("progress",":"+percent);
-                            Map<String,Double> map = new HashMap<>();
-                            map.put("progress",percent);
-                            EventInfo eventInfo = new EventInfo();
-                            eventInfo.setContentMap(map);
-                            eventInfo.setContentString(QINIU_URL+"/"+key);
-                            EventBus.getDefault().post(eventInfo);
-                        }
-                    }, new UpCancellationSignal() {
-                        @Override
-                        public boolean isCancelled() {
-                            return false;
-                        }
-                    });
-                }
-            });
-
+        }else{
+            Log.e("未识别的requestCode",""+requestCode);
         }
+
+
+    }
+
+    /*
+        TODO
+            这是用于提示用户，在用户第一次使用纯文本发布功能的时候
+
+     */
+    private void popupConfirmWindow(View v) {
+        popupView = LayoutInflater.from(this).inflate(R.layout.publish_remind_popupwindow,null);
+        popupWindow=new PopupWindow(popupView, dip2px(this,350) , dip2px(this,150), true);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setTouchable(true);
+
+        Button btnConfirm = popupView.findViewById(R.id.btn_confirm);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                        TODO    以type = 2 跳转
+                 */
+                startPublishActivity(2,null);
+            }
+        });
+
+        popupWindow.showAtLocation(v, Gravity.CENTER,0,20);
+
+    }
+
+    /*i
+        TODO    跳转方法，传入一个type类型和一个nullable的String path
+     */
+    private void startPublishActivity(int i, @Nullable String path) {
+        Intent intent = new Intent(InfoAndCommentActivity.this, PublishActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("type",i);
+        bundle.putSerializable("isdraft","false");
+        if(i == 2){
+            //纯文本
+
+        }else{
+            //视频
+            bundle.putSerializable("path",selectResultList.get(0).getPath());
+        }
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 
+    /*
+    TODO    这是点击发布之后弹出的选择框
+     */
     private void popupwindow(View v) {
         popupView = LayoutInflater.from(this).inflate(R.layout.publishpopupwindow_layout,null);
-        popupWindow=new PopupWindow(popupView, dip2px(this,300) , dip2px(this,200), true);
+        popupWindow=new PopupWindow(popupView, dip2px(this,350) , dip2px(this,90), true);
+        popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(false);
         popupWindow.setTouchable(true);
-        Button btnVideo=popupView.findViewById(R.id.btn_shortvideo);
-        Button btnPic=popupView.findViewById(R.id.btn_pic);
+
+        Button btnAlbum = popupView.findViewById(R.id.btn_album);
+        Button btnVideo = popupView.findViewById(R.id.btn_video);
+
         btnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 askPermissionForVideo();
                 type = 0;
-                popupWindow.dismiss();
-
             }
         });
-        btnPic.setOnClickListener(new View.OnClickListener() {
+
+        btnAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                askPermissionForPic();
-                type = 1;
-                popupWindow.dismiss();
+                askPermissionForAlbum();
             }
         });
+
         popupWindow.showAtLocation(v, Gravity.CENTER,0,20);
     }
 
@@ -248,31 +345,41 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         return (int) (dpValue * scale + 0.5f);
     }
 
+    private void askPermissionForAlbum(){
+        if(EasyPermissions.hasPermissions(this,PERMISSION_NECESSARY)){
+            startAlbum();
+        }else{
+            EasyPermissions.requestPermissions(this,"打开相册必须的权限",5000,PERMISSION_NECESSARY);
+        }
+    }
 
     private void askPermissionForVideo(){
-        String[] perms = {Manifest.permission.INTERNET,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
-
-        if(EasyPermissions.hasPermissions(this,perms)){
-            startSelectVideo();
+        if(EasyPermissions.hasPermissions(this,PERMISSION_NECESSARY)){
+            startVideo();
         }else{
-            EasyPermissions.requestPermissions(this,"程序必须的权限",4513,perms);
+            EasyPermissions.requestPermissions(this,"拍摄视频必须的权限",4999,PERMISSION_NECESSARY);
         }
     }
 
-    private void askPermissionForPic(){
-        String[] perms = {Manifest.permission.INTERNET,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
-
-        if(EasyPermissions.hasPermissions(this,perms)){
-            startSelectPic();
-        }else{
-            EasyPermissions.requestPermissions(this,"程序必须的权限",4513,perms);
-        }
-    }
-
-
-    private void startSelectVideo(){
+    /*
+    启动相机
+     */
+    private void startVideo(){
         PictureSelector.create(InfoAndCommentActivity.this)
-                .openGallery(PictureMimeType.ofVideo())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .openCamera(PictureMimeType.ofVideo())
+                .loadImageEngine(GlideEngine.createGlideEngine())
+                .recordVideoSecond(15)//视频秒数录制 默认60s int
+                .forResult(PICTURESELECT_VIDEO);       //request码是相机请求
+        popupWindow.dismiss();
+    }
+
+
+    /*
+    启动相册
+     */
+    private void startAlbum() {
+        PictureSelector.create(InfoAndCommentActivity.this)
+                .openGallery(PictureMimeType.ofAll())
                 .loadImageEngine(GlideEngine.createGlideEngine())
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)// 设置相册Activity方向，不设置默认使用系统
                 .isWeChatStyle(true)// 是否开启微信图片选择风格，此开关开启了才可使用微信主题！！！
@@ -281,7 +388,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
                 .queryMaxFileSize(10)// 只查多少M以内的图片、视频、音频  单位M
-                .querySpecifiedFormatSuffix(PictureMimeType.ofMP4())// 查询指定后缀格式资源
                 .isSingleDirectReturn(false)// 单选模式下是否直接返回，PictureConfig.SINGLE模式下有效
                 .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .previewVideo(true)// 是否可预览视频 true or false
@@ -290,45 +396,24 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 .compress(true)// 是否压缩 true or false
                 .openClickSound(true)// 是否开启点击声音 true or false
-                .cutOutQuality(90)// 裁剪输出质量 默认100
-                .minimumCompressSize(100)// 小于100kb的图片不压缩
                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                 .videoQuality(1)// 视频录制质量 0 or 1 int
                 .videoMaxSecond(30)// 显示多少秒以内的视频or音频也可适用 int
                 .videoMinSecond(2)// 显示多少秒以内的视频or音频也可适用 int
-                .recordVideoSecond(30)//视频秒数录制 默认60s int
-                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
-    }
-
-    private void startSelectPic(){
-        PictureSelector.create(InfoAndCommentActivity.this)
-                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                .isWeChatStyle(true)// 是否开启微信图片选择风格，此开关开启了才可使用微信主题！！！
-                .theme(R.style.picture_WeChat_style)
-                .loadImageEngine(GlideEngine.createGlideEngine())
-                .maxSelectNum(1)// 最大图片选择数量 int
-                .minSelectNum(1)// 最小选择数量 int
-                .imageSpanCount(4)// 每行显示个数 int
-                .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-                .previewImage(true)// 是否可预览图片 true or false
-                .previewVideo(false)// 是否可预览视频 true or false
-                .enablePreviewAudio(false) // 是否可播放音频 true or false
-                .isCamera(true)// 是否显示拍照按钮 true or false
-                .isZoomAnim(true)//图片列表点击缩放效果
+                .recordVideoSecond(15)//视频秒数录制 默认60s int
                 .enableCrop(false)// 是否裁剪 true or false
                 .rotateEnabled(false)//禁止旋转
-                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+        popupWindow.dismiss();
     }
 
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if(type == 0){
-            startSelectVideo();
-        }else if(type == 1){
-            startSelectPic();
-        }else{
-            //TODO
+        if(requestCode == 5000){
+            startAlbum();
+        }else if(requestCode == 4999){
+            startVideo();
         }
 
     }

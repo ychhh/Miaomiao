@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ChangeListManager">
     <list default="true" id="635dadab-9047-4c67-84fa-b08a167c81d8" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java" afterDir="false" />
@@ -866,4 +867,12 @@
       </state>
     </states>
   </component>
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="21" />
+    <option name="y" value="65" />
+    <option name="width" value="1180" />
+    <option name="height" value="610" />
+  </component>
+>>>>>>> b8033ea469b0dda8f5e6f12b456755d7f1547d79
 </project>

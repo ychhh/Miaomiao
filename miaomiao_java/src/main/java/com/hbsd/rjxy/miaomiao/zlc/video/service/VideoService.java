@@ -1,8 +1,7 @@
-package com.hbsd.rjxy.miaomiao.zlc.video.video;
+package com.hbsd.rjxy.miaomiao.zlc.video.service;
 
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
-import com.hbsd.rjxy.miaomiao.zlc.constant.VideoConstant;
 import com.hbsd.rjxy.miaomiao.zlc.utils.QiniuUtils;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +53,13 @@ public class VideoService {
     }
 
 
+    /*
+        发布
+    
+     */
+    public int publishMulti(Multi_info multi_info){
+        return videoDao.publishMulti(multi_info.getType(),multi_info.getCid(),multi_info.getUid(),multi_info.getMpath(),multi_info.getMupload_time(),multi_info.getMcontent(),multi_info.getMformat(),multi_info.getMcover());
+    }
 
 
 

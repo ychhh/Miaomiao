@@ -1,9 +1,11 @@
 package com.hbsd.rjxy.miaomiao.ljt.login.presenter;
 
 import android.os.AsyncTask;
+import android.sax.EndElementListener;
 
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
+import com.hbsd.rjxy.miaomiao.utils.EncodeUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +44,7 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
 
                 //发送JSON格式的字符串到服务器
                 JSONObject object=new JSONObject();
-                object.put("tel",objects[0]);
+                object.put("tel", EncodeUtil.encodeToString(objects[0].toString()));
                 outputStream.write(object.toString().getBytes());
                 outputStream.close();
 
@@ -64,6 +66,7 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
 
         @Override
         protected void onPostExecute(Object o) {
+            //todo 存储是否有密码，以及zll 的东西，放在constant里
             super.onPostExecute(o);
             if(o!=null){
                 String content=o.toString();
@@ -72,7 +75,7 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
                     response = new JSONObject(content);
                     String result=response.getString("result");//1.密码正确(附带返回用户id)
                     if (result.equals("true")){
-                        iPhoneLoginView.onLoginResult(result,response.getInt("uid"));
+                        iPhoneLoginView.onLoginResult(result,response.getInt("uid"),response.getString("hasPasswod"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

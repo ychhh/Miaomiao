@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/ll_publish_back"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="45dp"
         android:orientation="horizontal"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp">
 
         <ImageView
@@ -27,11 +30,12 @@
     </LinearLayout>
 
     <Button
-        android:textColor="@color/black"
+        android:id="@+id/btn_publish"
+        android:textColor="@color/white"
         android:background="@drawable/btn_selector"
         android:textSize="14dp"
         android:text="发表"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:layout_gravity="right"
         android:layout_marginTop="45dp"
         android:layout_width="70dp"
@@ -47,11 +51,29 @@
         android:textColor="@color/black"
         android:background="#fff"
         android:text=""
+        android:minLines="2"
         android:maxLines="4"
         android:scrollbars="vertical"
         android:scrollbarStyle="insideInset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/pb_publish"
+        app:progress_text_visibility="invisible"
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        style="@style/NumberProgressBar_Passing_Green"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_log"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/btnLogin"
+        android:text="上传成功！"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 
 </FrameLayout>

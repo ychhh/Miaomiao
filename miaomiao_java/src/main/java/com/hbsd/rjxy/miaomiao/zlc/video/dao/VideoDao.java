@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface VideoDao extends JpaRepository<Multi_info,Integer> {
@@ -46,6 +47,13 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
     @Modifying
     @Query(value = "UPDATE multi_info SET mcomment_count=mcomment_count+1 WHERE miid=?",nativeQuery = true)
     int addVideoCommentAccount(int miid);
+
+
+    @Modifying
+    @Transactional(readOnly = false)
+    @Query(value = "INSERT INTO multi_info(type,cid,uid,mpath,mupload_time,mcontent,mvisited,mstatus,mcomment_count,mformat,mhot,mcover,mrecommended,mtag)" +
+            " VALUES(?,?,?,?,?,?,0,0,0,?,0,?,0.1,1)",nativeQuery =true)
+    int publishMulti(int type, int cid, int uid, String mpath, String mupload_time,String mcontent,String mformat,String cover);
 
 
 

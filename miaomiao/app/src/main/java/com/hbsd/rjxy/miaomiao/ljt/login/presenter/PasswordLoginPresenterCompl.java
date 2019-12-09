@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPasswordLoginView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
+import com.hbsd.rjxy.miaomiao.utils.EncodeUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,10 +41,10 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
                 connection.setRequestMethod("POST");
                 OutputStream outputStream = connection.getOutputStream();
 
-                //发送JSON格式的字符串到服务器
+                //发送JSON格式的字符串到服务器(Base64加密)
                 JSONObject object=new JSONObject();
-                object.put("tel",objects[0]);
-                object.put("pwd",objects[1]);
+                object.put("tel", EncodeUtil.encodeToString(objects[0].toString()));
+                object.put("pwd",EncodeUtil.encodeToString(objects[1].toString()));
                 outputStream.write(object.toString().getBytes());
                 outputStream.close();
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/framelayout_confirm"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <TextView
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_marginTop="30dp"
+        android:text="纯文字发布功能为测试功能，还是要多发布视频和图片呐！"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginBottom="15dp"
+        android:id="@+id/btn_confirm"
+        android:layout_gravity="bottom"
+        android:text="确认"
+        android:textColor="@color/black"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_selector_confirm"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+
+</FrameLayout>
