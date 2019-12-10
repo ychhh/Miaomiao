@@ -92,6 +92,7 @@ public class VideoPresenter extends AsyncTask<Object,Object,String>{
         if(videoList != null){
             //如果拿到了视频数据，则放到eventinfo的list中去
             videoEvent.setContentList(videoList);
+            videoEvent.setContentString("videoInit");
             EventBus.getDefault().post(videoEvent);
             Log.e("videoList",""+videoList.toString());
         }else{
@@ -100,6 +101,7 @@ public class VideoPresenter extends AsyncTask<Object,Object,String>{
             Map<String,String> map = new HashMap<>();
             map.put("status","complete");
             videoEvent.setContentMap(map);
+            videoEvent.setContentString("videoInit");
             EventBus.getDefault().post(videoEvent);
         }
     }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:background="@color/white">
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/rl_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,8 +18,9 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -26,7 +29,48 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
+    <TextView
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="bottom"
+        android:background="@color/btnInvalidText"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+
+        <EditText
+            android:id="@+id/et_comment_context"
+            android:layout_marginLeft="25dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:textColorHint="@color/black"
+            android:hint="留下你来过的足迹~"
+            android:maxLines="2"
+            android:minLines="1"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/iv_publish_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/publishcomment" />
+
+    </LinearLayout>
 
 
 </FrameLayout>

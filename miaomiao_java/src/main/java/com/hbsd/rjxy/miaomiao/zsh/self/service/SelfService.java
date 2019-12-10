@@ -52,4 +52,23 @@ public class SelfService {
      */
 
 
+
+    /**
+     * 根据uid更改用户信息（姓名、性别、简介）
+     * @param username
+     * @param sex
+     * @param uintro
+     * @param uid
+     * @return
+     */
+    @Transactional
+    public int updateUserMsgById(String username,String sex,String uintro,Integer uid){
+        return selfDao.updateUserMsgById(username,sex,uintro,uid);
+    }
+
+
+    public int updatePwdById(String pwd,Integer id){
+        return selfDao.updateUserPwdById(pwd,id);
+    }
+
 }
