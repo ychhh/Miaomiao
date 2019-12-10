@@ -18,14 +18,11 @@ import com.google.gson.JsonParser;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
-import com.hbsd.rjxy.miaomiao.ych.model.FollowAdaptet;
-import com.qiniu.android.utils.Json;
+import com.hbsd.rjxy.miaomiao.ych.model.FollowAdapter;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +30,6 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_SUB_CAT;
@@ -62,7 +58,7 @@ public class FollowActivity extends Activity {
                     cats.add(gson.fromJson(element, Cat.class));
                 }
                 Log.e(TAG, "handleMessage: "+cats.toString() );
-                Adapter adapter=new FollowAdaptet(FollowActivity.this,cats,R.layout.item_follow_cat);
+                Adapter adapter=new FollowAdapter(FollowActivity.this,cats,R.layout.item_follow_cat);
                 listView.setAdapter((ListAdapter) adapter);
             }
         };

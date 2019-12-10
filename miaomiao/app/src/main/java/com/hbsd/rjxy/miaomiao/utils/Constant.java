@@ -46,7 +46,7 @@ public class Constant {
     public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8080/publish/getToken";//发布获取token
     public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8080/publish/publish";//发布
     public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
-    public static final String FIND_SUB_CAT = "http://10.7.87.229:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
+    public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
     public static final String UNFOLLOW = "http://10.7.87.229:8081/sub/unfollow";
 
 
