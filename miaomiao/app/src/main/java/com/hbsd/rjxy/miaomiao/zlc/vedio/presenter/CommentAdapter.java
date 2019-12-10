@@ -14,7 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Comment;
+import com.hbsd.rjxy.miaomiao.utils.TimeUtils;
 
+import java.util.Calendar;
 import java.util.List;
 
 /*
@@ -26,11 +28,14 @@ import java.util.List;
 public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder> {
 
     private Context context;
+    private String currentTime;
 
 
-    public CommentAdapter(int layoutResId, @Nullable List<Comment> data, Context context) {
+    public CommentAdapter(int layoutResId, @Nullable List<Comment> data, Context context,String currentTime) {
         super(layoutResId, data);
         this.context = context;
+        this.currentTime = currentTime;
+        Log.e("currentTime",""+currentTime);
     }
 
     @Override
@@ -38,6 +43,17 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
         helper.setText(R.id.tv_comment_content,item.getCocontent());
 
 
+        /*
+            TODO    时间的逻辑判断
+                （1）同一天同一小时，判断多少分钟以前
+                            一分钟以内是‘刚刚’
+                （2）同一天不同小时，判断多少小时以前
+                （3）不同天，判断多少天以前
+         */
+        TimeUtils timeUtils = new TimeUtils(currentTime);
+        helper.setText(R.id.tv_comment_publish_time,timeUtils.compareTime(item.getPublishTime()));
+
+        Log.e("tu",""+timeUtils.toString());
 
 
         helper.getView(R.id.iv_comment_like).setOnClickListener(new View.OnClickListener() {

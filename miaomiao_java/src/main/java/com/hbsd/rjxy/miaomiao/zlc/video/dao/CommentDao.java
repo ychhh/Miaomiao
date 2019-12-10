@@ -24,7 +24,7 @@ public interface CommentDao extends JpaRepository<Comment,Integer> {
      * 根据视频的miid分页查询评论
      *
      */
-    @Query(value = "SELECT * FROM comment WHERE miid=? AND costatus=0 limit ?,?",nativeQuery = true)
+    @Query(value = "SELECT * FROM comment WHERE miid=? AND costatus=0 ORDER BY publish_time desc , uid asc limit ?,?",nativeQuery = true)
     List<Comment> findCommentsByMiidAndPage(int miid,int start,int step);
 
 
@@ -33,12 +33,12 @@ public interface CommentDao extends JpaRepository<Comment,Integer> {
      */
     @Modifying
     @Transactional(readOnly = false)
-    @Query(value = "INSERT INTO comment(miid,colike,costatus,uid,cocontent,publishTime) VALUES(?,?,?,?,?,?)",nativeQuery = true)
+    @Query(value = "INSERT INTO comment(miid,colike,costatus,uid,cocontent,publish_time) VALUES(?,?,?,?,?,?)",nativeQuery = true)
     int addComment(int miid,int colike,int costatus,int uid,String cocontent,String publishTime);
 
 
     @Transactional(readOnly = false)
-    @Query(value = "SELECT coid FROM comment WHERE uid=? AND publishTime=?",nativeQuery = true)
+    @Query(value = "SELECT coid FROM comment WHERE uid=? AND publish_time=?",nativeQuery = true)
     int findId(int uid,String publishTime);
 
 

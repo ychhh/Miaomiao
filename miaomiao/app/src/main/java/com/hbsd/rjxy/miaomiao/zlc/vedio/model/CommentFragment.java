@@ -3,6 +3,7 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,14 +22,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
+import com.hbsd.rjxy.miaomiao.entity.SortClass;
 import com.hbsd.rjxy.miaomiao.utils.HideKeyBoard;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.CommentAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +48,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +62,7 @@ import okhttp3.Response;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_COMMENT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_FINDCOMMENTPAGING;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_TIME;
 
 
 /*
@@ -91,12 +101,17 @@ public class CommentFragment extends Fragment {
     EditText etComment;
     @BindView(R.id.iv_publish_comment)
     ImageView ivPublish;
+    @BindView(R.id.rl_comment)
+    SmartRefreshLayout rlComment;
+    @BindView(R.id.iv_loading)
+    ImageView ivLoading;
 
 
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
     private int miid;
     private int currentPage = 1;    //当前页
+    private String currentTime;
 
     private boolean isPublishing = false;
 
@@ -110,6 +125,7 @@ public class CommentFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ivLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -128,11 +144,15 @@ public class CommentFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
+
         initDate();
+
 
 
         initPublishButton();
         initCommentEditText();
+        initRefreshLayout();
+        initImageView();
 
 
         return view;
@@ -140,7 +160,63 @@ public class CommentFragment extends Fragment {
 
     }
 
+    //获取服务器当前时间
     private void initDate() {
+        OkHttpUtils.getInstance().get(URL_GET_TIME, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                currentTime = response.body().string();
+                initData();
+            }
+        });
+
+    }
+
+    private void initImageView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            RequestOptions options = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+            Glide.with(this)
+                    .asGif()
+                    .load(R.drawable.loading)
+                    .apply(options)
+                    .into(ivLoading);
+        }
+    }
+
+    private void initRefreshLayout() {
+        rlComment.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                /*
+                   TODO     下拉刷新，将currentPage恢复为1,获取全部评论并且排序
+                 */
+                currentPage = 1;
+//                OkHttpUtils.getInstance().postJson("", "", new Callback() {
+//                    @Override
+//                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+//
+//                    }
+//                });
+
+
+
+            }
+        });
+
+
+    }
+
+    private void initData() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("miid",miid);
@@ -159,7 +235,10 @@ public class CommentFragment extends Fragment {
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
                     List<Comment> comments = gson.fromJson(response.body().string(), new TypeToken<List<Comment>>(){}.getType());
+                    Collections.sort(comments,new SortClass());
+
                     EventInfo<String,String,Comment> eventInfo = new EventInfo<>();
                     eventInfo.setContentList(comments);
                     eventInfo.setContentString("initCommentData");
@@ -174,6 +253,7 @@ public class CommentFragment extends Fragment {
         if(eventInfo.getContentString().equals("initCommentData")){
 
             commentList = eventInfo.getContentList();
+            ivLoading.setVisibility(View.INVISIBLE);
             initAdapter();
             initRecyclerView();
         }else if("publishCommentFailed".equals(eventInfo.getContentString())){
@@ -299,7 +379,7 @@ public class CommentFragment extends Fragment {
 
     private void initAdapter() {
 
-         commentAdapter = new CommentAdapter(R.layout.rv_comment_detail_layout,commentList,getContext());
+         commentAdapter = new CommentAdapter(R.layout.rv_comment_detail_layout,commentList,getContext(),currentTime);
 
     }
 

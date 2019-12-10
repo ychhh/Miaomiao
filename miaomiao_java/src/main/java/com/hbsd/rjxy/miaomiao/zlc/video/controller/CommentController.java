@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.logging.SimpleFormatter;
 
 @Controller
 public class CommentController {
@@ -131,6 +135,15 @@ public class CommentController {
         }else{
             return "fail";
         }
+    }
+
+    @RequestMapping("/comment/getTime")
+    @ResponseBody
+    public String getTime(HttpServletRequest request,HttpServletResponse response){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(date));
+        return sdf.format(date);
     }
 
 
