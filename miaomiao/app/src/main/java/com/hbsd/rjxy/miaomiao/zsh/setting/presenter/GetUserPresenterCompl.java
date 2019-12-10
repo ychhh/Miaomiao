@@ -25,7 +25,7 @@ import java.net.URL;
 import static android.content.Context.MODE_PRIVATE;
 
 public class GetUserPresenterCompl implements GetUserPresenter {
-
+    User user;
     Activity activity;
     public GetUserPresenterCompl(Activity activity){
         this.activity=activity;
@@ -96,29 +96,29 @@ public class GetUserPresenterCompl implements GetUserPresenter {
                JSONObject response = null;
 
                try {
-                   SharedPreferences sharedPreferences=activity.getSharedPreferences("loginInfo", MODE_PRIVATE);
-                   SharedPreferences.Editor editor = sharedPreferences.edit();
 
                    response = new JSONObject(content);
-                   User user0 = new User();
+                   user= new User();
                    Integer id=response.getInt("uid");
                    String name=response.getString("uName");
                    String intro = response.getString("uIntro");
                    String sex = response.getString("uSex");
-                   user0.setUserName(name);
-                   user0.setUserIntro(intro);
-                   user0.setUserSex(sex);
-                   user0.setUserId(id);
+                   TextView tx_intro=activity.findViewById(R.id.self_sbp);
+                   user.setUserName(name);
+                   user.setUserIntro(intro);
+                   user.setUserSex(sex);
+                   user.setUserId(id);
 
-                   editor.putString("uName",name);
-                   editor.putString("uIntro",intro);
-                   editor.putString("uSex",sex);
-                   editor.commit();
 
-                   /* 顺便把当下的签名改了*/
-                   TextView tx_intro=activity.findViewById(R.id.self_intro);
-                   tx_intro.setText(user0.getUserIntro());
-                  Log.e("获取当前用户信息",user0.getUserName()+user0.getUserIntro());
+
+                   /* 修改ui内容*/
+                  // TextView tx_name=activity.findViewById(R.id.self_name);
+
+
+
+                   tx_intro.setText(intro);
+
+
 
 
 

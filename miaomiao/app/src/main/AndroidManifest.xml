@@ -34,7 +34,6 @@
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,7 +42,6 @@
         <activity android:name=".ljt.login.PhoneLoginActivity">
 
         </activity>
-
         <activity android:name=".ljt.login.ShowServiceActivity"/>
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />

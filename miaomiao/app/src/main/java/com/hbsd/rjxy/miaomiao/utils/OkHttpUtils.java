@@ -38,7 +38,7 @@ public class OkHttpUtils {
     //超时时间
     public static final int TIMEOUT = 1000*60;
 
-    private OkHttpUtils(){
+    public OkHttpUtils(){
         mOkHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)

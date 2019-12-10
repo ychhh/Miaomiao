@@ -1,9 +1,11 @@
 package com.hbsd.rjxy.miaomiao.zsh.setting.view;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,9 @@ import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
@@ -28,8 +30,6 @@ import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class SelfFragment extends Fragment {
@@ -42,10 +42,9 @@ public class SelfFragment extends Fragment {
     private Button btn_setting;
     private Button btn_editF;
     private Button tx_order;
-    private SharedPreferences sharedPreferences;
     private GetUserPresenterCompl getUserPresenterCompl;
-    private User user;
-    private TextView tx_intro;
+    private Integer uid;
+    private  TextView tx_intro;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class SelfFragment extends Fragment {
 
         initDrawerList();
         initUserData();
-
+        Activity activity=this.getActivity();
 
 //        Log.e("获取到用户信息",user.getUserName()+"2019年12月7日");
         menu_listview_r.setAdapter(adapter);
@@ -84,15 +83,54 @@ public class SelfFragment extends Fragment {
         menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
 
 
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String msg = intent.getStringExtra("data");
+                if("refresh".equals(msg)){
 
+                    refresh();
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
 
 
     }
+    public void refresh(){
+        mDrawer_layout = view.findViewById(R.id.drawer_layout);
+        mMenu_layout_right =  view.findViewById(R.id.menu_layout_right);
+        ListView menu_listview_r = mMenu_layout_right.findViewById(R.id.menu_listView_r);
+        btn_setting=view.findViewById(R.id.btn_setting);
+        btn_editF=view.findViewById(R.id.btn_editF);
+        tx_order=view.findViewById(R.id.self_order);
+        tx_intro=view.findViewById(R.id.self_intro);
+
+        initDrawerList();
+        initUserData();
+        Activity activity=this.getActivity();
+
+//        Log.e("获取到用户信息",user.getUserName()+"2019年12月7日");
+        menu_listview_r.setAdapter(adapter);
+        //监听setting按钮
+        initEvent();
+
+
+
+        //监听菜单
+        menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
+
+    }
+
+
     public void initUserData(){
         /*获取uid*/
        // sharedPreferences=this.getActivity().getSharedPreferences("loginInfo", MODE_PRIVATE);
         //String id= (String) sharedPreferences.getString("uid");
-        Integer uid=1;
+        uid=8;
         getUserPresenterCompl=new GetUserPresenterCompl(this.getActivity());
         getUserPresenterCompl.getUser(uid);
 
@@ -143,7 +181,9 @@ public class SelfFragment extends Fragment {
                 }
                 case R.id.btn_editF:{
                     Intent intent=new Intent(getActivity(), EditProfileActivity.class);
+                    intent.putExtra("id",uid);
                     startActivity(intent);
+
                     break;
                 }
                 case R.id.self_order:{
@@ -174,6 +214,8 @@ public class SelfFragment extends Fragment {
             {
                 case 0:
                     Intent intent0=new Intent(getActivity(),ShowCardActivity.class);
+                    Integer uid=8;
+                    intent0.putExtra("uid",uid);
                     startActivity(intent0);
 
                     break;
