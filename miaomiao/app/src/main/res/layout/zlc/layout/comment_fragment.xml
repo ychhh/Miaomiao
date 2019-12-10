@@ -10,11 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <pl.droidsonroids.gif.GifImageView
+            android:src="@drawable/loading"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+            android:layout_height="match_parent" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -22,9 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        <pl.droidsonroids.gif.GifImageView
+            android:src="@drawable/loading"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+            android:layout_height="120dp" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

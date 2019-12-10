@@ -121,7 +121,7 @@ public class CommentController {
             jsonObject = new JSONObject(RequestUtil.getJson(request));
             recordService.addRecord(jsonObject.getInt("coid"),jsonObject.getInt("uid"),jsonObject.getInt("miid"));
             if(commentService.likeComment(jsonObject.getInt("coid")) == 1){
-                return "success";
+                return gson.toJson(recordService.findRecords(jsonObject.getInt("miid"),jsonObject.getInt("uid")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -145,7 +145,7 @@ public class CommentController {
             JSONObject jsonObject = new JSONObject(RequestUtil.getJson(request));
             recordService.removeRecord(jsonObject.getInt("coid"),jsonObject.getInt("uid"));
             if(commentService.dislikeComment(jsonObject.getInt("coid")) == 1){
-                return "success";
+                return gson.toJson(recordService.findRecords(jsonObject.getInt("miid"),jsonObject.getInt("uid")));
             }
         } catch (JSONException e) {
             e.printStackTrace();

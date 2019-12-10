@@ -382,6 +382,7 @@ public class CommentFragment extends Fragment {
                             HideKeyBoard.hideSoftKeyboard(getContext(),views);
                             Log.e("发送成功",""+comment.toString());
                             commentList.add(0,comment);
+                            Log.e("commentList",""+commentList.toString());
                             etComment.setText("");
                             etComment.clearFocus();
                             commentAdapter.notifyDataSetChanged();
