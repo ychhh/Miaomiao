@@ -2,23 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="993c7b84-8fb5-4a2a-a58c-eb3bb248bbf2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/SortClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/TimeUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/drawable/loading.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/RecordLikes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/RecordLikes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/RecordDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/RecordService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CommentFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/model/CommentFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/comment_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/comment_fragment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/rv_comment_detail_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/rv_comment_detail_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentViewHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentViewHolder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/constant/VideoConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/constant/VideoConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/utils/TimeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/utils/TimeUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/constant/VideoConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/constant/VideoConstant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/utils/TimeUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/utils/TimeUtils.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.class" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,6 +48,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -65,6 +70,7 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="ProjectId" id="1UmOKUwUeq5LO5nrKViDzGZ1yjM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -151,12 +157,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6800a8d7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b3a520ff" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6800a8d7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5e1c19de" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b3a520ff" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@dbcdbb1" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -169,7 +175,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="635dadab-9047-4c67-84fa-b08a167c81d8" name="Default Changelist" comment="" />
+      <changelist id="993c7b84-8fb5-4a2a-a58c-eb3bb248bbf2" name="Default Changelist" comment="" />
       <created>1574929783467</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -187,6 +193,7 @@
       <workItem from="1575682467789" duration="2389000" />
       <workItem from="1575688349825" duration="7971000" />
       <workItem from="1575871200677" duration="1148000" />
+      <workItem from="1575958275645" duration="7388000" />
     </task>
     <servers />
   </component>

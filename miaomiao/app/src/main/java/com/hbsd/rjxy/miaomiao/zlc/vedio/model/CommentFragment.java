@@ -30,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
+import com.hbsd.rjxy.miaomiao.entity.RecordLikes;
 import com.hbsd.rjxy.miaomiao.entity.SortClass;
 import com.hbsd.rjxy.miaomiao.utils.HideKeyBoard;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
@@ -62,6 +63,7 @@ import okhttp3.Response;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_COMMENT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_FINDCOMMENTPAGING;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_RECORD;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_TIME;
 
 
@@ -109,9 +111,11 @@ public class CommentFragment extends Fragment {
 
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
+    private List<RecordLikes> recordLikes;
     private int miid;
     private int currentPage = 1;    //当前页
     private String currentTime;
+    private String currentId;
 
     private boolean isPublishing = false;
 
@@ -147,8 +151,6 @@ public class CommentFragment extends Fragment {
 
         initDate();
 
-
-
         initPublishButton();
         initCommentEditText();
         initRefreshLayout();
@@ -171,9 +173,53 @@ public class CommentFragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 currentTime = response.body().string();
+                //判断用户是否已经登录
+                //如果没有登录的话就不执行了
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                String uid = sp.getString("uid","1");
+                currentId = uid;
+                if("1".equals(uid)){
+                    //没有登录的
+
+                    //这个以后要放到下面
+                    initRecord(uid);
+                }else{
+
+                }
+
+
+
+            }
+        });
+
+    }
+
+    private void initRecord(String uid) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("miid",miid);
+            jsonObject.put("uid",Integer.parseInt(uid));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.getInstance().postJson(URL_GET_RECORD, jsonObject.toString(), new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                recordLikes = gson.fromJson(response.body().string(),new TypeToken<List<RecordLikes>>(){}.getType());
                 initData();
             }
         });
+
+
+
+
+
+
 
     }
 
@@ -251,7 +297,6 @@ public class CommentFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receiveComments(EventInfo eventInfo){
         if(eventInfo.getContentString().equals("initCommentData")){
-
             commentList = eventInfo.getContentList();
             ivLoading.setVisibility(View.INVISIBLE);
             initAdapter();
@@ -379,7 +424,7 @@ public class CommentFragment extends Fragment {
 
     private void initAdapter() {
 
-         commentAdapter = new CommentAdapter(R.layout.rv_comment_detail_layout,commentList,getContext(),currentTime);
+         commentAdapter = new CommentAdapter(R.layout.rv_comment_detail_layout,commentList,getContext(),currentTime,recordLikes,currentId,miid);
 
     }
 

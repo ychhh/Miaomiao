@@ -56,6 +56,14 @@ public class Constant {
 
     public static final String URL_GET_TIME = "http://10.7.87.224:8080/comment/getTime";//获取服务器时间
 
+    public static final String URL_LIKE_COMMENT = "http://10.7.87.224:8080/comment/like";   //点赞评论
+    public static final String URL_DISLIKE_COMMENT = "http://10.7.87.224:8080/comment/dislike";//取消点赞评论
+    public static final String URL_GET_RECORD = "http://10.7.87.224:8080/comment/getRecord";//获取评论记录
+
+
+
+
+
 
 
 
