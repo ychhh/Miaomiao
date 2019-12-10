@@ -38,6 +38,7 @@ import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.CommentAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -186,9 +187,6 @@ public class CommentFragment extends Fragment {
                 }else{
 
                 }
-
-
-
             }
         });
 
@@ -235,6 +233,9 @@ public class CommentFragment extends Fragment {
     }
 
     private void initRefreshLayout() {
+
+        rlComment.setReboundDuration(500);
+
         rlComment.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -242,6 +243,7 @@ public class CommentFragment extends Fragment {
                    TODO     下拉刷新，将currentPage恢复为1,获取全部评论并且排序
                  */
                 currentPage = 1;
+                initDate();
 //                OkHttpUtils.getInstance().postJson("", "", new Callback() {
 //                    @Override
 //                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -253,8 +255,48 @@ public class CommentFragment extends Fragment {
 //
 //                    }
 //                });
+            }
+        });
+
+        rlComment.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                currentPage += 1;
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("miid",miid);
+                    jsonObject.put("page",currentPage);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                OkHttpUtils.getInstance().postJson(URL_FINDCOMMENTPAGING, jsonObject.toString(), new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        List<Comment> comments = gson.fromJson(response.body().string(),new TypeToken<List<Comment>>(){}.getType());
+                        if(comments.size() == 0){
+                            EventInfo eventInfo = new EventInfo();
+                            eventInfo.setContentString("nomoreComment");
+                            EventBus.getDefault().post(eventInfo);
+                        }else{
+                            EventInfo<String,String,Comment> eventInfo = new EventInfo<>();
+                            eventInfo.setContentString("nextPage");
+                            eventInfo.setContentList(comments);
+                            EventBus.getDefault().post(eventInfo);
+                        }
 
 
+
+                    }
+                });
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
             }
         });
@@ -301,6 +343,7 @@ public class CommentFragment extends Fragment {
             ivLoading.setVisibility(View.INVISIBLE);
             initAdapter();
             initRecyclerView();
+            rlComment.finishRefresh(2000);
         }else if("publishCommentFailed".equals(eventInfo.getContentString())){
             commentList.remove(0);
             commentAdapter.notifyDataSetChanged();
@@ -313,6 +356,16 @@ public class CommentFragment extends Fragment {
             commentAdapter.notifyDataSetChanged();
             //解锁
             isPublishing = false;
+        }else if("nextPage".equals(eventInfo.getContentString())){
+            for(Object c : eventInfo.getContentList()){
+                Comment comment = (Comment)c;
+                commentList.add(comment);
+            }
+            commentAdapter.notifyDataSetChanged();
+            rlComment.finishLoadMore(2000);
+        }else if("nomoreComment".equals(eventInfo.getContentString())){
+            rlComment.finishLoadMore(2000);
+            Toast.makeText(getContext(),"到底啦",Toast.LENGTH_SHORT).show();
         }
 
     }

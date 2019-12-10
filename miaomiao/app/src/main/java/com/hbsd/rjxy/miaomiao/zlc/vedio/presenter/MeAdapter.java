@@ -36,6 +36,9 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         helper.setText(R.id.tv_video_fish,""+item.getMhot()).setText(R.id.tv_comment_amount,""+item.getMcomment_count());
 
 
+        helper.setText(R.id.tv_videocontent,item.getMcontent());
+
+
 
         int cid = item.getCid();
         //通过cid请求头像
