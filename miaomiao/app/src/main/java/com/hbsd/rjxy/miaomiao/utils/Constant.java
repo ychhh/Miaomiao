@@ -23,7 +23,7 @@ public class Constant {
     public static String LOGIN_URL="http://10.7.88.158:8080/login/";//登录的URL
     public static String GET_USER_URL="http://10.7.88.102:8080/Self/";//操作当前登录的用户信息
 
-   // public static String LOGIN_URL="http://10.7.90.209:8080/login/";//登录的URL
+
 
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
