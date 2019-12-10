@@ -66,6 +66,9 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
     private int type = -1;  //0：视频，1：图片，2：纯文字
 
+    private int miid;
+    private int currentItem;
+
 
 
 
@@ -75,11 +78,22 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.catinfo_comment_layout);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle.getSerializable("from").equals("commentPic")){
+            currentItem = 1;
+        }else{
+            currentItem = 0;
+        }
+        Log.e("currentItem",""+currentItem);
+        miid = (int) bundle.getSerializable("miid");
+
         ButterKnife.bind(this);
         fragments = new ArrayList<>();
         fragments.add(new CatinfoFragment());
-        fragments.add(new CommentFragment());
+        fragments.add(new CommentFragment(miid));
         viewPager.setAdapter(new CustomPageAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        viewPager.setCurrentItem(currentItem);
 
         SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
 
@@ -339,7 +353,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         popupWindow.showAtLocation(v, Gravity.CENTER,0,20);
     }
 
-    //  将物理像素装换成真实像素
+    //  将物理像素换成真实像素
     private int dip2px(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

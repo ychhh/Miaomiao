@@ -1,18 +1,13 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "comment")
 public class Comment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int coid;
     private int miid;
     private int colike;
-    private int costatus;   //0正常，1删除,2is_banned
+    private int costatus;
     private int uid;
     private String cocontent;
     private String publishTime;
@@ -85,4 +80,6 @@ public class Comment {
                 ", publishTime='" + publishTime + '\'' +
                 '}';
     }
+
+
 }
