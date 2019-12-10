@@ -28,5 +28,47 @@ public class SelfService {
     public void updateUserNameById(String name,Integer uid){
         selfDao.updateUserNameById(name,uid);
     }
+    /**
+     * 根据uid修改用户性别
+     * @Param sex
+     * @Param uid
+     * */
+    @Transactional
+    public void updateUserSexById(String sex,Integer uid){
+        selfDao.updateUserSexById(sex,uid);
+    }
+    /**
+     * 根据uid修改简介
+     * @Param intro
+     * @Param uid
+     * */
+    @Transactional
+    public void updateUserIntroById(String intro,Integer uid){
+        selfDao.updateUserIntroById(intro,uid);
+    }
+    /**
+     * 根据uid改变头像
+     *
+     */
+
+
+
+    /**
+     * 根据uid更改用户信息（姓名、性别、简介）
+     * @param username
+     * @param sex
+     * @param uintro
+     * @param uid
+     * @return
+     */
+    @Transactional
+    public int updateUserMsgById(String username,String sex,String uintro,Integer uid){
+        return selfDao.updateUserMsgById(username,sex,uintro,uid);
+    }
+
+
+    public int updatePwdById(String pwd,Integer id){
+        return selfDao.updateUserPwdById(pwd,id);
+    }
 
 }

@@ -18,8 +18,9 @@ public class Constant {
 
     public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
 
-
     public static String LOGIN_URL="http://10.7.88.102:8080/login/";//登录的URL
+
+    public static String GET_USER_URL="http://10.7.88.250:8080/Self/";//操作当前登录的用户信息
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
