@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
+import com.hbsd.rjxy.miaomiao.zlc.utils.TimeUtils;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.CommentService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +63,7 @@ public class CommentController {
     /**
      * 添加评论，传一个comment对象
      *
-     * 成功返回success，失败返回fail
+     * 成功返回comment对象，失败返回。。
      *
      * @param request
      * @param response
@@ -72,10 +73,9 @@ public class CommentController {
     @ResponseBody
     public String addComment(HttpServletRequest request, HttpServletResponse response){
         Comment comment = gson.fromJson(RequestUtil.getJson(request), Comment.class);
-        if(commentService.addComment(comment) == 1){
-            return "success";
-        }
-        return "fail";
+        comment.setPublishTime(TimeUtils.getTime());
+        comment.setCoid((commentService.addComment(comment)));
+        return gson.toJson(comment);
     }
 
 
@@ -95,6 +95,42 @@ public class CommentController {
             return "success";
         }
         return "fail";
+    }
+
+
+    /**
+     * 点赞
+     * @param request
+     * @param response
+     * @return
+     */
+
+    @RequestMapping("/comment/like")
+    @ResponseBody
+    public String likeComment(HttpServletRequest request,HttpServletResponse response){
+        Comment comment = gson.fromJson(RequestUtil.getJson(request),Comment.class);
+        if(commentService.likeComment(comment) == 1){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
+
+    /**
+     * 取消点赞
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/comment/dislike")
+    @ResponseBody
+    public String dislikeComment(HttpServletRequest request,HttpServletResponse response){
+        Comment comment = gson.fromJson(RequestUtil.getJson(request),Comment.class);
+        if(commentService.dislikeComment(comment) == 1){
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 
 

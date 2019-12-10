@@ -47,7 +47,8 @@ public class CommentService {
     @Transactional(rollbackFor = Exception.class)
     public int addComment(Comment comment){
         videoDao.addVideoCommentAccount(comment.getMiid());
-        return commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent());
+        commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent(),comment.getPublishTime());
+        return commentDao.findId(comment.getUid(),comment.getPublishTime());
     }
 
 
@@ -60,6 +61,31 @@ public class CommentService {
     public int deleteCommentByCoid(Comment comment){
         return commentDao.deleteCommentByCoid(comment.getCoid());
     }
+
+
+    /**
+     * 点赞评论
+     * @param comment
+     * @return
+     */
+    public int likeComment(Comment comment){
+        return commentDao.likeComment(comment.getCoid());
+    }
+
+
+    /**
+     * 取消点赞
+     * @param comment
+     * @return
+     */
+    public int dislikeComment(Comment comment){
+        return commentDao.dislikeComment(comment.getCoid());
+    }
+
+
+
+
+
 
 
 

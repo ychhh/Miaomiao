@@ -31,6 +31,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="false" />
@@ -151,6 +152,7 @@
       </file>
     </leaf>
   </component>
+
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -161,6 +163,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -370,11 +373,13 @@
       <pane id="Scope" />
     </panes>
   </component>
+
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
+
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -400,6 +405,7 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
+
     <option name="ruleStates">
       <list>
         <RuleState>
@@ -410,11 +416,13 @@
         </RuleState>
       </list>
     </option>
+
     <option name="contentProportion" value="0.086330935" />
   </component>
   <component name="RunManager">
     <configuration name="MiaomiaoApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="miaomiao_java" />
+
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.hbsd.rjxy.miaomiao.*" />
@@ -428,6 +436,7 @@
     </configuration>
     <recent_temporary>
       <list>
+
         <item itemvalue="Spring Boot.MiaomiaoApplication (1)" />
       </list>
     </recent_temporary>
@@ -442,10 +451,12 @@
       </serviceView>
     </option>
   </component>
+
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
+
     <task active="true" id="Default" summary="Default task">
       <changelist id="635dadab-9047-4c67-84fa-b08a167c81d8" name="Default Changelist" comment="" />
       <created>1574929783467</created>
@@ -832,4 +843,11 @@
       </state>
     </states>
   </component>
+
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="21" />
+    <option name="y" value="65" />
+    <option name="width" value="1180" />
+    <option name="height" value="610" />
+
 </project>

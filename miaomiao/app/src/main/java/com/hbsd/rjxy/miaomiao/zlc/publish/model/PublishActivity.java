@@ -618,7 +618,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    //  将物理像素装换成真实像素
+    //  将物理像素换成真实像素
     private int dip2px(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

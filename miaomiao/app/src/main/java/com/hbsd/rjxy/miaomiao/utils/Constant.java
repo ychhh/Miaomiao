@@ -50,6 +50,9 @@ public class Constant {
     public static final String UNFOLLOW = "http://10.7.87.229:8081/sub/unfollow";
 
 
+    public static final String PUBLISH_URL_COMMENT = "http://10.7.87.224:8080/comment/addComment";//发布评论
+
+    public static final String URL_FINDCOMMENTPAGING = "http://10.7.87.224:8080/comment/findCommentsByMiidAndPage";//分页查询当前视频的评论
 
 
 
