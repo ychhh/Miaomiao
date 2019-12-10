@@ -53,7 +53,7 @@
 
                     android:text="姓名"/>
                 <TextView
-                    android:id="@+id/self_reName"
+                    android:id="@+id/self_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
@@ -71,7 +71,7 @@
 
                     android:text="miao"/>
                 <TextView
-                    android:id="@+id/self_userId"
+                    android:id="@+id/self_id"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
@@ -91,7 +91,7 @@
 
                     android:text="简介"/>
                 <TextView
-                    android:id="@+id/self_reSbp"
+                    android:id="@+id/self_intro"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
@@ -109,7 +109,7 @@
 
                     android:text="性别"/>
                 <TextView
-                    android:id="@+id/self_reSex"
+                    android:id="@+id/self_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"

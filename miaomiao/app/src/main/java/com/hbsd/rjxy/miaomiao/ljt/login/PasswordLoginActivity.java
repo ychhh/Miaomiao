@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -137,11 +138,17 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
             intent.setClass(PasswordLoginActivity.this, MainActivity.class);
             startActivity(intent); //页面跳转
         } else if (result.equals("error")) {
+            Looper.prepare();
             Toast.makeText(this, "密码错误！", Toast.LENGTH_SHORT).show();
+            Looper.loop();
         } else if (result.equals("false")) {
+            Looper.prepare();
             showPopupWindow(result);
+            Looper.loop();
         }else if (result.equals("null")){
+            Looper.prepare();
             showPopupWindow(result);
+            Looper.loop();
         }
     }
 

@@ -15,6 +15,7 @@ public class Comment {
     private int costatus;   //0正常，1删除,2is_banned
     private int uid;
     private String cocontent;
+    private String publishTime;
 
     public int getCoid() {
         return coid;
@@ -64,6 +65,14 @@ public class Comment {
         this.cocontent = cocontent;
     }
 
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -73,6 +82,7 @@ public class Comment {
                 ", costatus=" + costatus +
                 ", uid=" + uid +
                 ", cocontent='" + cocontent + '\'' +
+                ", publishTime='" + publishTime + '\'' +
                 '}';
     }
 }

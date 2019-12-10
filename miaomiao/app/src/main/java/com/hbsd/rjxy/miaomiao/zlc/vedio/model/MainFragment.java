@@ -215,42 +215,38 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     //订阅事件
     @Subscribe
     public void getVideoList(EventInfo<String,String,Multi_info> videoEvent){
-        if(videoEvent.isAvailable()){
-            /**
-             *    如果是有效的
-             *      如果当前视频列表已经存在数据
-             */
-            if(this.videoList.size() != 0){
-                for(Multi_info multi_info : videoEvent.getContentList()){
-                    this.videoList.add(multi_info);
+        if(videoEvent.getContentString().equals("videoInit")){
+            if(videoEvent.isAvailable()){
+                /**
+                 *    如果是有效的
+                 *      如果当前视频列表已经存在数据
+                 */
+                if(this.videoList.size() != 0){
+                    for(Multi_info multi_info : videoEvent.getContentList()){
+                        this.videoList.add(multi_info);
+                    }
+                }else{
+                    this.videoList = videoEvent.getContentList();
                 }
+                //如果的适配器还未初始化，初始化适配器和recyclerView
+                if(adapter == null){
+                    //初始化Adapter
+                    adapter = initAdapter();
+                    //初始化RecyclerView
+                    recyclerView = initRecyclerView();
+                }
+                //通知adapter内容改变
+                adapter.loadMoreComplete();
             }else{
-                this.videoList = videoEvent.getContentList();
-            }
-            //如果的适配器还未初始化，初始化适配器和recyclerView
-            if(adapter == null){
-                //初始化Adapter
-                adapter = initAdapter();
-                //初始化RecyclerView
-                recyclerView = initRecyclerView();
-            }
-            //通知adapter内容改变
-            adapter.loadMoreComplete();
-        }else{
-            //如果返回失败，那么根据map判断状态
-            if("complete".equals(videoEvent.getContentMap().get("status"))){
-                RECOMMEND_PAGE_DEFAULT -= 1;
-                Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
-            }
+                //如果返回失败，那么根据map判断状态
+                if("complete".equals(videoEvent.getContentMap().get("status"))){
+                    RECOMMEND_PAGE_DEFAULT -= 1;
+                    Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                }
 
 
+            }
         }
-
-
-
-
-
-
 
         Log.e("loadMoreComplete","loadMoreComplete");
         //没有移除粘性事件

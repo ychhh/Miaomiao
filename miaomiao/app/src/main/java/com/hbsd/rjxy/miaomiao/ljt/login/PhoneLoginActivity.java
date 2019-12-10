@@ -178,12 +178,6 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
         return matcher.matches();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SMSSDK.unregisterEventHandler(eh);
-    }
-
     /**
      *
      * @param result
@@ -229,5 +223,11 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
             btnGetPhoneCode.setClickable(true);
             btnGetPhoneCode.setText("获取验证码");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eh);
     }
 }

@@ -37,6 +37,12 @@ public class CommentService {
     }
 
 
+
+    public List<Comment> findCommentsByMiidAndPageForLogin(int miid,int page){
+        return commentDao.findCommentsByMiidAndPage(miid,(page-1)*COMMENT_PAGING_STEP,COMMENT_PAGING_STEP);
+    }
+
+
     /**
      * 添加评论，修改视频的评论数量(事务控制)
      * Multi_info 视频对象
@@ -47,7 +53,8 @@ public class CommentService {
     @Transactional(rollbackFor = Exception.class)
     public int addComment(Comment comment){
         videoDao.addVideoCommentAccount(comment.getMiid());
-        return commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent());
+        commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent(),comment.getPublishTime());
+        return commentDao.findId(comment.getUid(),comment.getPublishTime());
     }
 
 
@@ -60,6 +67,31 @@ public class CommentService {
     public int deleteCommentByCoid(Comment comment){
         return commentDao.deleteCommentByCoid(comment.getCoid());
     }
+
+
+    /**
+     * 点赞评论
+     * @param coid
+     * @return
+     */
+    public int likeComment(int coid){
+        return commentDao.likeComment(coid);
+    }
+
+
+    /**
+     * 取消点赞
+     * @param coid
+     * @return
+     */
+    public int dislikeComment(int coid){
+        return commentDao.dislikeComment(coid);
+    }
+
+
+
+
+
 
 
 
