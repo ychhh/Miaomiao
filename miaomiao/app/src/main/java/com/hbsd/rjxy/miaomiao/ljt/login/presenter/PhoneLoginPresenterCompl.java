@@ -1,21 +1,19 @@
 package com.hbsd.rjxy.miaomiao.ljt.login.presenter;
 
-import android.os.AsyncTask;
-import android.sax.EndElementListener;
-
 import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EncodeUtil;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
 
@@ -27,60 +25,36 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
 
     @Override
     public void doLogin(String tel) {
-        LoginTask task=new LoginTask();
-        task.execute(new Object[]{tel});
-    }
-
-    private class LoginTask extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            //创建URL对象
-            try {
-                URL url = new URL(Constant.LOGIN_URL+"phone");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                OutputStream outputStream = connection.getOutputStream();
-
-                //发送JSON格式的字符串到服务器
-                JSONObject object=new JSONObject();
-                object.put("tel", EncodeUtil.encodeToString(objects[0].toString()));
-                outputStream.write(object.toString().getBytes());
-                outputStream.close();
-
-                InputStream is=connection.getInputStream();
-                byte []buffer=new byte[255];
-                int len=is.read(buffer);
-                String content=new String(buffer,0,len);
-                is.close();
-                return content;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+        JSONObject object=new JSONObject();
+        //发送JSON格式的字符串到服务器
+        try {
+            object.put("tel", EncodeUtil.encodeToString(tel));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Callback callback=new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
             }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(Object o) {
-            //todo 存储是否有密码，以及zll 的东西，放在constant里
-            super.onPostExecute(o);
-            if(o!=null){
-                String content=o.toString();
-                JSONObject response= null;
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String content=response.body().string();
+                JSONObject jsonObject= null;
                 try {
-                    response = new JSONObject(content);
-                    String result=response.getString("result");//1.密码正确(附带返回用户id)
+                    jsonObject = new JSONObject(content);
+                    String result=jsonObject.getString("result");//1.密码正确(附带返回用户id)
                     if (result.equals("true")){
-                        iPhoneLoginView.onLoginResult(result,response.getInt("uid"),response.getString("hasPasswod"));
+                        iPhoneLoginView.onLoginResult(result,jsonObject.getInt("uid"),jsonObject.getString("hasPasswod"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }
+        };
+        OkHttpUtils.getInstance().postJson(Constant.LOGIN_URL+"phone",object.toString(),callback);
+
     }
+
 }

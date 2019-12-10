@@ -6,6 +6,7 @@
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/rl_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,6 +27,13 @@
             android:layout_height="match_parent"></com.scwang.smartrefresh.layout.footer.ClassicsFooter>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
     <TextView
         android:layout_marginBottom="40dp"

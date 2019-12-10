@@ -35,7 +35,7 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
      * @param step 每页显示的数量
      * @return
      */
-    @Query(value = "SELECT * FROM multi_info limit ?,?",nativeQuery = true)
+    @Query(value = "SELECT * FROM multi_info where type=0 limit ?,?",nativeQuery = true)
     List<Multi_info> findVideoPaging(int start,int step);
 
 

@@ -32,12 +32,21 @@ public class SelfControl {
         String param=null;
         try {
             is = request.getInputStream();
-            byte[]buffer=new byte[255];
+            byte[]buffer=new byte[1024];
             int len=is.read(buffer);
             param=new String(buffer,0,len);
             JSONObject object=new JSONObject(param);
             JSONObject res=new JSONObject();
-
+            String username=object.getString("newName");
+            String sex=object.getString("newSex");
+            String uintro=object.getString("newIntro");
+            Integer uid=object.getInt("uid");
+            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid);
+            if (rtn>0){
+                res.put("edited","ok");
+            }else{
+                res.put("edited","error");
+            }
             response.getWriter().append(res.toString());
         } catch (JSONException e) {
             e.printStackTrace();

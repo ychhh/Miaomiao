@@ -51,7 +51,7 @@
             android:layout_marginTop="15dp"
             android:layout_gravity="right"
             android:text="一天前"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content" />
 
 

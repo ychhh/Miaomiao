@@ -35,10 +35,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity">
-
-
-
+        <activity android:name=".ljt.login.PhoneLoginActivity"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ljt.login.PhoneLoginActivity">
 
