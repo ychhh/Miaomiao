@@ -18,13 +18,8 @@ public class Constant {
 
     public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
 
-
-<<<<<<< HEAD
     public static String LOGIN_URL="http://10.7.88.158:8080/login/";//登录的URL
     public static String GET_USER_URL="http://10.7.88.250:8080/Self/";//操作当前登录的用户信息
-=======
-    public static String LOGIN_URL="http://10.7.90.209:8080/login/";//登录的URL
->>>>>>> b8033ea469b0dda8f5e6f12b456755d7f1547d79
 
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
@@ -50,6 +45,9 @@ public class Constant {
 
     public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8080/publish/getToken";//发布获取token
     public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8080/publish/publish";//发布
+    public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
+    public static final String FIND_SUB_CAT = "http://10.7.87.229:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
+    public static final String UNFOLLOW = "http://10.7.87.229:8081/sub/unfollow";
 
 
 

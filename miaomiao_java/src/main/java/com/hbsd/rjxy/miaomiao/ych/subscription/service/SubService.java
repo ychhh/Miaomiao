@@ -16,6 +16,9 @@ public class SubService {
         return subDao.findAll();
     }
     public List<Subscription_record> findAllByUid(int uid){
+        for (Subscription_record record:subDao.findAllByUid(uid)){
+            System.out.println("1"+record.toString());
+        }
         return subDao.findAllByUid(uid);
     }
     public List<Subscription_record> findAllByCid(int cid){
