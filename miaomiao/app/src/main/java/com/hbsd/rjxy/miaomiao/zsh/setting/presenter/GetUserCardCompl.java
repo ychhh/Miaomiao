@@ -23,7 +23,7 @@ import java.net.URL;
 import static android.content.Context.MODE_PRIVATE;
 
 public class GetUserCardCompl implements GetUserCardPresenter {
-
+        User user;
         Activity activity;
     public GetUserCardCompl(Activity activity){
             this.activity=activity;
@@ -32,6 +32,7 @@ public class GetUserCardCompl implements GetUserCardPresenter {
 
     @Override
     public void getUserCard(Integer uid) {
+
         GetUserTask task=new GetUserTask();
         task.execute(new Object[]{uid});
     }
@@ -94,34 +95,29 @@ public class GetUserCardCompl implements GetUserCardPresenter {
                     JSONObject response = null;
 
                     try {
-                        SharedPreferences sharedPreferences=activity.getSharedPreferences("loginInfo", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
                         response = new JSONObject(content);
-                        User user0 = new User();
+
                         Integer id=response.getInt("uid");
                         String name=response.getString("uName");
                         String intro = response.getString("uIntro");
                         String sex = response.getString("uSex");
-                        user0.setUserName(name);
-                        user0.setUserIntro(intro);
-                        user0.setUserSex(sex);
-                        user0.setUserId(id);
 
-                        editor.putString("uName",name);
-                        editor.putString("uIntro",intro);
-                        editor.putString("uSex",sex);
-                        editor.commit();
 
-                        /* 修改ui内容*/
 
-                        TextView tx_reName=activity.findViewById(R.id.self_reName);
-                        TextView tx_reSbp=activity.findViewById(R.id.self_reSbp);
-                        TextView tx_reSex=activity.findViewById(R.id.self_reSex);
+
+
+                        /* set资料信息*/
+                        TextView tx_reName=activity.findViewById(R.id.self_name);
                         TextView tx_intro=activity.findViewById(R.id.self_intro);
-                        tx_intro.setText(user0.getUserIntro());
-                        tx_reName.setText(user0.getUserName());
-                        Log.e("获取当前用户信息",user0.getUserName()+user0.getUserIntro());
+                        TextView tx_id=activity.findViewById(R.id.self_id);
+                        TextView tx_sex=activity.findViewById(R.id.self_sex);
+                        tx_intro.setText(intro);
+                        tx_reName.setText(name);
+                        tx_id.setText(id.toString());
+                        tx_sex.setText(sex);
+                        //Log.e("获取当前用户信息",user0.getUserName()+user0.getUserIntro());
 
 
 
