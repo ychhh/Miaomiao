@@ -51,8 +51,8 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
 
     @Modifying
     @Transactional(readOnly = false)
-    @Query(value = "INSERT INTO multi_info(type,cid,uid,mpath,mupload_time,mcontent,mvisited,mstatus,mcomment_count,mformat,mhot,mcover,mrecommended,mtag)" +
-            " VALUES(?,?,?,?,?,?,0,0,0,?,0,?,0.1,1)",nativeQuery =true)
+    @Query(value = "INSERT INTO multi_info(type,cid,uid,mpath,mupload_time,mcontent,mvisited,mstatus,mcomment_count,mformat,mhot,maddress,mcover,mrecommended,mtag)" +
+            " VALUES(?,?,?,?,?,?,0,0,0,?,0,1,?,0.1,1)",nativeQuery =true)
     int publishMulti(int type, int cid, int uid, String mpath, String mupload_time,String mcontent,String mformat,String cover);
 
 
