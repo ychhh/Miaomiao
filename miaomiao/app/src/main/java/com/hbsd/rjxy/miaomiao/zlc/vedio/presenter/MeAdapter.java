@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,20 +17,41 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> implements View.OnClickListener {
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
+
+public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implements View.OnClickListener {
 
     private Context context;
+    private List<Subscription_record> subscriptionRecords;
+    Gson gson = new Gson();
 
-    public MeAdapter(int layoutResId, @Nullable List data,Context context) {
+    public MeAdapter(int layoutResId, @Nullable List data, Context context, List<Subscription_record> subscriptionRecords) {
         super(layoutResId, data);
         this.context = context;
+        if (subscriptionRecords != null) {
+            this.subscriptionRecords = subscriptionRecords;
+        }
     }
 
 
@@ -37,14 +59,25 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
     protected void convert(final MeViewHolder helper, Multi_info item) {
 
         //设置视频小鱼干数量  评论数量
-        helper.setText(R.id.tv_video_fish,""+item.getMhot()).setText(R.id.tv_comment_amount,""+item.getMcomment_count());
+        helper.setText(R.id.tv_video_fish, "" + item.getMhot()).setText(R.id.tv_comment_amount, "" + item.getMcomment_count());
 
 
-        helper.setText(R.id.tv_videocontent,item.getMcontent());
+        helper.setText(R.id.tv_videocontent, item.getMcontent());
 
-        helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (subscriptionRecords != null) {
+            int flag = 0;
+            for (Subscription_record subscriptionRecord : subscriptionRecords) {
+                if (subscriptionRecord.getCid() == item.getCid()) {
+                    helper.getView(R.id.iv_subscribe_plus).setVisibility(View.INVISIBLE);
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                helper.getView(R.id.iv_subscribe_plus).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
                 /*
                     TODO:   （1）先判断是否登录了，没登录，去登陆！
@@ -55,38 +88,60 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
 
                  */
 
-                ObjectAnimator animator = ObjectAnimator.ofFloat(v,"rotation",0f,360f);
-                animator.setDuration(1000);
-                animator.start();
-                ObjectAnimator animator1 = ObjectAnimator.ofFloat(v,"scaleX",1f,0f);
-                animator1.setDuration(1500);
-                animator1.start();
-                ObjectAnimator animator2 = ObjectAnimator.ofFloat(v,"scaleY",1f,0f);
-                animator2.setDuration(1500);
-                animator2.start();
-                animator2.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        v.setVisibility(View.INVISIBLE);
-                        ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success),"alpha",0f,1f,0f);
-                        animator3.setDuration(1000);
-                        animator3.start();
-                        helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
-                        animator3.addListener(new AnimatorListenerAdapter() {
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
+                        animator.setDuration(1000);
+                        animator.start();
+                        ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
+                        animator1.setDuration(1500);
+                        animator1.start();
+                        ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
+                        animator2.setDuration(1500);
+                        animator2.start();
+                        animator2.addListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
                                 super.onAnimationEnd(animation);
-                                helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                                v.setVisibility(View.INVISIBLE);
+                                ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
+                                animator3.setDuration(1000);
+                                animator3.start();
+                                helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
+                                animator3.addListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                                    }
+                                });
+
+                            }
+                        });
+                        SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                        String uid = sp.getString("uid", "1");
+                        Map<String, String> map = new HashMap<>();
+                        map.put("uid", uid);
+                        map.put("cid", item.getCid() + "");
+                        OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                subscriptionRecords =
+                                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                                Log.e("updated SubList",""+subscriptionRecords.toString());
+                                //我要更新这个subscriptionRecords
                             }
                         });
 
+
                     }
                 });
-
-
             }
-        });
+
+        }
 
 
         int cid = item.getCid();
@@ -94,7 +149,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         helper.getView(R.id.iv_cathead).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(createIntent(item,0));
+                context.startActivity(createIntent(item, 0));
             }
         });
 
@@ -105,9 +160,9 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
                 //点击小鱼干，发送请求  判断是否登录过
 
                 //判断已经登陆过
-                item.setMhot(item.getMhot()+1);
-                helper.setText(R.id.tv_video_fish,""+item.getMhot());
-                new FeedPresenter(context,item).execute();
+                item.setMhot(item.getMhot() + 1);
+                helper.setText(R.id.tv_video_fish, "" + item.getMhot());
+                new FeedPresenter(context, item).execute();
             }
         });
 
@@ -118,15 +173,15 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         helper.getView(R.id.iv_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(createIntent(item,1));
+                context.startActivity(createIntent(item, 1));
             }
         });
 
         //设置评论数量
-        helper.setText(R.id.tv_comment_amount,item.getMcomment_count()+"");
+        helper.setText(R.id.tv_comment_amount, item.getMcomment_count() + "");
 
 
-        helper.gsyVideoPlayer.setUpLazy(item.getMpath(),true,null,null,"title");
+        helper.gsyVideoPlayer.setUpLazy(item.getMpath(), true, null, null, "title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //返回摁钮不可见
@@ -159,15 +214,15 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
     /*
         TODO    type传0是点击头像，1点击评论图片
      */
-    private Intent createIntent(Multi_info item , int type) {
-        Intent intent = new Intent(context,InfoAndCommentActivity.class);
+    private Intent createIntent(Multi_info item, int type) {
+        Intent intent = new Intent(context, InfoAndCommentActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("miid",item.getMiid());
-        bundle.putSerializable("cid",item.getCid());
-        if(type == 0){
-            bundle.putSerializable("from","head");
-        }else if(type == 1){
-            bundle.putSerializable("from","commentPic");
+        bundle.putSerializable("miid", item.getMiid());
+        bundle.putSerializable("cid", item.getCid());
+        if (type == 0) {
+            bundle.putSerializable("from", "head");
+        } else if (type == 1) {
+            bundle.putSerializable("from", "commentPic");
         }
         intent.putExtras(bundle);
         return intent;
@@ -185,10 +240,10 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_subscribe:
                 //点击订阅 do something
-                Toast.makeText(context,"这是订阅",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "这是订阅", Toast.LENGTH_SHORT).show();
                 break;
 
 
