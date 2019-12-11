@@ -1,12 +1,8 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
-import javax.persistence.*;
 import java.util.Date;
-@Entity
-@Table(name = "cat")
+
 public class Cat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cid;
     private int uid;
     private int miid;
