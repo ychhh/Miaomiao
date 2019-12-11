@@ -112,18 +112,18 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     (1)判断是否是登录的
              */
 
-//            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-//            uid = sp.getString("uid","1");
-//            if("1".equals(uid)){
-//                //没登录，不去请求订阅列表
-//                //现在写的是登录的情况
-////                askforSubscriptionList();
-//
-//            }else {
-//                //没登录这样
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            uid = sp.getString("uid","1");
+            if("1".equals(uid)){
+                //没登录，不去请求订阅列表
+                //现在写的是登录的情况
+                askforSubscriptionList();
+
+            }else {
+                //没登录这样
             askforRecommend();
-//            }
-            askforSubscriptionList();
+            }
+
 
 
 
@@ -147,6 +147,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 subscriptionRecords =
                         gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
+//                Log.e("askforSubscriptionList",""+response.body().string());
+
+
+                askforRecommend();
             }
         });
 
