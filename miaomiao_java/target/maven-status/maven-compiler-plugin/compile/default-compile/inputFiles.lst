@@ -3,6 +3,7 @@ F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\vide
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\VideoDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\service\CommentService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\entity\Comment.java
+F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\entity\RecordLikes.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\cat\controller\CatController.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\cat\dao\CatDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\entity\Cat.java
@@ -11,6 +12,7 @@ F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ljt\Logi
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\service\VideoService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zsh\self\dao\SelfDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zsh\self\service\SelfService.java
+F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\RecordDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\utils\RequestUtil.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\MiaomiaoApplication.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\entity\Subscription_record.java
@@ -29,6 +31,7 @@ F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ljt\Logi
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\test\TestController.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\controller\PublishController.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\utils\QiniuUtils.java
+F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\service\RecordService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\cat\service\CatService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\CommentDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\controller\VideoController.java

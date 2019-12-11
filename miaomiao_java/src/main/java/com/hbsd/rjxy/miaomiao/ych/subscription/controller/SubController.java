@@ -43,8 +43,8 @@ public class SubController {
     }
     @RequestMapping("/follow")
     @ResponseBody
-    public int follow(int uid,int cid){
-        return subService.follow(uid,cid);
+    public String follow(int uid,int cid){
+        return  gson.toJson(subService.follow(uid,cid));
     }
     @RequestMapping("/unfollow")
     @ResponseBody
@@ -59,8 +59,10 @@ public class SubController {
         for (Subscription_record record :records){
             System.out.println(record.toString());
             System.out.println(record.toString());
-            int cid=record.getCid();
-            cats.add(catService.findAllByCid(cid));
+            if (record.getSubscription_status()==1) {
+                int cid = record.getCid();
+                cats.add(catService.findAllByCid(cid));
+            }
         }
         System.out.println(cats);
         return gson.toJson(cats);

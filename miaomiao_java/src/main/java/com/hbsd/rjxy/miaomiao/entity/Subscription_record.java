@@ -1,8 +1,14 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize;
 import java.util.Date;
+//import java.sql.Date;
+
+//import java.util.Date;
 @Entity
 @Table(name = "subscription_record")
 public class Subscription_record {
@@ -13,8 +19,18 @@ public class Subscription_record {
     private int cid;
     @Column(name = "uid")
     private int uid;
-    private int subscriibe_status;
-    private Date subscribe_time;
+    private int subscription_status;
+
+    public Date getSubscription_time() {
+        return subscription_time;
+    }
+
+    public void setSubscription_time(Date subscription_time) {
+        this.subscription_time = subscription_time;
+    }
+
+    @Column(name = "subscription_time")
+    private Date subscription_time;
 
     public int getCid() {
         return cid;
@@ -36,21 +52,14 @@ public class Subscription_record {
         this.srid = srid;
     }
 
-    public int getSubscriibe_status() {
-        return subscriibe_status;
+    public int getSubscription_status() {
+        return subscription_status;
     }
 
-    public void setSubscriibe_status(int subscriibe_status) {
-        this.subscriibe_status = subscriibe_status;
+    public void setSubscription_status(int subscription_status) {
+        this.subscription_status = subscription_status;
     }
 
-    public Date getSubscribe_time() {
-        return subscribe_time;
-    }
-
-    public void setSubscribe_time(Date subscribe_time) {
-        this.subscribe_time = subscribe_time;
-    }
     public void setUid(int uid) {
         this.uid = uid;
     }
@@ -61,8 +70,8 @@ public class Subscription_record {
                 "srid=" + srid +
                 ", cid=" + cid +
                 ", uid=" + uid +
-                ", subscriibe_status=" + subscriibe_status +
-                ", subscribe_time=" + subscribe_time +
+                ", subscription_status=" + subscription_status +
+                ", subscription_time=" + subscription_time +
                 '}';
     }
 }
