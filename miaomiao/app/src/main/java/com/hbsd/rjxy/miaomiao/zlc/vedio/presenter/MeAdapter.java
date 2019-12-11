@@ -129,11 +129,11 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                                subscriptionRecords =
-//                                        gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
-//                                        }.getType());
-//                                Log.e("updated SubList", "" + subscriptionRecords.toString());
-                                Log.e("updated", "" + response.body().string());
+                                subscriptionRecords =
+                                        gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                        }.getType());
+                                Log.e("updated SubList", "" + subscriptionRecords.toString());
+
                                 //我要更新这个subscriptionRecords
                             }
                         });

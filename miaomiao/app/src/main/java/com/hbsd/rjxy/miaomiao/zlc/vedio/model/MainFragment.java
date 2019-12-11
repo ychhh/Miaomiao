@@ -140,6 +140,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
+                Log.e("网络连接失败","连接失败");
+
             }
 
             @Override
