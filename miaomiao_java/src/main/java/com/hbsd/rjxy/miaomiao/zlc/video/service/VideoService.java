@@ -39,6 +39,7 @@ public class VideoService {
      * @return
      */
     public List<Multi_info> findVideoPaging(int page){
+        System.out.println("page"+page);
         return videoDao.findVideoPaging((page-1)*PAGING_STEP,PAGING_STEP);
     }
 
