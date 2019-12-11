@@ -25,6 +25,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 
+import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
@@ -69,6 +70,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private RecyclerView recyclerView;
     private MeAdapter adapter;
     private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
+    private List<Subscription_record> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -110,17 +112,18 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     (1)判断是否是登录的
              */
 
-            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-            uid = sp.getString("uid","1");
-            if("1".equals(uid)){
-                //没登录，不去请求订阅列表
-                //现在写的是登录的情况
-                askforSubscriptionList();
-
-            }else {
-                //没登录这样
-                askforRecommend();
-            }
+//            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+//            uid = sp.getString("uid","1");
+//            if("1".equals(uid)){
+//                //没登录，不去请求订阅列表
+//                //现在写的是登录的情况
+////                askforSubscriptionList();
+//
+//            }else {
+//                //没登录这样
+            askforRecommend();
+//            }
+            askforSubscriptionList();
 
 
 
@@ -132,7 +135,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private void askforSubscriptionList() {
         Map<String,String> map = new HashMap<>();
-        map.put("uid",uid);
+        map.put("uid","1");
         OkHttpUtils.getInstance().postForm(URL_GET_SUBSCRIPTION_LIST, map, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -141,7 +144,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.e("askforSubscriptionList",""+response.body().string());
+                subscriptionRecords =
+                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
             }
         });
 
@@ -271,7 +276,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     @Override
     public MeAdapter initAdapter() {
-        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext());
+        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext(),subscriptionRecords);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {

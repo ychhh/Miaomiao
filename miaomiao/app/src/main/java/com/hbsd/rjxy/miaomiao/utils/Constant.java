@@ -59,7 +59,7 @@ public class Constant {
     public static final String URL_GET_RECORD = "http://10.7.87.224:8080/comment/getRecord";//获取评论记录
     public static final String URL_GET_HEADANDNAME = "http://10.7.87.224:8080/comment/getHeadAndName";//获取用户头像和昵称
     public static final String URL_GET_SUBSCRIPTION_LIST = "http://10.7.87.224:8080/sub/findbyuid";//获取用户订阅列表
-
+    public static final String URL_SUBSCRIBE_CAT = "http://10.7.87.224:8080/sub/follow";//订阅猫
 
 
 
