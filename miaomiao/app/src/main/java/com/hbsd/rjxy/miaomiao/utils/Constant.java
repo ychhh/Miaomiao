@@ -46,6 +46,11 @@ public class Constant {
     public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
     public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8080/publish/getToken";//发布获取token
     public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8080/publish/publish";//发布
+
+    public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
+    public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
+    public static final String UNFOLLOW = "http://10.7.87.229:8081/sub/unfollow";
+
     public static final String PUBLISH_URL_COMMENT = "http://10.7.87.224:8080/comment/addComment";//发布评论
     public static final String URL_FINDCOMMENTPAGING = "http://10.7.87.224:8080/comment/findCommentsByMiidAndPage";//分页查询当前视频的评论
     public static final String URL_GET_TIME = "http://10.7.87.224:8080/comment/getTime";//获取服务器时间
