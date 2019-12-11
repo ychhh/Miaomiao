@@ -25,7 +25,6 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 
-import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
@@ -70,7 +69,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private RecyclerView recyclerView;
     private MeAdapter adapter;
     private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
-    private List<Subscription_record> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -143,14 +141,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                 subscriptionRecords =
-                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
-
-                askforRecommend();
-                Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
-
-
-
+                Log.e("askforSubscriptionList",""+response.body().string());
             }
         });
 
@@ -280,7 +271,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     @Override
     public MeAdapter initAdapter() {
-        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext(),subscriptionRecords);
+        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext());
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
