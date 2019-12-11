@@ -31,6 +31,7 @@ import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
@@ -66,6 +67,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     TextView tv_subscribed;
     @BindView(R.id.tv_recommend)
     TextView tv_recommend;
+    @BindView(R.id.rl_video)
+    SmartRefreshLayout rlVideo;
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
@@ -99,7 +102,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             recyclerView = view.findViewById(R.id.rv_main);
 
             initPlayPosition(getContext());
-
+            initRefreshLayout();
 
 
 
@@ -131,6 +134,15 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
         }
         return view;
+    }
+
+    private void initRefreshLayout() {
+        rlVideo.setHeaderHeight(190);
+        rlVideo.setHeaderMaxDragRate(2.0f);
+        rlVideo.setHeaderTriggerRate(0.7f);
+
+
+
     }
 
     private void askforSubscriptionList() {
