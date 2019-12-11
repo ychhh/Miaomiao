@@ -64,6 +64,7 @@ import okhttp3.Response;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_COMMENT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_FINDCOMMENTPAGING;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_HEADANDNAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_RECORD;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_TIME;
 
@@ -152,7 +153,9 @@ public class CommentFragment extends Fragment {
 
         initDate();
 
-        initPublishButton();
+        //获取头像和昵称，，，，，初始化button点击事件
+        initUserData();
+
         initCommentEditText();
         initRefreshLayout();
         initImageView();
@@ -160,6 +163,47 @@ public class CommentFragment extends Fragment {
 
         return view;
 
+
+    }
+
+    private void initUserData() {
+        //先判断是否登录了
+        SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+        String uid = sp.getString("uid","1");
+        if("1".equals(uid)){
+            //没登录，登录跳转
+
+
+            //放到下面
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("uid",uid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            OkHttpUtils.getInstance().postJson(URL_GET_HEADANDNAME, jsonObject.toString(), new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    //收到的json包含两个一个hpath，一个username
+
+                    EventInfo eventInfo = new EventInfo();
+                    eventInfo.setContentString("finishInitUserData");
+                    Map<String,String> map = new HashMap<>();
+                    map.put("jb",response.body().string());
+                    eventInfo.setContentMap(map);
+                    EventBus.getDefault().post(eventInfo);
+                }
+            });
+
+
+        }else{
+
+        }
 
     }
 
@@ -366,6 +410,30 @@ public class CommentFragment extends Fragment {
         }else if("nomoreComment".equals(eventInfo.getContentString())){
             rlComment.finishLoadMore(2000);
             Toast.makeText(getContext(),"到底啦",Toast.LENGTH_SHORT).show();
+        }else if("finishInitUserData".equals(eventInfo.getContentString())){
+
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            String res = (String) eventInfo.getContentMap().get("jb");
+            try {
+                JSONObject jb = new JSONObject(res);
+                if("fail".equals(res)){
+                    //没拿到啊，那咋办啊。。。。
+                    sp.edit().putString("hpath",jb.getString(""))
+                            .putString("username",jb.getString(""))
+                            .commit();
+                }else{
+                    //拿到了，写到sp里面
+                    sp.edit().putString("hpath",jb.getString("hpath"))
+                            .putString("username",jb.getString("username"))
+                            .commit();
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            initPublishButton();
         }
 
     }
@@ -426,7 +494,8 @@ public class CommentFragment extends Fragment {
                             comment.setCocontent(etComment.getText().toString());
                             comment.setColike(0);
                             comment.setCostatus(0);
-
+                            comment.setUhead(sp.getString("hpath",""));
+                            comment.setUname(sp.getString("username",""));
                             //时间应该放在服务器处理
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
                             comment.setPublishTime(simpleDateFormat.format(System.currentTimeMillis()));

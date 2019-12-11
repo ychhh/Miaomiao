@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="993c7b84-8fb5-4a2a-a58c-eb3bb248bbf2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/comment_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/zlc/layout/comment_fragment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zlc/vedio/presenter/CommentAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/dao/CommentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/controller/CommentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/service/CommentService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -143,12 +149,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7056403f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5b5b89a2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7056403f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7603adba" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5b5b89a2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@52c1d5e4" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />

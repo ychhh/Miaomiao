@@ -17,7 +17,7 @@ public class User {
     private String pwd;
     private String username;
     private String uintro;
-    private Integer hid;
+    private String hpath;
     private Integer is_vip;
     private Integer is_admin;
     private Integer bid;
@@ -73,12 +73,12 @@ public class User {
         this.uintro = uintro;
     }
 
-    public Integer getHid() {
-        return hid;
+    public String getHpath() {
+        return hpath;
     }
 
-    public void setHid(Integer hid) {
-        this.hid = hid;
+    public void setHpath(String hpath) {
+        this.hpath = hpath;
     }
 
     public Integer getIs_vip() {

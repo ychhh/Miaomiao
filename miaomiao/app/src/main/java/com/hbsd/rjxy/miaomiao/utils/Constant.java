@@ -13,10 +13,7 @@ public class Constant {
 
     public static String[] TAB_STRING = {"首页","圈子","我的猫","直播","我的"}; //tabhost中的名词
 
-    public static String INIT_VIDEO_URL = "http://10.7.87.224:8080/video/pagingVideo";//请求视频的url
 
-
-    public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
 
     public static String LOGIN_URL="http://10.7.88.102:8080/login/";//登录的URL
 
@@ -45,19 +42,18 @@ public class Constant {
      */
     public static final String REMIND_PUBLISH_ONCE = "REMIND_PUBLISH_ONCE";
 
+    public static String INIT_VIDEO_URL = "http://10.7.87.224:8080/video/pagingVideo";//请求视频的url
+    public static String ADD_HOT_URl = "http://10.7.87.224:8080/video/addHot";//点击小鱼干发送的Url
     public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8080/publish/getToken";//发布获取token
     public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8080/publish/publish";//发布
-
-
     public static final String PUBLISH_URL_COMMENT = "http://10.7.87.224:8080/comment/addComment";//发布评论
-
     public static final String URL_FINDCOMMENTPAGING = "http://10.7.87.224:8080/comment/findCommentsByMiidAndPage";//分页查询当前视频的评论
-
     public static final String URL_GET_TIME = "http://10.7.87.224:8080/comment/getTime";//获取服务器时间
-
     public static final String URL_LIKE_COMMENT = "http://10.7.87.224:8080/comment/like";   //点赞评论
     public static final String URL_DISLIKE_COMMENT = "http://10.7.87.224:8080/comment/dislike";//取消点赞评论
     public static final String URL_GET_RECORD = "http://10.7.87.224:8080/comment/getRecord";//获取评论记录
+    public static final String URL_GET_HEADANDNAME = "http://10.7.87.224:8080/comment/getHeadAndName";//获取用户头像和昵称
+
 
 
 

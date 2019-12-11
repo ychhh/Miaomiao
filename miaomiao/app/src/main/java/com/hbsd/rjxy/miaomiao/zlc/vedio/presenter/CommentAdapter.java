@@ -5,11 +5,15 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -70,6 +74,26 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
 
     @Override
     protected void convert(@NonNull CommentViewHolder helper, Comment item) {
+
+
+        /*
+            TODO    头像path为空就使用默认的系统头像
+                根据uid查询用户的头像和username
+         */
+
+        if(item.getUhead().equals("")||item.getUhead() == null){
+            Glide.with(context)
+                    .load(R.drawable.u45)
+                    .override(Target.SIZE_ORIGINAL)
+                    .into((ImageView) helper.getView(R.id.civ_comment_head));
+        }else{
+            Glide.with(context)
+                    .load(item.getUhead())
+                    .override(Target.SIZE_ORIGINAL)
+                    .into((ImageView) helper.getView(R.id.civ_comment_head));
+        }
+
+        helper.setText(R.id.comment_uname,item.getUname());
 
 
         helper.setText(R.id.tv_comment_content,item.getCocontent());
