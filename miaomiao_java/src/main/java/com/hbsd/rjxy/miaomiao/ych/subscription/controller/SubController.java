@@ -58,9 +58,10 @@ public class SubController {
         List<Subscription_record> records=subService.findAllByUid(uid);
         for (Subscription_record record :records){
             System.out.println(record.toString());
-            System.out.println(record.toString());
+
             if (record.getSubscription_status()==1) {
                 int cid = record.getCid();
+                System.out.println(cid+"kljaskdlks");
                 cats.add(catService.findAllByCid(cid));
             }
         }

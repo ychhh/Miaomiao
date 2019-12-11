@@ -61,7 +61,7 @@ public class Constant {
     public static final String URL_GET_HEADANDNAME = "http://47.94.171.160:8081/comment/getHeadAndName";//获取用户头像和昵称
     public static final String URL_GET_SUBSCRIPTION_LIST = "http://47.94.171.160:8081/sub/findbyuid";//获取用户订阅列表
     public static final String URL_SUBSCRIBE_CAT = "http://47.94.171.160:8081/sub/follow";//订阅猫
-
+    public static final String URL_UNFOLLOW_CAT = "http://47.94.171.160:8081/sub/unfollow";//取消订阅猫
 
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";
