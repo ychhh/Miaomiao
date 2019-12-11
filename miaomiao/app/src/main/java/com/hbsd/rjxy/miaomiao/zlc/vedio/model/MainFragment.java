@@ -58,31 +58,32 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private int playBottom;
     //这个是否第一次播放的初始化放到了initData方法中
     boolean firstOpenVideo = true;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = initFragment(inflater,container);
 
-        ButterKnife.bind(this,view);
-        tv_recommend.setOnClickListener(this::onClick);
-        tv_subscribed.setOnClickListener(this::onClick);
+        if(view != null){
 
-        //获得recyclerView
-        recyclerView = view.findViewById(R.id.rv_main);
+        }else{
+            view = initFragment(inflater,container);
 
-        initPlayPosition(getContext());
+            ButterKnife.bind(this,view);
+            tv_recommend.setOnClickListener(this::onClick);
+            tv_subscribed.setOnClickListener(this::onClick);
 
+            //获得recyclerView
+            recyclerView = view.findViewById(R.id.rv_main);
 
+            initPlayPosition(getContext());
 
-        //自定义播放帮助类
-        scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.videoPlayer, playTop, playBottom);
-
-
-        //初始化数据
-        videoList = initData(videoList);
-        new VideoPresenter(getContext(),null).execute();
-
+            //自定义播放帮助类
+            scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.videoPlayer, playTop, playBottom);
+            //初始化数据
+            videoList = initData(videoList);
+            new VideoPresenter(getContext(),null).execute();
+        }
         return view;
     }
 
@@ -232,9 +233,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 if(adapter == null){
                     //初始化Adapter
                     adapter = initAdapter();
-                    //初始化RecyclerView
-                    recyclerView = initRecyclerView();
+
                 }
+                //初始化RecyclerView
+                recyclerView = initRecyclerView();
                 //通知adapter内容改变
                 adapter.loadMoreComplete();
             }else{
@@ -340,6 +342,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         //每次回来也要自动播放
         firstOpenVideo = true;
         GSYVideoManager.onResume();
+
         super.onResume();
     }
 

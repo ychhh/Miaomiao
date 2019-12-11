@@ -148,8 +148,8 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                         }else{
                             //当前无锁
                             helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_unpressed));
+                            item.setColike(item.getColike()-1);
                             if(item.getColike() != 0){
-                                item.setColike(item.getColike()-1);
                                 helper.setText(R.id.comment_like_account,item.getColike()+"");
                             }else{
                                 helper.setText(R.id.comment_like_account,"");
