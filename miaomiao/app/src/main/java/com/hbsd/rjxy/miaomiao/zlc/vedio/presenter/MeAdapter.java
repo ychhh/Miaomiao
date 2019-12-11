@@ -62,8 +62,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         helper.setText(R.id.tv_video_fish, "" + item.getMhot()).setText(R.id.tv_comment_amount, "" + item.getMcomment_count());
 
 
-        helper.setText(R.id.tv_videocontent, item.getMcontent());
-
         if (subscriptionRecords != null) {
             int flag = 0;
             for (Subscription_record subscriptionRecord : subscriptionRecords) {
@@ -116,6 +114,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
                             }
                         });
+
                         SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
                         String uid = sp.getString("uid", "1");
                         Map<String, String> map = new HashMap<>();
@@ -127,11 +126,13 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
                             }
 
+
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 subscriptionRecords =
-                                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
-                                Log.e("updated SubList",""+subscriptionRecords.toString());
+                                        gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                        }.getType());
+                                Log.e("updated SubList", "" + subscriptionRecords.toString());
                                 //我要更新这个subscriptionRecords
                             }
                         });
@@ -140,8 +141,12 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     }
                 });
             }
-
         }
+
+
+        helper.setText(R.id.tv_videocontent, item.getMcontent());
+
+
 
 
         int cid = item.getCid();

@@ -112,17 +112,18 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     (1)判断是否是登录的
              */
 
-            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-            uid = sp.getString("uid","1");
-            if("1".equals(uid)){
-                //没登录，不去请求订阅列表
-                //现在写的是登录的情况
-                askforSubscriptionList();
-
-            }else {
-                //没登录这样
-                askforRecommend();
-            }
+//            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+//            uid = sp.getString("uid","1");
+//            if("1".equals(uid)){
+//                //没登录，不去请求订阅列表
+//                //现在写的是登录的情况
+////                askforSubscriptionList();
+//
+//            }else {
+//                //没登录这样
+            askforRecommend();
+//            }
+            askforSubscriptionList();
 
 
 
@@ -134,7 +135,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private void askforSubscriptionList() {
         Map<String,String> map = new HashMap<>();
-        map.put("uid",uid);
+        map.put("uid","1");
         OkHttpUtils.getInstance().postForm(URL_GET_SUBSCRIPTION_LIST, map, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -143,14 +144,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                 subscriptionRecords =
+                subscriptionRecords =
                         gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
-
-                askforRecommend();
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
-
-
-
             }
         });
 
