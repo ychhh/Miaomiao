@@ -144,8 +144,11 @@
 //                public void onClick(View v) {
 ////                    dataSource.remove(position);
 //                    dataSource.remove(position);
-////                    dataSource.clear();
-////                    dataSource.add(cat);
+                    Log.e(TAG, "onClick: 1123456"+position );
+                    dataSource.remove(position);
+//                    dataSource.clear();
+//                    dataSource.add(cat);
+                    adapter.notifyDataSetChanged();
 //                    adapter.notifyDataSetChanged();
 ////                    adapter.notifyDataSetChanged();
 ////                    adapter.da
