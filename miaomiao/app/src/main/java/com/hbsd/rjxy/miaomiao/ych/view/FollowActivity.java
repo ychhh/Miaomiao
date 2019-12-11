@@ -56,7 +56,7 @@ public class FollowActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_cat);
         listView=findViewById(R.id.list_follow);
-        map.put("uid","1");
+        map.put("uid","2");
         Log.e(TAG, "onCreate: 123" );
         handler=new Handler(){
             @Override
@@ -108,12 +108,7 @@ public class FollowActivity extends Activity {
         }
         @Override
         public int getCount() {
-            if(dataSource==null){
-                return 0;
-            }
-            else{
-                return dataSource.size();
-            }
+            return  dataSource.size();
         }
 
         @Override
@@ -147,8 +142,10 @@ public class FollowActivity extends Activity {
             viewHolder.btn_unfollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    dataSource.remove(position);
                     dataSource.remove(position);
 //                    dataSource.clear();
+//                    dataSource.add(cat);
                     adapter.notifyDataSetChanged();
 //                    adapter.notifyDataSetChanged();
 //                    adapter.da

@@ -14,6 +14,7 @@ F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zsh\self
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zsh\self\service\SelfService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\RecordDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\utils\RequestUtil.java
+F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\service\UserService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\MiaomiaoApplication.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\entity\Subscription_record.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\test\TestVideoController.java
@@ -32,6 +33,7 @@ F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\test
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\controller\PublishController.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\utils\QiniuUtils.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\service\RecordService.java
+F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\UserDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\ych\cat\service\CatService.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\dao\CommentDao.java
 F:\projects\Miaomiao\miaomiao_java\src\main\java\com\hbsd\rjxy\miaomiao\zlc\video\controller\VideoController.java
