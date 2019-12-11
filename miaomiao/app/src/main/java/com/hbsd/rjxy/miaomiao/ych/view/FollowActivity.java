@@ -143,6 +143,7 @@ public class FollowActivity extends Activity {
                 @Override
                 public void onClick(View v) {
 //                    dataSource.remove(position);
+                    Log.e(TAG, "onClick: 1123456"+position );
                     dataSource.remove(position);
 //                    dataSource.clear();
 //                    dataSource.add(cat);
