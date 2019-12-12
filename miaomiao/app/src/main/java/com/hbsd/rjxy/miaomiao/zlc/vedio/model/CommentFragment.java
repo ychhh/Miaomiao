@@ -38,6 +38,7 @@ import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.CommentAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -63,6 +64,7 @@ import okhttp3.Response;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_URL_COMMENT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_FINDCOMMENTPAGING;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_HEADANDNAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_RECORD;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_TIME;
 
@@ -151,7 +153,9 @@ public class CommentFragment extends Fragment {
 
         initDate();
 
-        initPublishButton();
+        //获取头像和昵称，，，，，初始化button点击事件
+        initUserData();
+
         initCommentEditText();
         initRefreshLayout();
         initImageView();
@@ -159,6 +163,47 @@ public class CommentFragment extends Fragment {
 
         return view;
 
+
+    }
+
+    private void initUserData() {
+        //先判断是否登录了
+        SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+        String uid = sp.getString("uid","1");
+        if("1".equals(uid)){
+            //没登录，登录跳转
+
+
+            //放到下面
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("uid",uid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            OkHttpUtils.getInstance().postJson(URL_GET_HEADANDNAME, jsonObject.toString(), new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    //收到的json包含两个一个hpath，一个username
+
+                    EventInfo eventInfo = new EventInfo();
+                    eventInfo.setContentString("finishInitUserData");
+                    Map<String,String> map = new HashMap<>();
+                    map.put("jb",response.body().string());
+                    eventInfo.setContentMap(map);
+                    EventBus.getDefault().post(eventInfo);
+                }
+            });
+
+
+        }else{
+
+        }
 
     }
 
@@ -186,9 +231,6 @@ public class CommentFragment extends Fragment {
                 }else{
 
                 }
-
-
-
             }
         });
 
@@ -235,6 +277,9 @@ public class CommentFragment extends Fragment {
     }
 
     private void initRefreshLayout() {
+
+        rlComment.setReboundDuration(500);
+
         rlComment.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -242,6 +287,7 @@ public class CommentFragment extends Fragment {
                    TODO     下拉刷新，将currentPage恢复为1,获取全部评论并且排序
                  */
                 currentPage = 1;
+                initDate();
 //                OkHttpUtils.getInstance().postJson("", "", new Callback() {
 //                    @Override
 //                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -253,8 +299,48 @@ public class CommentFragment extends Fragment {
 //
 //                    }
 //                });
+            }
+        });
+
+        rlComment.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                currentPage += 1;
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("miid",miid);
+                    jsonObject.put("page",currentPage);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                OkHttpUtils.getInstance().postJson(URL_FINDCOMMENTPAGING, jsonObject.toString(), new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        List<Comment> comments = gson.fromJson(response.body().string(),new TypeToken<List<Comment>>(){}.getType());
+                        if(comments.size() == 0){
+                            EventInfo eventInfo = new EventInfo();
+                            eventInfo.setContentString("nomoreComment");
+                            EventBus.getDefault().post(eventInfo);
+                        }else{
+                            EventInfo<String,String,Comment> eventInfo = new EventInfo<>();
+                            eventInfo.setContentString("nextPage");
+                            eventInfo.setContentList(comments);
+                            EventBus.getDefault().post(eventInfo);
+                        }
 
 
+
+                    }
+                });
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
             }
         });
@@ -301,6 +387,7 @@ public class CommentFragment extends Fragment {
             ivLoading.setVisibility(View.INVISIBLE);
             initAdapter();
             initRecyclerView();
+            rlComment.finishRefresh(2000);
         }else if("publishCommentFailed".equals(eventInfo.getContentString())){
             commentList.remove(0);
             commentAdapter.notifyDataSetChanged();
@@ -313,6 +400,40 @@ public class CommentFragment extends Fragment {
             commentAdapter.notifyDataSetChanged();
             //解锁
             isPublishing = false;
+        }else if("nextPage".equals(eventInfo.getContentString())){
+            for(Object c : eventInfo.getContentList()){
+                Comment comment = (Comment)c;
+                commentList.add(comment);
+            }
+            commentAdapter.notifyDataSetChanged();
+            rlComment.finishLoadMore(2000);
+        }else if("nomoreComment".equals(eventInfo.getContentString())){
+            rlComment.finishLoadMore(2000);
+            Toast.makeText(getContext(),"到底啦",Toast.LENGTH_SHORT).show();
+        }else if("finishInitUserData".equals(eventInfo.getContentString())){
+
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            String res = (String) eventInfo.getContentMap().get("jb");
+            try {
+                JSONObject jb = new JSONObject(res);
+                if("fail".equals(res)){
+                    //没拿到啊，那咋办啊。。。。
+                    sp.edit().putString("hpath",jb.getString(""))
+                            .putString("username",jb.getString(""))
+                            .commit();
+                }else{
+                    //拿到了，写到sp里面
+                    sp.edit().putString("hpath",jb.getString("hpath"))
+                            .putString("username",jb.getString("username"))
+                            .commit();
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            initPublishButton();
         }
 
     }
@@ -373,7 +494,8 @@ public class CommentFragment extends Fragment {
                             comment.setCocontent(etComment.getText().toString());
                             comment.setColike(0);
                             comment.setCostatus(0);
-
+                            comment.setUhead(sp.getString("hpath",""));
+                            comment.setUname(sp.getString("username",""));
                             //时间应该放在服务器处理
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
                             comment.setPublishTime(simpleDateFormat.format(System.currentTimeMillis()));
@@ -382,6 +504,7 @@ public class CommentFragment extends Fragment {
                             HideKeyBoard.hideSoftKeyboard(getContext(),views);
                             Log.e("发送成功",""+comment.toString());
                             commentList.add(0,comment);
+                            Log.e("commentList",""+commentList.toString());
                             etComment.setText("");
                             etComment.clearFocus();
                             commentAdapter.notifyDataSetChanged();

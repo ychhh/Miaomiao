@@ -31,7 +31,8 @@ android {
                     'src/main/res',
                     'src/main/res/layout/ljt'
                     , 'src/main/res/layout/zlc'
-                    , 'src/main/res/layout/zsh']
+                    , 'src/main/res/layout/zsh'
+                    , 'src/main/res/layout/ych']
         }
     }
 }
@@ -52,6 +53,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     //智能刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-12'
+    //gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     //灵活的RecyclerViewAdapter   https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47-androidx'
     //recyclerView
@@ -81,6 +85,7 @@ dependencies {
     implementation 'com.qiniu:qiniu-android-sdk:7.5.0'
     //progressBar
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+
 
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

@@ -3,6 +3,7 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,28 +19,45 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 
+import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.VideoPresenter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
+import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.RECOMMEND_PAGE_DEFAULT;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_SUBSCRIPTION_LIST;
 
 
 public class MainFragment extends Fragment implements IMainFragmentView , IVideoPreseter , View.OnClickListener {
@@ -49,41 +67,146 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     TextView tv_subscribed;
     @BindView(R.id.tv_recommend)
     TextView tv_recommend;
+    @BindView(R.id.rl_video)
+    SmartRefreshLayout rlVideo;
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
     private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
+    private List<Subscription_record> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
     //这个是否第一次播放的初始化放到了initData方法中
     boolean firstOpenVideo = true;
+    private View view;
+    private int contentType = 1;//TODO ：1推荐，0订阅
+    private String uid;
+
+    Gson gson = new Gson();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = initFragment(inflater,container);
 
-        ButterKnife.bind(this,view);
-        tv_recommend.setOnClickListener(this::onClick);
-        tv_subscribed.setOnClickListener(this::onClick);
+        if(view != null){
 
-        //获得recyclerView
-        recyclerView = view.findViewById(R.id.rv_main);
+        }else{
+            view = initFragment(inflater,container);
 
-        initPlayPosition(getContext());
+            ButterKnife.bind(this,view);
+            tv_recommend.setOnClickListener(this::onClick);
+            tv_subscribed.setOnClickListener(this::onClick);
+
+            //获得recyclerView
+            recyclerView = view.findViewById(R.id.rv_main);
+
+            initPlayPosition(getContext());
+            initRefreshLayout();
 
 
 
-        //自定义播放帮助类
-        scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.videoPlayer, playTop, playBottom);
+            //自定义播放帮助类
+            scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.videoPlayer, playTop, playBottom);
+            //初始化数据
+            videoList = initData(videoList);
+            /*
+                TODO    重构，使用okhttp
+                    (1)判断是否是登录的
+             */
+
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            uid = sp.getString("uid","1");
+            if("1".equals(uid)){
+                //没登录，不去请求订阅列表
+                //现在写的是登录的情况
+                askforSubscriptionList();
+
+            }else {
+                //没登录这样
+            askforRecommend();
+            }
 
 
-        //初始化数据
-        videoList = initData(videoList);
-        new VideoPresenter(getContext(),null).execute();
 
+
+
+
+        }
         return view;
+    }
+
+    private void initRefreshLayout() {
+        rlVideo.setHeaderHeight(190);
+        rlVideo.setHeaderMaxDragRate(2.0f);
+        rlVideo.setHeaderTriggerRate(0.7f);
+
+
+
+    }
+
+    private void askforSubscriptionList() {
+        Map<String,String> map = new HashMap<>();
+        map.put("uid","1");
+        OkHttpUtils.getInstance().postForm(URL_GET_SUBSCRIPTION_LIST, map, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                Log.e("网络连接失败","连接失败");
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                subscriptionRecords =
+                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
+//                Log.e("askforSubscriptionList",""+response.body().string());
+
+
+                askforRecommend();
+            }
+        });
+
+
+    }
+
+    private void askforRecommend() {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("page",RECOMMEND_PAGE_DEFAULT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.getInstance().postJson(INIT_VIDEO_URL, jo.toString(), new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                if(!videoList.isEmpty()){
+                    //如果拿到了视频数据，则放到eventinfo的list中去
+                    videoEvent.setContentList(videoList);
+                    videoEvent.setContentString("videoInit");
+                    EventBus.getDefault().post(videoEvent);
+                    Log.e("videoList",""+videoList.toString());
+                }else{
+                    //没有拿到设置eventinfo为无效
+                    Log.e("videolist","null");
+                    videoEvent.setAvailable(false);
+                    Map<String,String> map = new HashMap<>();
+                    map.put("status","complete");
+                    videoEvent.setContentMap(map);
+                    videoEvent.setContentString("videoInit");
+                    EventBus.getDefault().post(videoEvent);
+                }
+            }
+        });
+
     }
 
 
@@ -171,13 +294,13 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     @Override
     public MeAdapter initAdapter() {
-        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext());
+        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext(),subscriptionRecords);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 //这里是预加载请求，当前推荐页++
                 RECOMMEND_PAGE_DEFAULT += 1;
-                new VideoPresenter(getContext(),null).execute();
+                askforRecommend();
             }
         },recyclerView);
 
@@ -213,7 +336,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
     //订阅事件
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void getVideoList(EventInfo<String,String,Multi_info> videoEvent){
         if(videoEvent.getContentString().equals("videoInit")){
             if(videoEvent.isAvailable()){
@@ -232,9 +355,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 if(adapter == null){
                     //初始化Adapter
                     adapter = initAdapter();
-                    //初始化RecyclerView
                     recyclerView = initRecyclerView();
                 }
+                //初始化RecyclerView
+
                 //通知adapter内容改变
                 adapter.loadMoreComplete();
             }else{
@@ -282,10 +406,28 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  * 2.请求服务器重新获得视频数据
                  *
                  */
-                setTextViewColor(tv_subscribed,tv_recommend);
+                if(contentType != 0){
+                    //当前不是订阅内容，判断是否登录
+                    SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    String uid = sp.getString("uid","1");
+                    if("1".equals(uid)){
+                        //以后下面的内容放到else分支里，1改成unregist
+                        setTextViewColor(tv_subscribed,tv_recommend);
+                        //请求订阅的视频内容...
 
-                //如果没有登录
-                startActivity(new Intent(getContext(),PleaseLoginActivity.class));
+
+
+                        //修改当前contentType为 0
+                        contentType = 0;
+                    }else{
+                        //如果没有登录
+                        startActivity(new Intent(getContext(),PleaseLoginActivity.class));
+                    }
+
+                }else{
+                    //已经是这个页面了
+                }
+
 
 
 
@@ -299,7 +441,16 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  * 2.请求服务器重新获得视频数据
                  *
                  */
-                setTextViewColor(tv_recommend,tv_subscribed);
+
+                if(contentType != 1){
+                    setTextViewColor(tv_recommend,tv_subscribed);
+                    contentType = 1;
+                    //请求推荐视频的数据
+
+                }else{
+                    //表示已经是推荐内容了
+                }
+
 
 
                 break;
@@ -340,6 +491,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         //每次回来也要自动播放
         firstOpenVideo = true;
         GSYVideoManager.onResume();
+
         super.onResume();
     }
 

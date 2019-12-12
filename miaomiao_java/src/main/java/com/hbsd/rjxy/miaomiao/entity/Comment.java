@@ -16,6 +16,8 @@ public class Comment {
     private int uid;
     private String cocontent;
     private String publishTime;
+    private String uhead;
+    private String uname;
 
     public int getCoid() {
         return coid;
@@ -73,6 +75,22 @@ public class Comment {
         this.publishTime = publishTime;
     }
 
+    public String getUhead() {
+        return uhead;
+    }
+
+    public void setUhead(String uhead) {
+        this.uhead = uhead;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -83,6 +101,8 @@ public class Comment {
                 ", uid=" + uid +
                 ", cocontent='" + cocontent + '\'' +
                 ", publishTime='" + publishTime + '\'' +
+                ", uhead='" + uhead + '\'' +
+                ", uname='" + uname + '\'' +
                 '}';
     }
 }

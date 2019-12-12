@@ -8,6 +8,7 @@ import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
 import com.hbsd.rjxy.miaomiao.zlc.utils.TimeUtils;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.CommentService;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.RecordService;
+import com.hbsd.rjxy.miaomiao.zlc.video.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class CommentController {
     CommentService commentService;
     @Autowired
     RecordService recordService;
+    @Autowired
+    UserService userService;
 
     Gson gson = new Gson();
 
@@ -121,7 +124,7 @@ public class CommentController {
             jsonObject = new JSONObject(RequestUtil.getJson(request));
             recordService.addRecord(jsonObject.getInt("coid"),jsonObject.getInt("uid"),jsonObject.getInt("miid"));
             if(commentService.likeComment(jsonObject.getInt("coid")) == 1){
-                return "success";
+                return gson.toJson(recordService.findRecords(jsonObject.getInt("miid"),jsonObject.getInt("uid")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -145,7 +148,7 @@ public class CommentController {
             JSONObject jsonObject = new JSONObject(RequestUtil.getJson(request));
             recordService.removeRecord(jsonObject.getInt("coid"),jsonObject.getInt("uid"));
             if(commentService.dislikeComment(jsonObject.getInt("coid")) == 1){
-                return "success";
+                return gson.toJson(recordService.findRecords(jsonObject.getInt("miid"),jsonObject.getInt("uid")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -181,8 +184,28 @@ public class CommentController {
         }
 
         return "fail";
-
     }
+
+
+    /**
+     * 根据uid查这个用户的头像和name
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/comment/getHeadAndName")
+    @ResponseBody
+    public String getHeadAndName(HttpServletRequest request,HttpServletResponse response){
+
+        try {
+            JSONObject jsonObject = new JSONObject(RequestUtil.getJson(request));
+            return userService.findHpathAndUsername(jsonObject.getInt("uid"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "fail";
+    }
+
 
 
 
