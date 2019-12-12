@@ -25,53 +25,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MyCatsAdapter extends BaseQuickAdapter<Cat, BaseViewHolder> {
+public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
 
     private Context context;
-    public MyCatsAdapter(int layoutResId, @Nullable List<Cat> data,Context context) {
+
+    public MyCatsAdapter(int layoutResId, @Nullable List<List<Cat>> data, Context context) {
         super(layoutResId, data);
-        Log.e(TAG, "MyCatsAdapter: 11111111111111111" );
-        this.context=context;
+        Log.e(TAG, "MyCatsAdapter: " + data);
+        this.context = context;
+
     }
 
+    public MyCatsAdapter(@Nullable List<List<Cat>> data) {
+        super(data);
+    }
 
     public MyCatsAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, Cat item) {
-        if (item.getCid()%3==0){
-        Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat1));}
-        else if (item.getCid()%3==1){
-            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat2));
-        }else {
-            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat3));
-        }
-        helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.putExtra("cid",item.getCid());
-                Log.e(TAG, "convert: 跳转"+item.getCid() );
+    protected void convert(@NonNull BaseViewHolder helper, List<Cat> item) {
+        Log.e(TAG, "convert: item:" + item.size());
+        for (int i = 0; i < item.size(); i++) {
+            if (item.get(i) != null) {
+                Log.e(TAG, "convert i: " + i);
+                if (i%3 == 0)
+                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat1));
+                if (i%3 == 1)
+                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat2));
+                if (i%3 == 2)
+                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat3));
             }
-        });
+        }
+//
 
-//        context.startActivity();
-    }
 
 //    @Override
-//    protected void convert(@NonNull BaseViewHolder helper, Map<String, String> item) {
-//        Log.e(TAG, "MyCatsAdapter: 2222222222" );
-//        Glide.with(context).load(item.get("0")).into((ImageView) helper.getView(R.id.img_cat1));
-//        Glide.with(context).load(item.get("1")).into((ImageView) helper.getView(R.id.img_cat2));
-//        Glide.with(context).load(item.get("2")).into((ImageView) helper.getView(R.id.img_cat3));
+//    protected void convert(@NonNull BaseViewHolder helper, Cat item) {
+//        if (item.getCid()%3==0){
+//        Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat1));}
+//        else if (item.getCid()%3==1){
+//            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat2));
+//        }else {
+//            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat3));
+//        }
 //        helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent intent;
+//                Intent intent=new Intent();
+//                intent.putExtra("cid",item.getCid());
+//                Log.e(TAG, "convert: 跳转"+item.getCid() );
 //            }
 //        });
-//    }
 
+    }
 }

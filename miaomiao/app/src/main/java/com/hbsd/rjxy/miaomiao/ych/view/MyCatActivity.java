@@ -35,6 +35,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_SUB_CAT;
 
 public class MyCatActivity extends Activity {
     List<Cat> cats=new ArrayList<>();
+    List<List<Cat>> catss= new ArrayList<List<Cat>>();
     RecyclerView recyclerView;
     String TAG="MyCatActivity";
     Handler handler;
@@ -53,12 +54,28 @@ public class MyCatActivity extends Activity {
                 Log.e(TAG, "handleMessagecat: "+msg.obj );
                 JsonParser parser = new JsonParser();
                 JsonArray jsonarray = parser.parse(msg.obj.toString()).getAsJsonArray();
-                for (JsonElement element : jsonarray) {
-                    cats.add(gson.fromJson(element, Cat.class));
+//                for (JsonElement element : jsonarray) {
+//                    Cat c=gson.fromJson(element, Cat.class);
+//                    cats.add(c);
+//                    Log.e(TAG, "handleMessage:gsonc "+element );
+//                }
+                for (int i=0;i<jsonarray.size();i++){
+//                    Log.e(TAG, "handleMessage: jsonarray.size()："+jsonarray.size() );
+                    Cat c=gson.fromJson(jsonarray.get(i), Cat.class);
+
+                    cats.add(c);
+                    if (cats.size()==3){
+                        Log.e(TAG, "handleMessage: cats:"+cats );
+                        catss.add(cats);
+                        cats=new ArrayList<>();
+                    }
                 }
-                MyCatsAdapter adapter=new MyCatsAdapter(R.layout.item_my_cat,cats,MyCatActivity.this);
+                catss.add(cats);
+                Log.e(TAG, "handleMessage: catsssize"+catss.size() );
+                Log.e(TAG, "handleMessage: catss"+catss );
+                MyCatsAdapter adapter=new MyCatsAdapter(R.layout.item_my_cat,catss,MyCatActivity.this);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(MyCatActivity.this);
-                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                layoutManager.setOrientation(RecyclerView.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
 
