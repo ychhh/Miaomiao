@@ -141,7 +141,7 @@ public class FollowActivity extends Activity {
             }
             viewHolder.cat_name.setText(cat.getCname());
             viewHolder.cat_intro.setText(cat.getCintro());
-            Glide.with(context).load(cat.getHid()).into(viewHolder.cat_head);
+            Glide.with(context).load(cat.getHpath()).into(viewHolder.cat_head);
             viewHolder.btn_unfollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
