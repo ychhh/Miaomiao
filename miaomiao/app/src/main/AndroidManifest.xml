@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hbsd.rjxy.miaomiao">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -28,37 +28,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:theme">
-        <activity android:name=".zsh.setting.view.ShowCardActivity"></activity>
+
+        <activity android:name=".wq.CatFCActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".zsh.setting.view.ShowCardActivity" />
         <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
         <activity
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity">
 
         </activity>
-        <activity android:name=".ljt.login.ShowServiceActivity"/>
+        <activity android:name=".ljt.login.PhoneLoginActivity" />
+        <activity android:name=".ljt.login.ShowServiceActivity" />
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
         <activity android:name=".ljt.login.LoginProblemsActivity" />
-
-
-        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /><!-- 提示登陆页面 -->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity" > <!-- 点击猫头像或评论跳转到额activity -->
+        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /> <!-- 提示登陆页面 -->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"> <!-- 点击猫头像或评论跳转到额activity -->
 
         </activity>
-        <activity android:name=".zlc.publish.model.PublishActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 发布页面 -->
-        <!--短信验证码-->
+        <activity
+            android:name=".zlc.publish.model.PublishActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 发布页面 -->
+        <!-- 短信验证码 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <meta-data
             android:name="Mob-AppKey"
             android:value="2d45d50c7d388" />
