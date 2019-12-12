@@ -13,21 +13,13 @@ public class Constant {
 
     public static String[] TAB_STRING = {"首页","圈子","我的猫","直播","我的"}; //tabhost中的名词
 
-
-
     public static String LOGIN_URL="http://10.7.88.102:8080/login/";//登录的URL
-
-
-<<<<<<< HEAD
-    public static String GET_USER_URL="http://10.7.88.102:8080/Self/";//操作当前登录的用户信息
 
     public static String UPLOAD_USERHEAD_TOKEN_URL="http://10.7.88.102:8080/Self/getToken";//上传用户头像获取token
 
-=======
     public static String GET_USER_URL="http://47.94.171.160:8081/Self/";//操作当前登录的用户信息
     //http://10.7.88.102:8080/Self/
     //http://47.94.171.160:8081/Self/
->>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
     public static final String QINIU_URL = "q20jftoug.bkt.clouddn.com";   //七牛服务器地址
@@ -73,12 +65,5 @@ public class Constant {
 
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";
-
-
-
-
-
-
-
 
 }
