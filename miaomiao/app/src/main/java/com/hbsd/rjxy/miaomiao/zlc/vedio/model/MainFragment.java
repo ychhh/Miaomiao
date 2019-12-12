@@ -30,8 +30,11 @@ import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
@@ -82,6 +85,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private View view;
     private int contentType = 1;//TODO ：1推荐，0订阅
     private String uid;
+    private boolean nomoreVideo = false;
 
     Gson gson = new Gson();
 
@@ -140,7 +144,13 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setHeaderHeight(190);
         rlVideo.setHeaderMaxDragRate(2.0f);
         rlVideo.setHeaderTriggerRate(0.7f);
-
+        rlVideo.setEnableLoadMore(false);
+        rlVideo.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                askforRefreshVideoList();
+            }
+        });
 
 
     }
@@ -170,6 +180,43 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
     }
+
+    private void askforRefreshVideoList(){
+        if(!nomoreVideo){
+            RECOMMEND_PAGE_DEFAULT += 1;
+            JSONObject jo = new JSONObject();
+            try {
+                jo.put("page",RECOMMEND_PAGE_DEFAULT);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            OkHttpUtils.getInstance().postJson(INIT_VIDEO_URL, jo.toString(), new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    //这个要替换当前的这些视频
+                    List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                    Log.e("refresh",""+videoList.toString());
+                    EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                    videoEvent.setContentList(videoList);
+                    videoEvent.setContentString("refreshVideoList");
+                    EventBus.getDefault().post(videoEvent);
+                }
+            });
+        }else{
+            //已经没有更多的没看过的视频了
+        }
+
+
+
+
+
+    }
+
 
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
@@ -366,10 +413,29 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 if("complete".equals(videoEvent.getContentMap().get("status"))){
                     RECOMMEND_PAGE_DEFAULT -= 1;
                     Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                    nomoreVideo = true;
                 }
 
 
             }
+        }else if("refreshVideoList".equals(videoEvent.getContentString())){
+            GSYVideoManager.releaseAllVideos();
+            this.videoList.clear();
+            for(Multi_info multi_info : videoEvent.getContentList()){
+                this.videoList.add(multi_info);
+            }
+            adapter.notifyItemChanged(0);
+            firstOpenVideo = true;
+            rlVideo.finishRefresh(1000);
+            recyclerView.swapAdapter(adapter,true);
+            recyclerView.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            layoutManager.onItemsChanged(recyclerView);
+            MeGSYVideoPlayer meGSYVideoPlayer = recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.videoPlayer);
+            meGSYVideoPlayer.startAfterPrepared();
+
+
+
         }
 
         Log.e("loadMoreComplete","loadMoreComplete");

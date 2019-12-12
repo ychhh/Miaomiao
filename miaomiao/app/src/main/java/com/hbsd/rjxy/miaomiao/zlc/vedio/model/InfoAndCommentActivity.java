@@ -249,6 +249,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
             String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
+            Log.e("文件大小为：",""+selectResultList.get(0).getSize());
             type = 0;
             startPublishActivity(type,selectResultList.get(0).getPath());
 
@@ -259,6 +260,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
             String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
+            Log.e("文件大小为：",""+selectResultList.get(0).getSize());
             if("mp4".equals(fileExt)){
                 type = 0;
             }else if("jpg".equals(fileExt) || "png".equals(fileExt) || "jpeg".equals(fileExt)){

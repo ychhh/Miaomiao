@@ -75,5 +75,19 @@
         android:layout_height="wrap_content" />
 
 
+    <ImageView
+        android:id="@+id/iv_frameImage"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="240dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/iv_frame"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
 
 </FrameLayout>
