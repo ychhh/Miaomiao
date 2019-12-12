@@ -25,8 +25,6 @@ public class SelfTest {
         //selfService.updateUserSexById(sex,uid);
         /*根据uid修改简介*/
 //        selfService.updateUserIntroById(intro,uid);
-        int rtn=selfService.updateUserMsgById(name,sex,intro,uid);
-        System.out.println("修改返回"+rtn);
     }
 
 

@@ -19,15 +19,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
+import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditProfileView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -39,7 +43,7 @@ import java.io.IOException;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.UPLOAD_USERHEAD_TOKEN_URL;
 
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity implements EditProfileView {
     private Button btn_back;
     private Button btn_commit;
     private TextView tx_reName;
@@ -54,40 +58,54 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditUserPresenterCompl editUserPresenterCompl;
     private String localImgPath;
     private String qiNiuImgPath;
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        /*接收我的界面传来的数据*/
         intent = getIntent();
-        id = intent.getIntExtra("id", 0);
-        initData();
+        String str = intent.getStringExtra("user");
+        Gson gson = new Gson();
+        user = gson.fromJson(str, User.class);
+
+        /*控件*/
         btn_back = findViewById(R.id.self_back);
         btn_commit = findViewById(R.id.self_reCommit);
         iv_reImg = findViewById(R.id.iv_reImg);
         tx_reName = findViewById(R.id.self_reName);
         tx_reSbp = findViewById(R.id.self_reSbp);
         tx_reSex = findViewById(R.id.self_reSex);
-        tv_changeHead=findViewById(R.id.tv_changeHead);
-        //大监听
+        tv_changeHead = findViewById(R.id.tv_changeHead);
+        /*数据初始化*/
+        initView();
+        /*大监听*/
         ButtonClickLinstener buttonClickLinstener = new ButtonClickLinstener();
         //绑定监听
         btn_back.setOnClickListener(buttonClickLinstener);
         btn_commit.setOnClickListener(buttonClickLinstener);
         tv_changeHead.setOnClickListener(buttonClickLinstener);
-
     }
 
-    public void initData() {
+    public void initView() {
+        /*TODO
+         *   图片的设置
+         *   */
+        tx_reSex.setText(user.getUserSex());
+        tx_reSbp.setText(user.getUserIntro());
+        tx_reName.setText(user.getUserName());
         editUserPresenterCompl = new EditUserPresenterCompl(this);
-        editUserPresenterCompl.initUser(id);
+    }
 
-
+    /*实现接口方法，结束当前界面*/
+    @Override
+    public void Okfinish() {
+        finish();
     }
 
     public class ButtonClickLinstener implements View.OnClickListener {
-
         /**
          * Called when a view has been clicked.
          *
@@ -104,37 +122,20 @@ public class EditProfileActivity extends AppCompatActivity {
                     String newName = tx_reName.getText().toString();
                     String newsbp = tx_reSbp.getText().toString();
                     String newSex = tx_reSex.getText().toString();
+                    //Log.e("读取到当下想修改的用户名为",newName);
                     JSONObject obj = new JSONObject();
                     try {
-                        obj.put("uid", id);
+                        obj.put("uid", user.getUserId());
                         obj.put("newName", newName);
                         obj.put("newIntro", newsbp);
                         obj.put("newSex", newSex);
                         String jsonStr = obj.toString();
-                        callback = new Callback() {
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                Log.e("任务", "shibai");
-                            }
+                        Log.e("json", jsonStr);
+                        editUserPresenterCompl.editUser(jsonStr);
 
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                Log.e("已经成功接收到修改之后的客户信息", "zhenhao");
-                            }
-                        };
-                        String url = Constant.GET_USER_URL + "edit";
-                        okHttpUtils = new OkHttpUtils();
-                        okHttpUtils.postJson(url, jsonStr, callback);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    Log.e("新的用户名", newName);
-                    Intent intent0 = new Intent("android.intent.action.CART_BROADCAST");
-                    intent0.putExtra("data", "refresh");
-                    LocalBroadcastManager.getInstance(EditProfileActivity.this).sendBroadcast(intent0);
-                    sendBroadcast(intent0);
-                    finish();
                     break;
                 }
                 case R.id.tv_changeHead:
@@ -142,7 +143,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(EditProfileActivity.this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
                     break;
-
             }
         }
     }
@@ -186,20 +186,17 @@ public class EditProfileActivity extends AppCompatActivity {
      * 获取token
      */
     private void startUploadProgress() {
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("uid", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         OkHttpUtils.getInstance().postJson(UPLOAD_USERHEAD_TOKEN_URL, jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
             }
-
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String token = response.body().string();
@@ -210,7 +207,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void startRealUpload(String token) {
         UploadUtils uploadUtils = new UploadUtils(token, localImgPath, new File(localImgPath).getName());
-        qiNiuImgPath=uploadUtils.getKey();//服务器端图片名称，包含后缀
+        qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
         uploadUtils.upload();
     }
 }

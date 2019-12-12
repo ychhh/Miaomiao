@@ -51,8 +51,6 @@ public class SelfService {
      *
      */
 
-
-
     /**
      * 根据uid更改用户信息（姓名、性别、简介）
      * @param username

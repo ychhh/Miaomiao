@@ -35,7 +35,7 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
      * @param step 每页显示的数量
      * @return
      */
-    @Query(value = "SELECT * FROM multi_info limit ?,?",nativeQuery = true)
+    @Query(value = "SELECT * FROM multi_info where type=0 limit ?,?",nativeQuery = true)
     List<Multi_info> findVideoPaging(int start,int step);
 
 
@@ -51,8 +51,8 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
 
     @Modifying
     @Transactional(readOnly = false)
-    @Query(value = "INSERT INTO multi_info(type,cid,uid,mpath,mupload_time,mcontent,mvisited,mstatus,mcomment_count,mformat,mhot,mcover,mrecommended,mtag)" +
-            " VALUES(?,?,?,?,?,?,0,0,0,?,0,?,0.1,1)",nativeQuery =true)
+    @Query(value = "INSERT INTO multi_info(type,cid,uid,mpath,mupload_time,mcontent,mvisited,mstatus,mcomment_count,mformat,mhot,maddress,mcover,mrecommended,mtag)" +
+            " VALUES(?,?,?,?,?,?,0,0,0,?,0,1,?,0.1,1)",nativeQuery =true)
     int publishMulti(int type, int cid, int uid, String mpath, String mupload_time,String mcontent,String mformat,String cover);
 
 

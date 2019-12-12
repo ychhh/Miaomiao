@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="993c7b84-8fb5-4a2a-a58c-eb3bb248bbf2" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/wq/controller/QueryCatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" afterDir="false" />
@@ -53,6 +54,28 @@
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/hbsd/rjxy/miaomiao/MiaomiaoApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/hbsd/rjxy/miaomiao/MiaomiaoApplicationTests.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
+=======
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/entity/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/ych/model/MyCatsAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/ych/view/MyCatActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/activity_follow_cat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/activity_my_cat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/item_follow_cat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/res/layout/item_my_cat.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/utils/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/ych/view/FollowActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/ych/view/FollowActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hbsd/rjxy/miaomiao/zlc/video/dao/VideoDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/miaomiao-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/miaomiao-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests.txt" afterDir="false" />
+    </list>
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +102,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zlc/video/controller/VideoController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -88,20 +112,44 @@
                 <element signature="e#799#800#0" expanded="true" />
                 <element signature="e#857#858#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="66" column="9" lean-forward="true" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="348">
               <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="500">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Multi_info.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
@@ -110,15 +158,28 @@
                 <element signature="e#1168#1169#0" expanded="true" />
                 <element signature="e#1194#1195#0" expanded="true" />
               </folding>
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Cat.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/wq/controller/QueryCatController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="95">
               <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Multi_info.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </state>
           </provider>
         </entry>
@@ -126,26 +187,54 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/cat/dao/CatDao.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="190">
+=======
+            <state relative-caret-position="250">
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
               <caret line="16" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-317">
               <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/cat/controller/CatController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription_record.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1300">
+              <caret line="77" selection-start-line="77" selection-end-line="77" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="304">
               <caret line="61" column="14" lean-forward="true" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="134" selection-start-column="134" selection-end-column="134" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </state>
           </provider>
         </entry>
@@ -155,9 +244,24 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ii</find>
+      <find>subscription</find>
+      <find>subscribe</find>
+      <find>Subscribe</find>
+      <find>subscription_time</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>subscribtion</replace>
+      <replace>Subscription</replace>
+      <replace>subscription</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -165,11 +269,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/wq/controller/QueryCatController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/dao/SelfDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/service/SelfService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/zsh/self/control/SelfControl.java" />
+=======
+        <option value="$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
       </list>
     </option>
   </component>
@@ -177,7 +285,6 @@
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="localRepository" value="E:\miao\repository" />
-        <option name="mavenHome" value="F:/apache-maven-3.6.2" />
       </MavenGeneralSettings>
     </option>
     <option name="importingSettings">
@@ -187,12 +294,43 @@
       </MavenImportingSettings>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1179" />
     <option name="height" value="707" />
   </component>
+=======
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="miaomiao" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="miaomiao" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="miaomiao" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="170" />
+    <option name="y" value="80" />
+    <option name="width" value="1180" />
+    <option name="height" value="610" />
+  </component>
+  <component name="ProjectId" id="1UmOKUwUeq5LO5nrKViDzGZ1yjM" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -201,7 +339,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,6 +428,7 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="wq" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -313,6 +455,9 @@
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </path>
             <path>
               <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
@@ -324,8 +469,13 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+              <item name="cat" type="462c0819:PsiDirectoryNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </path>
             <path>
               <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
@@ -337,9 +487,14 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
               <item name="constant" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+              <item name="subscription" type="462c0819:PsiDirectoryNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </path>
             <path>
               <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
@@ -351,9 +506,15 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
               <item name="control" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+              <item name="subscription" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </path>
             <path>
               <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
@@ -365,8 +526,13 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+              <item name="subscription" type="462c0819:PsiDirectoryNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
               <item name="dao" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -379,6 +545,7 @@
               <item name="hbsd" type="462c0819:PsiDirectoryNode" />
               <item name="rjxy" type="462c0819:PsiDirectoryNode" />
               <item name="miaomiao" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
@@ -396,6 +563,12 @@
               <item name="zsh" type="462c0819:PsiDirectoryNode" />
               <item name="self" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ych" type="462c0819:PsiDirectoryNode" />
+              <item name="subscription" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+              <item name="SubDao" type="1a9f42e2:ClassTreeNode" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
             </path>
             <path>
               <item name="miaomiao" type="b2602c69:ProjectViewProjectNode" />
@@ -409,6 +582,10 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+<<<<<<< HEAD
+=======
+      <pane id="Scope" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -490,16 +667,12 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
+        <option name="contentProportion" value="0.077380955" />
         <treeState>
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6800a8d7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6800a8d7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5e1c19de" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@90e6b925" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -530,15 +703,28 @@
       <workItem from="1575682467789" duration="2389000" />
       <workItem from="1575688349825" duration="7971000" />
       <workItem from="1575871200677" duration="1148000" />
+<<<<<<< HEAD
       <workItem from="1576023066956" duration="13736000" />
       <workItem from="1576109215718" duration="4519000" />
+=======
+      <workItem from="1575958275645" duration="7604000" />
+      <workItem from="1575968961357" duration="3704000" />
+      <workItem from="1576053314353" duration="756000" />
+      <workItem from="1576105981941" duration="945000" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="20759000" />
   </component>
   <component name="TodoView" selected-index="3">
+=======
+    <option name="totallyTimeSpent" value="992000" />
+  </component>
+  <component name="TodoView">
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -548,10 +734,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25869894" />
+=======
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23793566" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -561,6 +754,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Run" order="2" weight="0.56393445" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -579,6 +773,26 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Maven" order="3" />
+=======
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="13" />
+      <window_info active="true" anchor="bottom" id="Run Dashboard" order="14" visible="true" weight="0.42492917" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.09773371" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.21715818" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Database" order="6" />
@@ -628,6 +842,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="add java and ui" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ljt/Login/controller/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1786">
@@ -701,16 +916,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
           <caret line="42" selection-start-line="26" selection-start-column="4" selection-end-line="42" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/service/SubService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Cat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Multi_info.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/cat/dao/CatDao.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="190">
+=======
+        <state relative-caret-position="250">
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
           <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="766">
@@ -784,6 +1024,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-317">
           <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/cat/controller/CatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/entity/Subscription_record.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1300">
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="134" selection-start-column="134" selection-end-column="134" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/dao/SubDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hbsd/rjxy/miaomiao/ych/subscription/controller/SubController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="66" column="9" lean-forward="true" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+>>>>>>> d00469bb903ccfb2b492a20ac044633345adceae
         </state>
       </provider>
     </entry>

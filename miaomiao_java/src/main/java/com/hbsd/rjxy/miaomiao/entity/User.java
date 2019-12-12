@@ -74,12 +74,12 @@ public class User {
         this.uintro = uintro;
     }
 
-    public Integer getHid() {
-        return hid;
+    public String getHpath() {
+        return hpath;
     }
 
-    public void setHid(Integer hid) {
-        this.hid = hid;
+    public void setHpath(String hpath) {
+        this.hpath = hpath;
     }
 
     public Integer getIs_vip() {
@@ -128,13 +128,5 @@ public class User {
 
     public void setUlast_login(Date ulast_login) {
         this.ulast_login = ulast_login;
-    }
-
-    public String getHpath() {
-        return hpath;
-    }
-
-    public void setHpath(String hpath) {
-        this.hpath = hpath;
     }
 }

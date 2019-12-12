@@ -3,7 +3,9 @@ package com.hbsd.rjxy.miaomiao.zlc.video.service;
 
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.CommentDao;
+import com.hbsd.rjxy.miaomiao.zlc.video.dao.UserDao;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ public class CommentService {
     CommentDao commentDao;
     @Autowired
     VideoDao videoDao;
-
+    @Autowired
+    UserDao userDao;
 
     public List<Comment> findCommentsByMiid(Multi_info multi_info){
         return commentDao.findCommentsByMiid(multi_info.getMiid());
@@ -37,6 +40,12 @@ public class CommentService {
     }
 
 
+
+    public List<Comment> findCommentsByMiidAndPageForLogin(int miid,int page){
+        return commentDao.findCommentsByMiidAndPage(miid,(page-1)*COMMENT_PAGING_STEP,COMMENT_PAGING_STEP);
+    }
+
+
     /**
      * 添加评论，修改视频的评论数量(事务控制)
      * Multi_info 视频对象
@@ -46,8 +55,19 @@ public class CommentService {
      */
     @Transactional(rollbackFor = Exception.class)
     public int addComment(Comment comment){
+        //增加视频评论数
         videoDao.addVideoCommentAccount(comment.getMiid());
-        commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent(),comment.getPublishTime());
+        //查询uid的upath和uname
+        User user = userDao.findUserByUid(comment.getUid());
+        //插入评论
+        commentDao.addComment(comment.getMiid()
+                ,comment.getColike()
+                ,comment.getCostatus()
+                ,comment.getUid()
+                ,comment.getCocontent()
+                ,comment.getPublishTime()
+                ,user.getHpath()
+                ,user.getUsername());
         return commentDao.findId(comment.getUid(),comment.getPublishTime());
     }
 
@@ -65,21 +85,21 @@ public class CommentService {
 
     /**
      * 点赞评论
-     * @param comment
+     * @param coid
      * @return
      */
-    public int likeComment(Comment comment){
-        return commentDao.likeComment(comment.getCoid());
+    public int likeComment(int coid){
+        return commentDao.likeComment(coid);
     }
 
 
     /**
      * 取消点赞
-     * @param comment
+     * @param coid
      * @return
      */
-    public int dislikeComment(Comment comment){
-        return commentDao.dislikeComment(comment.getCoid());
+    public int dislikeComment(int coid){
+        return commentDao.dislikeComment(coid);
     }
 
 
