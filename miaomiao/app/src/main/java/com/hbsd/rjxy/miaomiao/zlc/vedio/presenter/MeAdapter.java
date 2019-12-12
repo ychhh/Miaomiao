@@ -1,5 +1,9 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +39,54 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info,MeViewHolder> impleme
         //设置视频小鱼干数量  评论数量
         helper.setText(R.id.tv_video_fish,""+item.getMhot()).setText(R.id.tv_comment_amount,""+item.getMcomment_count());
 
+
+        helper.setText(R.id.tv_videocontent,item.getMcontent());
+
+        helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                    TODO:   （1）先判断是否登录了，没登录，去登陆！
+                            （2）已经登陆了，那之前在fragment里一定拿到过订阅列表的信息
+                            （3）对比订阅列表的cid和本视频的cid，判断是否显示这个订阅的视图
+                            （4）订阅：
+                                        （1）动画效果，（2）订阅的业务逻辑
+
+                 */
+
+                ObjectAnimator animator = ObjectAnimator.ofFloat(v,"rotation",0f,360f);
+                animator.setDuration(1000);
+                animator.start();
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(v,"scaleX",1f,0f);
+                animator1.setDuration(1500);
+                animator1.start();
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(v,"scaleY",1f,0f);
+                animator2.setDuration(1500);
+                animator2.start();
+                animator2.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        v.setVisibility(View.INVISIBLE);
+                        ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success),"alpha",0f,1f,0f);
+                        animator3.setDuration(1000);
+                        animator3.start();
+                        helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
+                        animator3.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                            }
+                        });
+
+                    }
+                });
+
+
+            }
+        });
 
 
         int cid = item.getCid();

@@ -15,7 +15,7 @@ public class User {
     private String userPassword;
     private String userName;
     private String userIntro;
-    private int userHeadId;
+    private String hPath;
     private int isVip;
     private int isAdmain;
     private int bannedId;
@@ -27,7 +27,7 @@ public class User {
     }
 
     public User(int userId, String userTel, String userSex, String userPassword,
-                String userName, String userIntro, int userHeadId, int isVip,
+                String userName, String userIntro, String hPath, int isVip,
                 int isAdmain, int bannedId, int userCatCount, Date userRegistTime,
                 Date userLastLogin) {
         this.userId = userId;
@@ -36,7 +36,7 @@ public class User {
         this.userPassword = userPassword;
         this.userName = userName;
         this.userIntro = userIntro;
-        this.userHeadId = userHeadId;
+        this.hPath = hPath;
         this.isVip = isVip;
         this.isAdmain = isAdmain;
         this.bannedId = bannedId;
@@ -93,12 +93,13 @@ public class User {
         this.userIntro = userIntro;
     }
 
-    public int getUserHeadId() {
-        return userHeadId;
+
+    public String gethPath() {
+        return hPath;
     }
 
-    public void setUserHeadId(int userHeadId) {
-        this.userHeadId = userHeadId;
+    public void sethPath(String hPath) {
+        this.hPath = hPath;
     }
 
     public int getIsVip() {
@@ -158,7 +159,7 @@ public class User {
                 ", userPassword='" + userPassword + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userIntro='" + userIntro + '\'' +
-                ", userHeadId=" + userHeadId +
+                ", hPath='" + hPath + '\'' +
                 ", isVip=" + isVip +
                 ", isAdmain=" + isAdmain +
                 ", bannedId=" + bannedId +

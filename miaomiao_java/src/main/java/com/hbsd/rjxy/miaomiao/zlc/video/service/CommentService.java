@@ -3,7 +3,9 @@ package com.hbsd.rjxy.miaomiao.zlc.video.service;
 
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.CommentDao;
+import com.hbsd.rjxy.miaomiao.zlc.video.dao.UserDao;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ public class CommentService {
     CommentDao commentDao;
     @Autowired
     VideoDao videoDao;
-
+    @Autowired
+    UserDao userDao;
 
     public List<Comment> findCommentsByMiid(Multi_info multi_info){
         return commentDao.findCommentsByMiid(multi_info.getMiid());
@@ -52,8 +55,19 @@ public class CommentService {
      */
     @Transactional(rollbackFor = Exception.class)
     public int addComment(Comment comment){
+        //增加视频评论数
         videoDao.addVideoCommentAccount(comment.getMiid());
-        commentDao.addComment(comment.getMiid(),comment.getColike(),comment.getCostatus(),comment.getUid(),comment.getCocontent(),comment.getPublishTime());
+        //查询uid的upath和uname
+        User user = userDao.findUserByUid(comment.getUid());
+        //插入评论
+        commentDao.addComment(comment.getMiid()
+                ,comment.getColike()
+                ,comment.getCostatus()
+                ,comment.getUid()
+                ,comment.getCocontent()
+                ,comment.getPublishTime()
+                ,user.getHpath()
+                ,user.getUsername());
         return commentDao.findId(comment.getUid(),comment.getPublishTime());
     }
 
