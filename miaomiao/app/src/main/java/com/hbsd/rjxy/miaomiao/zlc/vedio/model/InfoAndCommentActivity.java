@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -248,6 +249,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
             String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
+            Log.e("文件大小为：",""+selectResultList.get(0).getSize());
             type = 0;
             startPublishActivity(type,selectResultList.get(0).getPath());
 
@@ -258,6 +260,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
             String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
+            Log.e("文件大小为：",""+selectResultList.get(0).getSize());
             if("mp4".equals(fileExt)){
                 type = 0;
             }else if("jpg".equals(fileExt) || "png".equals(fileExt) || "jpeg".equals(fileExt)){
@@ -295,6 +298,18 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                         TODO    以type = 2 跳转
                  */
                 startPublishActivity(2,null);
+            }
+        });
+
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        this.getWindow().setAttributes(lp);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
             }
         });
 
@@ -347,6 +362,18 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
             @Override
             public void onClick(View v) {
                 askPermissionForAlbum();
+            }
+        });
+
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        this.getWindow().setAttributes(lp);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
             }
         });
 

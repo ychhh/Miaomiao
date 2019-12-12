@@ -3,9 +3,7 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,7 +16,7 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 
-import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfFragment;
+import com.hbsd.rjxy.miaomiao.zsh.setting.SelfFragment;
 
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;

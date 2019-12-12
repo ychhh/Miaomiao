@@ -31,13 +31,13 @@
                     android:layout_height="60dp"
                     android:src="@drawable/u45"/>
                 <TextView
-                    android:id="@+id/self_sbp"
+                    android:id="@+id/self_main_intro"
                     android:layout_marginTop="10dp"
                     android:layout_width="90dp"
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="#aaa"
-                    android:text="愿得一人心"/>
+                    android:text="请登录"/>
 
             </LinearLayout>
             <!--编辑资料-->

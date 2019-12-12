@@ -30,6 +30,13 @@
         tools:replace="android:theme">
 
         <activity android:name=".wq.CatFCActivity" >
+        <activity android:name=".zsh.setting.ShowCardActivity"></activity>
+        <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
+        <activity
+            android:name=".zlc.vedio.model.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +58,18 @@
         <activity android:name=".ljt.login.ShowProblemActivity" />
         <activity android:name=".ljt.login.LoginProblemsActivity" />
         <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /> <!-- 提示登陆页面 -->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"> <!-- 点击猫头像或评论跳转到额activity -->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/> <!-- 点击猫头像或评论跳转到额activity -->
+        <activity android:name=".ych.view.MyCatActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".ych.view.FollowActivity">
+
+        </activity>
+        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /><!-- 提示登陆页面 -->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity" > <!-- 点击猫头像或评论跳转到额activity -->
 
         </activity>
         <activity

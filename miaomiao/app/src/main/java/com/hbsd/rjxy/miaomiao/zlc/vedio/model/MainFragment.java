@@ -25,11 +25,16 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 
+import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
@@ -65,10 +70,13 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     TextView tv_subscribed;
     @BindView(R.id.tv_recommend)
     TextView tv_recommend;
+    @BindView(R.id.rl_video)
+    SmartRefreshLayout rlVideo;
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
     private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
+    private List<Subscription_record> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -77,6 +85,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private View view;
     private int contentType = 1;//TODO ：1推荐，0订阅
     private String uid;
+    private boolean nomoreVideo = false;
 
     Gson gson = new Gson();
 
@@ -97,7 +106,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             recyclerView = view.findViewById(R.id.rv_main);
 
             initPlayPosition(getContext());
-
+            initRefreshLayout();
 
 
 
@@ -119,8 +128,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             }else {
                 //没登录这样
-                askforRecommend();
+            askforRecommend();
             }
+
 
 
 
@@ -130,23 +140,83 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         return view;
     }
 
-    private void askforSubscriptionList() {
-        Map<String,String> map = new HashMap<>();
-        map.put("uid",uid);
-        OkHttpUtils.getInstance().postForm(URL_GET_SUBSCRIPTION_LIST, map, new Callback() {
+    private void initRefreshLayout() {
+        rlVideo.setHeaderHeight(190);
+        rlVideo.setHeaderMaxDragRate(2.0f);
+        rlVideo.setHeaderTriggerRate(0.7f);
+        rlVideo.setEnableLoadMore(false);
+        rlVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.e("askforSubscriptionList",""+response.body().string());
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                askforRefreshVideoList();
             }
         });
 
 
     }
+
+    private void askforSubscriptionList() {
+        Map<String,String> map = new HashMap<>();
+        map.put("uid","1");
+        OkHttpUtils.getInstance().postForm(URL_GET_SUBSCRIPTION_LIST, map, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                Log.e("网络连接失败","连接失败");
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                subscriptionRecords =
+                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
+//                Log.e("askforSubscriptionList",""+response.body().string());
+
+
+                askforRecommend();
+            }
+        });
+
+
+    }
+
+    private void askforRefreshVideoList(){
+        if(!nomoreVideo){
+            RECOMMEND_PAGE_DEFAULT += 1;
+            JSONObject jo = new JSONObject();
+            try {
+                jo.put("page",RECOMMEND_PAGE_DEFAULT);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            OkHttpUtils.getInstance().postJson(INIT_VIDEO_URL, jo.toString(), new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    //这个要替换当前的这些视频
+                    List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                    Log.e("refresh",""+videoList.toString());
+                    EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                    videoEvent.setContentList(videoList);
+                    videoEvent.setContentString("refreshVideoList");
+                    EventBus.getDefault().post(videoEvent);
+                }
+            });
+        }else{
+            //已经没有更多的没看过的视频了
+        }
+
+
+
+
+
+    }
+
 
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
@@ -271,7 +341,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     @Override
     public MeAdapter initAdapter() {
-        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext());
+        adapter = new MeAdapter(R.layout.rv_mian_detail_layout,videoList,getContext(),subscriptionRecords);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -343,10 +413,29 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 if("complete".equals(videoEvent.getContentMap().get("status"))){
                     RECOMMEND_PAGE_DEFAULT -= 1;
                     Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                    nomoreVideo = true;
                 }
 
 
             }
+        }else if("refreshVideoList".equals(videoEvent.getContentString())){
+            GSYVideoManager.releaseAllVideos();
+            this.videoList.clear();
+            for(Multi_info multi_info : videoEvent.getContentList()){
+                this.videoList.add(multi_info);
+            }
+            adapter.notifyItemChanged(0);
+            firstOpenVideo = true;
+            rlVideo.finishRefresh(1000);
+            recyclerView.swapAdapter(adapter,true);
+            recyclerView.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            layoutManager.onItemsChanged(recyclerView);
+            MeGSYVideoPlayer meGSYVideoPlayer = recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.videoPlayer);
+            meGSYVideoPlayer.startAfterPrepared();
+
+
+
         }
 
         Log.e("loadMoreComplete","loadMoreComplete");
