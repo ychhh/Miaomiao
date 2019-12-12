@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:theme">
-        <activity android:name=".zsh.setting.view.ShowCardActivity"></activity>
+        <activity android:name=".zsh.setting.ShowCardActivity"></activity>
         <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
         <activity
             android:name=".zlc.vedio.model.MainActivity"

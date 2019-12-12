@@ -1,11 +1,8 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting.view;
+package com.hbsd.rjxy.miaomiao.zsh.setting;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +16,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
+import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfMainView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+    TODO
+        我的界面由fragment碎片组成，Activity依托zlc的MainActivity
+        <!--initData-->
+        通过sp获取uid,通过GetUserPresenter的实现者SelfMainView来获取并返回user
+        <!--initView-->
+        对右侧抽屉的初始化,运用自定义的AddItemAdapter
+        <!---refresh-->
+        利用从EditUserPresenterCompl中传过来的修改后的Json(user),进行当下用户的刷新
 
-public class SelfFragment extends Fragment {
+*/
+public class SelfFragment extends Fragment implements SelfMainView {
     public View view;
     public static final String[] TITLES = { "First", "Second" };
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
@@ -43,8 +55,9 @@ public class SelfFragment extends Fragment {
     private Button btn_editF;
     private Button tx_order;
     private GetUserPresenterCompl getUserPresenterCompl;
-    private Integer uid;
+    private User user;
     private  TextView tx_intro;
+    ListView menu_listview_r;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +66,7 @@ public class SelfFragment extends Fragment {
                 container,
                 false
         );
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -60,21 +74,32 @@ public class SelfFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        /*控件*/
+
         mDrawer_layout = view.findViewById(R.id.drawer_layout);
         mMenu_layout_right =  view.findViewById(R.id.menu_layout_right);
-        ListView menu_listview_r = mMenu_layout_right.findViewById(R.id.menu_listView_r);
+        menu_listview_r = mMenu_layout_right.findViewById(R.id.menu_listView_r);
         btn_setting=view.findViewById(R.id.btn_setting);
         btn_editF=view.findViewById(R.id.btn_editF);
         tx_order=view.findViewById(R.id.self_order);
-        tx_intro=view.findViewById(R.id.self_intro);
 
+        tx_intro=view.findViewById(R.id.self_main_intro);
+
+        getUserPresenterCompl=new GetUserPresenterCompl(this);
+
+        user=new User();
+
+        /*通过sp获取当下user的uid*/
+
+        user.setUserId(8);
+
+        /*初始化UserData*/
+        initData();
+        /*初始化抽屉*/
         initDrawerList();
-        initUserData();
-        Activity activity=this.getActivity();
-
-//        Log.e("获取到用户信息",user.getUserName()+"2019年12月7日");
         menu_listview_r.setAdapter(adapter);
-        //监听setting按钮
+
+        /*监听setting按钮*/
         initEvent();
 
 
@@ -83,60 +108,42 @@ public class SelfFragment extends Fragment {
         menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
 
 
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.intent.action.CART_BROADCAST");
-        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent){
-                String msg = intent.getStringExtra("data");
-                if("refresh".equals(msg)){
-
-                    refresh();
-                }
-            }
-        };
-        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
-
 
     }
-    public void refresh(){
-        mDrawer_layout = view.findViewById(R.id.drawer_layout);
-        mMenu_layout_right =  view.findViewById(R.id.menu_layout_right);
-        ListView menu_listview_r = mMenu_layout_right.findViewById(R.id.menu_listView_r);
-        btn_setting=view.findViewById(R.id.btn_setting);
-        btn_editF=view.findViewById(R.id.btn_editF);
-        tx_order=view.findViewById(R.id.self_order);
-        tx_intro=view.findViewById(R.id.self_intro);
 
-        initDrawerList();
-        initUserData();
-        Activity activity=this.getActivity();
-
-//        Log.e("获取到用户信息",user.getUserName()+"2019年12月7日");
-        menu_listview_r.setAdapter(adapter);
-        //监听setting按钮
-        initEvent();
-
-
-
-        //监听菜单
-        menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
+    public void initData(){
+        getUserPresenterCompl.getUser(user.getUserId());
 
     }
 
 
-    public void initUserData(){
-        /*获取uid*/
-       // sharedPreferences=this.getActivity().getSharedPreferences("loginInfo", MODE_PRIVATE);
-        //String id= (String) sharedPreferences.getString("uid");
-        uid=8;
-        getUserPresenterCompl=new GetUserPresenterCompl(this.getActivity());
-        getUserPresenterCompl.getUser(uid);
+    /*实现接口方法，获取当下的用户信息*/
+    @Override
+    public void initUserView(User user0) {
 
-       // Log.e("接收到用户",user.getUserName());
+        user=user0;
+
+        if(tx_intro!=null){
+            Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
+            tx_intro.setText(user.getUserIntro());
+        }
+
 
     }
+
+    @Override
+    public void refresh() {
+
+        initUserView(user);
+
+
+
+
+
+    }
+
+
+
     public void initDrawerList(){
         String[] titles={"个人名片","我的订阅","修改密码","小程序"};
 
@@ -152,6 +159,7 @@ public class SelfFragment extends Fragment {
 
 
     }
+    /*实现全局按钮的监听*/
     private void initEvent(){
 
         ButtonClickListener buttonClickListener=new ButtonClickListener();
@@ -159,6 +167,9 @@ public class SelfFragment extends Fragment {
         btn_editF.setOnClickListener(buttonClickListener);
         tx_order.setOnClickListener(buttonClickListener);
     }
+
+
+    /*全局监听类*/
     public class ButtonClickListener implements View.OnClickListener{
 
         /**
@@ -180,8 +191,11 @@ public class SelfFragment extends Fragment {
                     break;
                 }
                 case R.id.btn_editF:{
+
                     Intent intent=new Intent(getActivity(), EditProfileActivity.class);
-                    intent.putExtra("id",uid);
+                    Gson gson=new Gson();
+                    String str=gson.toJson(user);
+                    intent.putExtra("user",str);
                     startActivity(intent);
 
                     break;
@@ -196,7 +210,19 @@ public class SelfFragment extends Fragment {
 
         }
     }
+    @Override
+    public void onDestroy() {
 
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetMessage(String str){
+        Gson gson=new Gson();
+        user=gson.fromJson(str,User.class);
+        refresh();
+        Log.e("event=",str);
+    }
     /**
      * 右侧列表点击事件
      * @author busy_boy
@@ -206,16 +232,14 @@ public class SelfFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Fragment fragment = null;
-
-            //根据item点击行号判断启用哪个Fragment
+            //根据行号判断所选为哪个item
             switch (position)
             {
                 case 0:
-                    Intent intent0=new Intent(getActivity(),ShowCardActivity.class);
-                    Integer uid=8;
-                    intent0.putExtra("uid",uid);
+                    Intent intent0=new Intent(getActivity(), ShowCardActivity.class);
+                    Gson gson=new Gson();
+                    String str=gson.toJson(user);
+                    intent0.putExtra("user",str);
                     startActivity(intent0);
 
                     break;
@@ -237,6 +261,7 @@ public class SelfFragment extends Fragment {
             mDrawer_layout.closeDrawer(mMenu_layout_right);//关闭mMenu_layout
         }
     }
+
 
 
 }

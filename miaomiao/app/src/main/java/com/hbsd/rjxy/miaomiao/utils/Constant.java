@@ -21,8 +21,9 @@ public class Constant {
     public static String LOGIN_URL="http://10.7.88.102:8080/login/";//登录的URL
 
 
-    public static String GET_USER_URL="http://10.7.88.102:8080/Self/";//操作当前登录的用户信息
-
+    public static String GET_USER_URL="http://47.94.171.160:8081/Self/";//操作当前登录的用户信息
+    //http://10.7.88.102:8080/Self/
+    //http://47.94.171.160:8081/Self/
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
 
     public static final String QINIU_URL = "q20jftoug.bkt.clouddn.com";   //七牛服务器地址
