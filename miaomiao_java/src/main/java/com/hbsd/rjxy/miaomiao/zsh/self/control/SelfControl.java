@@ -1,6 +1,8 @@
 package com.hbsd.rjxy.miaomiao.zsh.self.control;
 
 import com.hbsd.rjxy.miaomiao.entity.User;
+import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
+import com.hbsd.rjxy.miaomiao.zlc.video.service.VideoService;
 import com.hbsd.rjxy.miaomiao.zsh.self.service.SelfService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +21,8 @@ import java.io.InputStream;
 public class SelfControl {
     @Autowired
     private SelfService selfService;
+    @Autowired
+    private VideoService videoService;
 
     /**
      * @Param request
@@ -40,8 +44,9 @@ public class SelfControl {
             String username=object.getString("newName");
             String sex=object.getString("newSex");
             String uintro=object.getString("newIntro");
+            String hpath=object.getString("newHpath");
             Integer uid=object.getInt("uid");
-            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid);
+            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid,hpath);
             if (rtn>0){
                 res.put("edited","ok");
             }else{
@@ -88,6 +93,7 @@ public class SelfControl {
                 res.put("uName",user.getUsername());
                 res.put("uSex",user.getUsex());
                 res.put("uIntro",user.getUintro());
+                res.put("hpath",user.getHpath());
 
             }
             is.close();
@@ -97,6 +103,19 @@ public class SelfControl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/getToken")
+    @ResponseBody
+    public String getToken(HttpServletRequest request, HttpServletResponse response){
+        try {
+            //
+            JSONObject jsonObject = new JSONObject(RequestUtil.getJson(request));
+            System.out.println(jsonObject.get("uid"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return videoService.getToken();
     }
 
 

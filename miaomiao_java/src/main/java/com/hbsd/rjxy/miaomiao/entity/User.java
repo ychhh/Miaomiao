@@ -17,6 +17,7 @@ public class User {
     private String pwd;
     private String username;
     private String uintro;
+    private String hpath;
     private Integer hid;
     private Integer is_vip;
     private Integer is_admin;
@@ -127,5 +128,13 @@ public class User {
 
     public void setUlast_login(Date ulast_login) {
         this.ulast_login = ulast_login;
+    }
+
+    public String getHpath() {
+        return hpath;
+    }
+
+    public void setHpath(String hpath) {
+        this.hpath = hpath;
     }
 }
