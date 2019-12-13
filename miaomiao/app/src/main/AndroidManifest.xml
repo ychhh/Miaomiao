@@ -30,6 +30,13 @@
         tools:replace="android:theme">
 
         <activity android:name=".wq.CatFCActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".zsh.setting.ShowCardActivity"></activity>
         <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
         <activity
@@ -37,21 +44,15 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".zsh.setting.view.ShowCardActivity" />
-        <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
-        <activity
-            android:name=".zlc.vedio.model.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
 
         </activity>
+
+
         <activity android:name=".ljt.login.PhoneLoginActivity" />
         <activity android:name=".ljt.login.ShowServiceActivity" />
         <activity android:name=".ljt.login.PasswordLoginActivity" />

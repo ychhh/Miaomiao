@@ -517,13 +517,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
              */
             //生成第一帧帧图
 
-
-            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(path);
-            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
-            ivFrameImage.setImageBitmap(bitmap);
-            Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
-            if (type == 0) {
+            if(type == 0){
+                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(path);
+                Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
+                ivFrameImage.setImageBitmap(bitmap);
+                Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
                 //如果是视频上传,生成帧图jpg文件，记录coverPath
                 File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
                 OutputStream stream = null;
@@ -541,6 +540,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 //拿到了需要上传的cover的path
                 coverPath = file.getPath();
             }
+
 
         }
         Log.e("检查草稿", "设置当前type为:" + type);
