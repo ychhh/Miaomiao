@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.hbsd.rjxy.miaomiao.R;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     private FragmentTabHost  tabHost = null;
     private Class[] tabClass = {MainFragment.class,Fragment2.class, Fragment2.class, Fragment2.class, SelfFragment.class};
     private ImageView iv_tabSpec = null;
+    private boolean secondDown = false; //两次返回键退出
 
 
 
@@ -140,5 +143,41 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        switch (keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                if(secondDown == true){
+                    finish();
+                }
+
+                if(secondDown == false){
+                    //返回键的监听
+                    secondDown = true;
+                    Toast.makeText(this,"再按一次退出",Toast.LENGTH_SHORT).show();
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            secondDown = false;
+
+                        }
+                    }.start();
+                    return false;
+                }
+                break;
+        }
+
+
+
+
+
+        return super.onKeyDown(keyCode, event);
+    }
 }
