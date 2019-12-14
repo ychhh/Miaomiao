@@ -126,8 +126,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             if("1".equals(uid)){
                 //没登录，不去请求订阅列表
                 //现在写的是登录的情况
-//                askforSubscriptionList();
-                askforRecommend();
+                askforSubscriptionList();
+//                askforRecommend();
             }else {
                 //没登录这样
             askforRecommend();
@@ -150,7 +150,18 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                askforRefreshVideoList();
+                if(contentType == 1){
+                    //推荐内容的刷新
+                    askforRefreshVideoList();
+                }else{
+                    //订阅内容的刷新
+
+
+
+
+                }
+
+
             }
         });
 
