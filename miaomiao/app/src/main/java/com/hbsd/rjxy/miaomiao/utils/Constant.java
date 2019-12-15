@@ -51,7 +51,7 @@ public class Constant {
     public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8081/publish/publish";//发布
 
     public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
-    public static final String FIND_SUB_CAT = "http://10.7.87.224:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
+    public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
     public static final String UNFOLLOW = "http://47.94.171.160:8081/sub/unfollow";
 
     public static final String PUBLISH_URL_COMMENT = "http://10.7.87.224:8081/comment/addComment";//发布评论
@@ -63,7 +63,7 @@ public class Constant {
     public static final String URL_GET_HEADANDNAME = "http://10.7.87.224:8081/comment/getHeadAndName";//获取用户头像和昵称
     public static final String URL_GET_SUBSCRIPTION_LIST = "http://10.7.87.224:8081/sub/findbyuid";//获取用户订阅列表
     public static final String URL_SUBSCRIBE_CAT = "http://10.7.87.224:8081/sub/follow";//订阅猫
-    public static final String URL_UNFOLLOW_CAT = "http://10.7.87.224:8081/sub/unfollow";//取消订阅猫
+    public static final String URL_UNFOLLOW_CAT = "http://47.94.171.160:8081/sub/unfollow";//取消订阅猫
 
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";

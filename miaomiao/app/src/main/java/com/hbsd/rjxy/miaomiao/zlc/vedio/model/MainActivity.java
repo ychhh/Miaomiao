@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.ych.model.MyCatFragment;
+import com.hbsd.rjxy.miaomiao.ych.view.MyCatActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 
@@ -24,7 +26,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener {
 
     private FragmentTabHost  tabHost = null;
-    private Class[] tabClass = {MainFragment.class,Fragment2.class, Fragment2.class, Fragment2.class, SelfFragment.class};
+    private Class[] tabClass = {MainFragment.class,Fragment2.class, MyCatFragment.class, Fragment2.class, SelfFragment.class};
     private ImageView iv_tabSpec = null;
 
 

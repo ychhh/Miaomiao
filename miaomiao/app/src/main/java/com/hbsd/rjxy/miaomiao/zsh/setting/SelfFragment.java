@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
+import com.hbsd.rjxy.miaomiao.ych.view.FollowActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
@@ -82,7 +83,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
         btn_setting=view.findViewById(R.id.btn_setting);
         btn_editF=view.findViewById(R.id.btn_editF);
         tx_order=view.findViewById(R.id.self_order);
-
         tx_intro=view.findViewById(R.id.self_main_intro);
 
         getUserPresenterCompl=new GetUserPresenterCompl(this);
@@ -201,8 +201,9 @@ public class SelfFragment extends Fragment implements SelfMainView {
                     break;
                 }
                 case R.id.self_order:{
-
-
+                    Intent intent=new Intent(getActivity(), FollowActivity.class);
+                    intent.putExtra("uid",user.getUserId());
+                    startActivity(intent);
                     break;
                 }
 
