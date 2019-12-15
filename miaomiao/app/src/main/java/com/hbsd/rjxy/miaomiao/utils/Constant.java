@@ -64,7 +64,8 @@ public class Constant {
     public static final String URL_GET_SUBSCRIPTION_LIST = "http://10.7.87.224:8081/sub/findbyuid";//获取用户订阅列表
     public static final String URL_SUBSCRIBE_CAT = "http://10.7.87.224:8081/sub/follow";//订阅猫
     public static final String URL_UNFOLLOW_CAT = "http://47.94.171.160:8081/sub/unfollow";//取消订阅猫
-
+    public static final String URL_ADD_CAT_HEAD= "http://47.94.171.160:8081/cat/setcathead";//设置猫的头像
+    public static final String URL_ADD_CAT_INFO= "http://47.94.171.160:8081/cat/setcatinfo";//设置猫的信息
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";
 
