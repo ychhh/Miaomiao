@@ -1,8 +1,11 @@
 package com.hbsd.rjxy.miaomiao.zlc.publish.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,11 +13,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -43,9 +47,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -72,12 +81,22 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.tv_log)
     TextView tvLog;             //上传状态提示文字
 
+    //帧图
+    @BindView(R.id.iv_frameImage)
+    ImageView ivFrameImage;
+
+    //test
+    @BindView(R.id.iv_frame)
+    ImageView ivTest;
+
+
     private boolean isUploadComplete = false;  // 判断当前activity的状态是否已经完成了上传（只有在type=0/1的时候判断）
     private boolean isCanceled = false; //取消上传的参数，onDestroy和返回的点击事件（判断是否已经上传完成）中都要修改这个变量
     private boolean etEmpty = true;     //et是否是空的
     private int type = -1;  //当前编辑的模式  0  1  2
     private boolean needToUpload = false;   //是否需要上传
     private String path;
+    private String coverPath;
     private Multi_info multi_info;
 
     private PopupWindow saveWindow;     //保存的popupwindow
@@ -129,7 +148,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             canceled_file_path  （string）文件路径
             <---测试-->
             未上传失败后重新开启上传的情况
-
+            现在就是不能再上传视频完成后，封面上传完成之前保存视频的上传url
      */
 
     @Override
@@ -143,7 +162,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         /*
             TODO    目前的场景有三个
                 （1）上传成功：修改tbLog，开启线程3.5秒后隐藏tbLog和pb
-
          */
         if ("dismissProgressbar".equals(eventInfo.getContentString())) {
             initProgressbar();
@@ -155,12 +173,71 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             progressBar.setProgress(0);
             tvLog.setText(0 + "%");
         }
+        if("startUploadCover".equals(eventInfo.getContentString())){
+            progressBar.setProgress(90);
+            tvLog.setText("正在上传封面图");
+        }
         if ("uploadFinish".equals(eventInfo.getContentString())) {
-            tvLog.setText("上传成功");
-            Log.e("上传后的文件url是", "" + eventInfo.getContentMap().get("url"));
-            //上传完成，把multi_info的mpath设置一下
             multi_info.setMpath((String) eventInfo.getContentMap().get("url"));
             multi_info.setType(type);
+
+            if(type == 1){
+                tvLog.setText("上传成功");
+                needToUpload = false;
+                isUploadComplete = true;
+                initButton();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(3500);
+                            EventInfo eventInfo = new EventInfo();
+                            eventInfo.setContentString("dismissProgressbar");
+                            EventBus.getDefault().post(eventInfo);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else{
+                startUploadProgress(true);
+            }
+            Log.e("上传后的文件url是", "" + eventInfo.getContentMap().get("url"));
+            //上传完成，把multi_info的mpath设置一下
+
+        }
+        if ("uploadError".equals(eventInfo.getContentString())) {
+            tvLog.setText("上传失败，3秒后重新上传");
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        Thread.sleep(3500);
+                        startUploadProgress(false);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        }
+        if ("progressUpdate".equals(eventInfo.getContentString())) {
+            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 100);
+            tvLog.setText(progressNum + "%");
+            progressBar.setProgress(progressNum);
+        }
+        if("progressUpdateCover".equals(eventInfo.getContentString())){
+            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 10);
+            tvLog.setText((progressNum+90) + "%");
+            progressBar.setProgress(progressNum);
+        }
+        if ("finishPublishing".equals(eventInfo.getContentString())) {
+            finish();
+        }
+        if("uploadCoverFinish".equals(eventInfo.getContentString())){
+            multi_info.setMcover((String) eventInfo.getContentMap().get("coverUrl"));
+            tvLog.setText("上传成功");
             needToUpload = false;
             isUploadComplete = true;
             initButton();
@@ -178,29 +255,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 }
             }.start();
-        }
-        if ("uploadError".equals(eventInfo.getContentString())) {
-            tvLog.setText("上传失败，3秒后重新上传");
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    try {
-                        Thread.sleep(3500);
-                        startUploadProgress();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-        }
-        if ("progressUpdate".equals(eventInfo.getContentString())) {
-            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 100);
-            tvLog.setText(progressNum + "%");
-            progressBar.setProgress(progressNum);
-        }
-        if ("finishPublishing".equals(eventInfo.getContentString())) {
-            finish();
         }
 
 
@@ -230,6 +284,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         checkDraft(bundle);
 
         initButton();
+        llPublish.setOnClickListener(this::onClick);
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,7 +323,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
         initProgressbar();
         if (type != 2 && needToUpload && !isUploadComplete) {
-            startUploadProgress();
+            startUploadProgress(false);
         }
 
 
@@ -277,7 +332,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     /*
         TODO    启动上传流程  （1）获取token
      */
-    private void startUploadProgress() {
+    private void startUploadProgress(boolean uploadCover) {
 
         /*
             TODO    获取token
@@ -299,7 +354,59 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String token = response.body().string();
-                startRealUpload(token);
+                if(uploadCover){
+                    startUploadCover(token);
+                }else{
+                    startRealUpload(token);
+                }
+
+            }
+        });
+
+
+    }
+
+
+
+    private void startUploadCover(String token){
+        UploadUtils uploadUtils = new UploadUtils(token, path, new File(coverPath).getName());
+        Log.e("token", ":" + token);
+        Log.e("path", ":" + coverPath);
+        Log.e("key", ":" + new File(coverPath).getName());
+        EventInfo eventInfo = new EventInfo();
+        eventInfo.setContentString("startUploadCover");
+        EventBus.getDefault().post(eventInfo);
+        uploadUtils.upload(new UpCompletionHandler() {
+            @Override
+            public void complete(String key, ResponseInfo info, JSONObject response) {
+                if (info.isOK()) {
+                    //上传成功
+                    Map<String, String> fileMap = new HashMap<>();
+                    fileMap.put("coverUrl", "http://" + QINIU_URL + "/" + uploadUtils.getKey());
+                    eventInfo.setContentMap(fileMap);
+                    eventInfo.setContentString("uploadCoverFinish");
+                    EventBus.getDefault().post(eventInfo);
+                } else {
+                    //上传失败，打印错误信息
+                    Log.e("uploadCover fail", "" + info);
+                    eventInfo.setContentString("uploadError");
+                    //停止上传就行了吧应该，如果上传失败了用户也会自己自己退出的
+//                    EventBus.getDefault().post(eventInfo);
+                }
+            }
+        }, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                eventInfo.setContentString("progressUpdateCover");
+                Map<String, Double> progressMap = new HashMap<>();
+                progressMap.put("progress", percent);
+                eventInfo.setContentMap(progressMap);
+                EventBus.getDefault().post(eventInfo);
+            }
+        }, new UpCancellationSignal() {
+            @Override
+            public boolean isCancelled() {
+                return false;
             }
         });
 
@@ -406,6 +513,37 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             needToUpload = true;
             isUploadComplete = false;
             multi_info = new Multi_info();
+
+            /*
+                TODO    :如果是视频的话，生成第一帧帧图的bitmap，然后转文件，上传7牛
+             */
+            //生成第一帧帧图
+
+            if(type == 0){
+                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(path);
+                Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
+                ivFrameImage.setImageBitmap(bitmap);
+                Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+                //如果是视频上传,生成帧图jpg文件，记录coverPath
+                File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+                OutputStream stream = null;
+                try {
+                    stream = new FileOutputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //拿到了需要上传的cover的path
+                coverPath = file.getPath();
+            }
+
+
         }
         Log.e("检查草稿", "设置当前type为:" + type);
     }
@@ -432,11 +570,35 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+    public void hideSoftKeyboard(Context context, List<View> viewList) {
+        if (viewList == null) return;
+
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        for (View v : viewList) {
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
 
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
+            case R.id.ll_publish_back:
+                List<View> views = new ArrayList<>();
+                views.add(v);
+                hideSoftKeyboard(this,views);
+                if (checkNeedSave()) {
+                    //弹出是否保留此次编辑的popupwindow
+                    popupSaveWindow();
+
+                } else {
+                    //弹出是否退出此次编辑的popupwindow
+                    popupExitWindow();
+                }
+                break;
+        }
     }
 
 
@@ -497,7 +659,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
             } else {
                 //弹出是否退出此次编辑的popupwindow
-
+                popupExitWindow();
             }
         }
 
@@ -610,6 +772,54 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         });
         saveWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 20);
 
+
+    }
+
+    private void popupExitWindow(){
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        this.getWindow().setAttributes(lp);
+        View view = getLayoutInflater().inflate(R.layout.publish_save_popupwindow, null);
+        exitWindow = new PopupWindow(view, dip2px(this, 350), dip2px(this, 150), true);
+        exitWindow.setFocusable(true);
+        exitWindow.setOutsideTouchable(false);
+        exitWindow.setTouchable(true);
+        exitWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });
+        TextView tvSave = view.findViewById(R.id.tv_save_text);
+        tvSave.setText("退出此次编辑？");
+
+
+        Button btnIgnore = view.findViewById(R.id.btn_publish_save_left);
+        btnIgnore.setText("取消");
+        btnIgnore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                        TODO    不保留，检查上传是否完成，如果未完成，取消上传
+                 */
+                exitWindow.dismiss();
+            }
+        });
+
+        Button btnSave = view.findViewById(R.id.btn_publish_save_right);
+        btnSave.setText("退出");
+        btnSave.setTextColor(getResources().getColor(R.color.btnLogin));
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                exitWindow.dismiss();
+                finish();
+            }
+        });
+        exitWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 20);
 
     }
 

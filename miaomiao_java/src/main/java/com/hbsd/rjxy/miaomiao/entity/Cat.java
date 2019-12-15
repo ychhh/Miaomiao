@@ -10,6 +10,7 @@ public class Cat {
     private int cid;
     private int uid;
     private int miid;
+    @Column(name = "hpath")
     private String hpath;
     private int chot;
     private int is_ste;
@@ -49,11 +50,11 @@ public class Cat {
         this.miid = miid;
     }
 
-    public String getHid() {
+    public String getHpath() {
         return hpath;
     }
 
-    public void setHid(String hpath) {
+    public void setHpath(String hpath) {
         this.hpath = hpath;
     }
 

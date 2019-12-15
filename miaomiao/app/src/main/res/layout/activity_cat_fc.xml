@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/slipe"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/TabHost01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical" >
+                    <FrameLayout android:id="@android:id/tabcontent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="200dp">
+                        <LinearLayout android:id="@+id/L1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                            <TextView android:text="one"
+                                android:layout_marginTop="20dp"
+                                android:gravity="center"
+                                android:id="@+id/TextView01"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout android:id="@+id/L2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                            <TextView android:text="two"
+                                android:layout_marginTop="20dp"
+                                android:gravity="center"
+                                android:id="@+id/TextView02"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/L3"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/TextView03"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:gravity="center"
+                                android:text="three"></TextView>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <TabWidget android:id="@android:id/tabs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </TabHost>
+
+            <ImageView
+                android:id="@+id/touxiang"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/miao_head"
+                android:layout_alignRight="@id/TabHost01"
+                android:layout_marginRight="10dp"
+                android:layout_alignTop="@id/TabHost01"
+                android:layout_marginTop="200dp"
+
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:layout_below="@+id/TabHost01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <ImageButton
+        android:id="@+id/fanhui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fanhui"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onClick"
+        />
+    <!--android:layout_alignTop="@+id/TabHost01"-->
+    <!--android:layout_alignLeft="@+id/TabHost01"-->
+
+    <ImageButton
+        android:id="@+id/fabu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fabu"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onClick"
+        />
+    <!--android:layout_alignTop="@id/TabHost01"-->
+    <!--android:layout_alignRight="@id/TabHost01"-->
+</RelativeLayout>

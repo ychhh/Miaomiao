@@ -4,13 +4,24 @@
     android:layout_height="match_parent"
     android:background="#000218"
     >
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="32dp"
-        android:text="关注的喵"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/follow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/back"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:text="关注的喵"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list_follow"
         android:layout_width="match_parent"
