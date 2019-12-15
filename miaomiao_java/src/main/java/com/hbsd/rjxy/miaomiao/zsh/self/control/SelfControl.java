@@ -44,14 +44,18 @@ public class SelfControl {
             String username=object.getString("newName");
             String sex=object.getString("newSex");
             String uintro=object.getString("newIntro");
-            String hpath=object.getString("newHpath");
             Integer uid=object.getInt("uid");
-            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid,hpath);
-            if (rtn>0){
-                res.put("edited","ok");
-            }else{
-                res.put("edited","error");
-            }
+            String hpath=object.getString("newHpath");
+            System.out.println("============="+hpath);
+            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid);
+            int rtn2=selfService.updateUserHpathById(hpath,uid);
+            System.out.println("rtn2"+rtn2);
+//            if (rtn>0 ){
+//                res.put("edited","ok");
+//            }else{
+//                res.put("edited","error");
+//            }
+            res.put("edited","ok");
             response.getWriter().append(res.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -118,6 +122,26 @@ public class SelfControl {
         return videoService.getToken();
     }
 
-
-
+    @RequestMapping("/editHpath")
+    @ResponseBody
+    public void updateUserHpath(HttpServletRequest request, HttpServletResponse response){
+        try {
+            //
+            JSONObject object = new JSONObject(RequestUtil.getJson(request));
+            JSONObject res=new JSONObject();
+            String hpath=object.getString("newHpath");
+            Integer uid=object.getInt("uid");
+            int rtn=selfService.updateUserHpathById(hpath,uid);
+            if (rtn>0){
+                res.put("edited","ok");
+            }else{
+                res.put("edited","error");
+            }
+            response.getWriter().append(res.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

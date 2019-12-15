@@ -72,8 +72,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.tv_log)
     TextView tvLog;             //上传状态提示文字
 
-    private boolean isUploadComplete = false ;  // 判断当前activity的状态是否已经完成了上传（只有在type=0/1的时候判断）
-    private boolean isCanceled = false ; //取消上传的参数，onDestroy和返回的点击事件（判断是否已经上传完成）中都要修改这个变量
+    private boolean isUploadComplete = false;  // 判断当前activity的状态是否已经完成了上传（只有在type=0/1的时候判断）
+    private boolean isCanceled = false; //取消上传的参数，onDestroy和返回的点击事件（判断是否已经上传完成）中都要修改这个变量
     private boolean etEmpty = true;     //et是否是空的
     private int type = -1;  //当前编辑的模式  0  1  2
     private boolean needToUpload = false;   //是否需要上传
@@ -139,32 +139,32 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void publishReceive(EventInfo eventInfo){
+    public void publishReceive(EventInfo eventInfo) {
         /*
             TODO    目前的场景有三个
                 （1）上传成功：修改tbLog，开启线程3.5秒后隐藏tbLog和pb
 
          */
-        if("dismissProgressbar".equals(eventInfo.getContentString())){
+        if ("dismissProgressbar".equals(eventInfo.getContentString())) {
             initProgressbar();
         }
 
-        if("startUpload".equals(eventInfo.getContentString())){
+        if ("startUpload".equals(eventInfo.getContentString())) {
             showProgressbar();
             progressBar.setMax(100);
             progressBar.setProgress(0);
-            tvLog.setText(0+"%");
+            tvLog.setText(0 + "%");
         }
-        if("uploadFinish".equals(eventInfo.getContentString())){
+        if ("uploadFinish".equals(eventInfo.getContentString())) {
             tvLog.setText("上传成功");
-            Log.e("上传后的文件url是",""+eventInfo.getContentMap().get("url"));
+            Log.e("上传后的文件url是", "" + eventInfo.getContentMap().get("url"));
             //上传完成，把multi_info的mpath设置一下
             multi_info.setMpath((String) eventInfo.getContentMap().get("url"));
             multi_info.setType(type);
             needToUpload = false;
             isUploadComplete = true;
             initButton();
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     super.run();
@@ -179,9 +179,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }.start();
         }
-        if("uploadError".equals(eventInfo.getContentString())){
+        if ("uploadError".equals(eventInfo.getContentString())) {
             tvLog.setText("上传失败，3秒后重新上传");
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     super.run();
@@ -194,12 +194,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }.start();
         }
-        if("progressUpdate".equals(eventInfo.getContentString())){
-            int progressNum = (int) Math.round((double)eventInfo.getContentMap().get("progress")*100);
-            tvLog.setText(progressNum+"%");
+        if ("progressUpdate".equals(eventInfo.getContentString())) {
+            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 100);
+            tvLog.setText(progressNum + "%");
             progressBar.setProgress(progressNum);
         }
-        if("finishPublishing".equals(eventInfo.getContentString())){
+        if ("finishPublishing".equals(eventInfo.getContentString())) {
             finish();
         }
 
@@ -211,7 +211,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_layout);
-
 
 
         //修改透明状态栏
@@ -238,11 +237,11 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 /*
                     TODO    如果是视频/图片发布，修改have_draft属性，如果是纯文本，修改haveTextDraft
                  */
-                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
-                if(type != 2){
-                    sp.edit().putBoolean("have_draft",false).commit();
-                }else{
-                    sp.edit().putBoolean("have_text_draft",false).commit();
+                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME, MODE_PRIVATE);
+                if (type != 2) {
+                    sp.edit().putBoolean("have_draft", false).commit();
+                } else {
+                    sp.edit().putBoolean("have_text_draft", false).commit();
                 }
                 multi_info.setType(type);
                 multi_info.setCid(1);
@@ -258,7 +257,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        Log.e("....finish publish",""+response.body().string());
+                        Log.e("....finish publish", "" + response.body().string());
                         EventInfo eventInfo = new EventInfo();
                         eventInfo.setContentString("finishPublishing");
                         EventBus.getDefault().post(eventInfo);
@@ -268,7 +267,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         initProgressbar();
-        if(type != 2 && needToUpload && !isUploadComplete){
+        if (type != 2 && needToUpload && !isUploadComplete) {
             startUploadProgress();
         }
 
@@ -285,8 +284,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
          */
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("cid",1);
-            jsonObject.put("uid",1);
+            jsonObject.put("cid", 1);
+            jsonObject.put("uid", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -294,7 +293,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         OkHttpUtils.getInstance().postJson(PUBLISH_URL_TOKEN, jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(PublishActivity.this,"连接服务器失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PublishActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -308,26 +307,26 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void startRealUpload(String token) {
-        UploadUtils uploadUtils = new UploadUtils(token,path,new File(path).getName());
-        Log.e("token",":"+token);
-        Log.e("path",":"+path);
-        Log.e("key",":"+new File(path).getName());
+        UploadUtils uploadUtils = new UploadUtils(token, path, new File(path).getName());
+        Log.e("token", ":" + token);
+        Log.e("path", ":" + path);
+        Log.e("key", ":" + new File(path).getName());
         EventInfo eventInfo = new EventInfo();
         eventInfo.setContentString("startUpload");
         EventBus.getDefault().post(eventInfo);
         uploadUtils.upload(new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
-                if(info.isOK()){
+                if (info.isOK()) {
                     //上传成功
-                    Map<String,String> fileMap = new HashMap<>();
-                    fileMap.put("url","http://"+QINIU_URL+"/"+uploadUtils.getKey());
+                    Map<String, String> fileMap = new HashMap<>();
+                    fileMap.put("url", "http://" + QINIU_URL + "/" + uploadUtils.getKey());
                     eventInfo.setContentMap(fileMap);
                     eventInfo.setContentString("uploadFinish");
                     EventBus.getDefault().post(eventInfo);
-                }else{
+                } else {
                     //上传失败，打印错误信息
-                    Log.e("upload fail",""+info);
+                    Log.e("upload fail", "" + info);
                     eventInfo.setContentString("uploadError");
                     //停止上传就行了吧应该，如果上传失败了用户也会自己自己退出的
 //                    EventBus.getDefault().post(eventInfo);
@@ -337,8 +336,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void progress(String key, double percent) {
                 eventInfo.setContentString("progressUpdate");
-                Map<String,Double> progressMap = new HashMap<>();
-                progressMap.put("progress",percent);
+                Map<String, Double> progressMap = new HashMap<>();
+                progressMap.put("progress", percent);
                 eventInfo.setContentMap(progressMap);
                 EventBus.getDefault().post(eventInfo);
             }
@@ -356,18 +355,16 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     /*
         TODO    隐藏提示文字和进度条，用到的时候再说
      */
-    public void initProgressbar(){
+    public void initProgressbar() {
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.setProgress(0);
         tvLog.setVisibility(View.INVISIBLE);
     }
 
-    public void showProgressbar(){
+    public void showProgressbar() {
         progressBar.setVisibility(View.VISIBLE);
         tvLog.setVisibility(View.VISIBLE);
     }
-
-
 
 
     /*
@@ -375,60 +372,60 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 如果不是草稿
                     ******无论是不是草稿，checkDraft之后的multi_info都存在了******
      */
-    public void checkDraft(Bundle bundle){
+    public void checkDraft(Bundle bundle) {
 
         type = (int) bundle.getSerializable("type");
-        if(bundle.getSerializable("isdraft").equals("true")){
-            Log.e("检查草稿","是草稿");
-            multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"),Multi_info.class);
-            Log.e("草稿的multi_info",""+multi_info.toString());
+        if (bundle.getSerializable("isdraft").equals("true")) {
+            Log.e("检查草稿", "是草稿");
+            multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
+            Log.e("草稿的multi_info", "" + multi_info.toString());
             //检查是否需要上传
-            if(type == 2){
+            if (type == 2) {
                 //文本，直接转multi_info
-                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"),Multi_info.class);
-            }else{
+                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
+            } else {
                 //文件，如果未上传完成，需要path
-                if(bundle.getSerializable("iscanceled").equals("true")){
+                if (bundle.getSerializable("iscanceled").equals("true")) {
                     needToUpload = true;
                     path = (String) bundle.getSerializable("canceled_file_path");
-                }else{
+                } else {
                     needToUpload = false;
                     isUploadComplete = true;
                 }
             }
             etEdit.setText(multi_info.getMcontent());
-        }else{
+        } else {
             /*
                 TODO ：   拿到uid  cid
             */
-            Log.e("检查草稿","不是草稿");
-            if(type != 2){
+            Log.e("检查草稿", "不是草稿");
+            if (type != 2) {
                 path = (String) bundle.getSerializable("path");
-                Log.e("检查草稿","设置当前path为:"+ path);
+                Log.e("检查草稿", "设置当前path为:" + path);
             }
             needToUpload = true;
             isUploadComplete = false;
             multi_info = new Multi_info();
         }
-        Log.e("检查草稿","设置当前type为:"+type);
+        Log.e("检查草稿", "设置当前type为:" + type);
     }
 
     /*
         TODO    初始化button的状态
             （未上传完成或者文本形式并且et为空）
      */
-    public void initButton(){
-        if(type == 0 || type == 1){
-            if(!isUploadComplete){
+    public void initButton() {
+        if (type == 0 || type == 1) {
+            if (!isUploadComplete) {
                 buttonInactive();
-            }else{
+            } else {
                 buttonActive();
             }
         }
-        if(type == 2){
-            if(etEmpty){
+        if (type == 2) {
+            if (etEmpty) {
                 buttonInactive();
-            }else{
+            } else {
                 buttonActive();
             }
 
@@ -450,22 +447,22 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(etEdit.getText().toString().equals("")){
+        if (etEdit.getText().toString().equals("")) {
             etEmpty = true;
-        }else{
+        } else {
             etEmpty = false;
-            if(type == 2){
+            if (type == 2) {
                 //使按钮变为不活跃状态
                 buttonActive();
             }
         }
-        if(type == 2 && etEmpty){
+        if (type == 2 && etEmpty) {
             buttonInactive();
         }
-        if(type != 2 && !isUploadComplete){
+        if (type != 2 && !isUploadComplete) {
             buttonInactive();
         }
-        Log.e("whatch","sssss");
+        Log.e("whatch", "sssss");
     }
 
     @Override
@@ -474,14 +471,13 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
-    public void buttonActive(){
+    public void buttonActive() {
         btnPublish.setEnabled(true);
         btnPublish.setBackground(getResources().getDrawable(R.drawable.btn_selector));
         btnPublish.setTextColor(getResources().getColor(R.color.white));
     }
 
-    public void buttonInactive(){
+    public void buttonInactive() {
         btnPublish.setEnabled(false);
         btnPublish.setBackground(getResources().getDrawable(R.drawable.btn_invalid));
         btnPublish.setTextColor(getResources().getColor(R.color.btnInvalidText));
@@ -493,18 +489,17 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             //返回键的监听
-            if(checkNeedSave()){
+            if (checkNeedSave()) {
                 //弹出是否保留此次编辑的popupwindow
                 popupSaveWindow();
 
-            }else{
+            } else {
                 //弹出是否退出此次编辑的popupwindow
 
             }
         }
-
 
 
         return super.onKeyDown(keyCode, event);
@@ -515,9 +510,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         TODO    除了文本形式的编辑内容为空时  true，询问是否退出此次编辑（取消---黑色 ，退出----红色）
                 其他情况都返回false    保留此次编辑？ （不保留----黑色，保留---蓝色）
      */
-    public boolean checkNeedSave(){
-        if(type == 2){
-            if(etEmpty){
+    public boolean checkNeedSave() {
+        if (type == 2) {
+            if (etEmpty) {
                 return false;
             }
         }
@@ -525,13 +520,13 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void popupSaveWindow(){
+    public void popupSaveWindow() {
 
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.3f;
         this.getWindow().setAttributes(lp);
-        View view = getLayoutInflater().inflate(R.layout.publish_save_popupwindow,null);
-        saveWindow = new PopupWindow(view, dip2px(this,350) , dip2px(this,150), true);
+        View view = getLayoutInflater().inflate(R.layout.publish_save_popupwindow, null);
+        saveWindow = new PopupWindow(view, dip2px(this, 350), dip2px(this, 150), true);
         saveWindow.setFocusable(true);
         saveWindow.setOutsideTouchable(false);
         saveWindow.setTouchable(true);
@@ -553,17 +548,17 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         TODO    不保留，检查上传是否完成，如果未完成，取消上传
                  */
 
-                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
-                if(!isUploadComplete && type != 2){
+                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME, MODE_PRIVATE);
+                if (!isUploadComplete && type != 2) {
                     //取消上传
                     isCanceled = true;
                 }
 
-                if(type == 2){
-                    sp.edit().putBoolean("have_text_draft",false).commit();
-                }else{
+                if (type == 2) {
+                    sp.edit().putBoolean("have_text_draft", false).commit();
+                } else {
 
-                    sp.edit().putBoolean("have_draft",false).commit();
+                    sp.edit().putBoolean("have_draft", false).commit();
                 }
                 saveWindow.dismiss();
                 finish();
@@ -574,38 +569,38 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
-                if(type == 2){
+                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME, MODE_PRIVATE);
+                if (type == 2) {
                     //设置uid，cid，发布日期不设置，文字内容mcontent，type
                     multi_info.setCid(1);
                     multi_info.setUid(1);
                     multi_info.setMcontent(etEdit.getText().toString());
-                    sp.edit().putBoolean("have_text_draft",true).putString("textdraftbody",gson.toJson(multi_info)).commit();
-                }else{
+                    sp.edit().putBoolean("have_text_draft", true).putString("textdraftbody", gson.toJson(multi_info)).commit();
+                } else {
                     /*
                         TODO：文件草稿，先判断是否上传完成
                      */
-                    if(isUploadComplete && !needToUpload){
+                    if (isUploadComplete && !needToUpload) {
                         //上传已经完成，url已经存进去了
                         multi_info.setUid(1);
                         multi_info.setCid(1);
                         multi_info.setMcontent(etEdit.getText().toString());
-                        sp.edit().putBoolean("have_draft",true)
-                                .putBoolean("have_canceled_file",false)
-                                .putString("draftbody",gson.toJson(multi_info))
-                                .putInt("type",type).commit();
-                    }else{
+                        sp.edit().putBoolean("have_draft", true)
+                                .putBoolean("have_canceled_file", false)
+                                .putString("draftbody", gson.toJson(multi_info))
+                                .putInt("type", type).commit();
+                    } else {
                         //上传未完成，先取消上传
                         isCanceled = true;
                         multi_info.setType(type);
                         multi_info.setUid(1);
                         multi_info.setCid(1);
                         multi_info.setMcontent(etEdit.getText().toString());
-                        sp.edit().putBoolean("have_draft",true)
-                                .putBoolean("have_canceled_file",true)
-                                .putString("canceled_file_path",path)
-                                .putInt("type",type)
-                                .putString("draftbody",gson.toJson(multi_info))
+                        sp.edit().putBoolean("have_draft", true)
+                                .putBoolean("have_canceled_file", true)
+                                .putString("canceled_file_path", path)
+                                .putInt("type", type)
+                                .putString("draftbody", gson.toJson(multi_info))
                                 .commit();
                     }
                 }
@@ -613,7 +608,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }
         });
-        saveWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER,0,20);
+        saveWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 20);
 
 
     }
