@@ -44,11 +44,11 @@ public class Constant {
     public static final String REMIND_PUBLISH_ONCE = "REMIND_PUBLISH_ONCE";
 
     //
-    public static final String INIT_VIDEO_URL = "http://10.7.87.224:8081/video/pagingVideo";//请求视频的url
-    public static final String INIT_SUBSCRIBE_VIDEO_LIST = "http://10.7.87.224:8081/video/pagingVideoByUid";//请求订阅视频的URL
-    public static final String ADD_HOT_URl = "http://10.7.87.224:8081/video/addHot";//点击小鱼干发送的Url
-    public static final String PUBLISH_URL_TOKEN = "http://10.7.87.224:8081/publish/getToken";//发布获取token
-    public static final String PUBLISH_URL_PUBLISH = "http://10.7.87.224:8081/publish/publish";//发布
+    public static final String INIT_VIDEO_URL = "http://192.168.11.211:8081/video/pagingVideo";//请求视频的url
+    public static final String INIT_SUBSCRIBE_VIDEO_LIST = "http://192.168.11.211:8081/video/pagingVideoByUid";//请求订阅视频的URL
+    public static final String ADD_HOT_URl = "http://192.168.11.211:8081/video/addHot";//点击小鱼干发送的Url
+    public static final String PUBLISH_URL_TOKEN = "http://192.168.11.211:8081/publish/getToken";//发布获取token
+    public static final String PUBLISH_URL_PUBLISH = "http://192.168.11.211:8081/publish/publish";//发布
 
     public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
     public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
@@ -67,5 +67,7 @@ public class Constant {
 
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";
+
+    //192.168.11.211
 
 }

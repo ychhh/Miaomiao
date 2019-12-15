@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,8 +127,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             if("1".equals(uid)){
                 //没登录，不去请求订阅列表
                 //现在写的是登录的情况
-//                askforSubscriptionList();
-                askforRecommend();
+                askforSubscriptionList();
+//                askforRecommend();
             }else {
                 //没登录这样
             askforRecommend();
@@ -150,7 +151,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                askforRefreshVideoList();
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                String uid = sp.getString("uid","1");
+                askforRefreshVideoList(uid);
+
             }
         });
 
@@ -187,16 +191,31 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     }
 
-    private void askforRefreshVideoList(){
+    private void askforRefreshVideoList(@Nullable String uid){
         if(!nomoreVideo){
-            RECOMMEND_PAGE_DEFAULT += 1;
+            int page;
+            String url;
+            if(contentType == 1){
+                RECOMMEND_PAGE_DEFAULT += 1;
+                page = RECOMMEND_PAGE_DEFAULT;
+                url = INIT_VIDEO_URL;
+            }else{
+                SUBSCRIBE_PAGE_DEFAULT += 1;
+                page = SUBSCRIBE_PAGE_DEFAULT;
+                url = INIT_SUBSCRIBE_VIDEO_LIST;
+            }
+
             JSONObject jo = new JSONObject();
             try {
-                jo.put("page",RECOMMEND_PAGE_DEFAULT);
+                jo.put("page",page);
+                if(contentType == 0){
+                    jo.put("uid",uid);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            OkHttpUtils.getInstance().postJson(INIT_VIDEO_URL, jo.toString(), new Callback() {
+            OkHttpUtils.getInstance().postJson(url, jo.toString(), new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -371,6 +390,11 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 }else{
                     //订阅视频的预加载请求
                     SUBSCRIBE_PAGE_DEFAULT += 1;
+
+                    /*
+                        TODO:订阅视频的预加载
+                     */
+                    askforRecommend();
                 }
 
             }
@@ -450,6 +474,12 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             }
         }else if("refreshVideoList".equals(videoEvent.getContentString())){
+            //如果返回是空
+            if(videoEvent.getContentList().isEmpty()){
+                rlVideo.finishRefresh(500);
+                Toast.makeText(getContext(),"没有更多视频了",Toast.LENGTH_SHORT).show();
+                return;
+            }
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
             for(Multi_info multi_info : videoEvent.getContentList()){
@@ -558,7 +588,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     setTextViewColor(tv_recommend,tv_subscribed);
                     contentType = 1;
                     //请求推荐视频的数据
-                    askforRefreshVideoList();
+                    askforRefreshVideoList(null);
                 }else{
                     //表示已经是推荐内容了
                 }
@@ -642,5 +672,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             }
         });
     }
+
+
+
 
 }

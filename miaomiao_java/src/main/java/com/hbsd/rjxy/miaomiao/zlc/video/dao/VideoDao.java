@@ -42,7 +42,7 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
      * 分页查询订阅视频
      *
      */
-    @Query(value = "select * from multi_info m,subscription_record s where s.uid=? and m.cid=s.cid order by m.mupload_time desc " +
+    @Query(value = "select * from multi_info m,subscription_record s where s.uid=? and m.cid=s.cid and m.type=0 order by m.mupload_time desc " +
             " limit ?,?",nativeQuery = true)
     List<Multi_info> findVideoPagingByUid(int uid,int start,int step);
 
