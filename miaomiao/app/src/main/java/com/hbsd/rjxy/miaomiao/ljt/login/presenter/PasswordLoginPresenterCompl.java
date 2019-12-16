@@ -33,8 +33,6 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        // todo 添加username，hpath
         Callback callback=new Callback(){
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

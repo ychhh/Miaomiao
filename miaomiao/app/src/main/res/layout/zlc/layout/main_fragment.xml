@@ -37,9 +37,10 @@
     <!--默认的状态为推荐被选中-->
     <LinearLayout
         android:gravity="center"
+
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="65dp">
 
         <TextView
             android:layout_gravity="bottom"
