@@ -196,11 +196,11 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             int page;
             String url;
             if(contentType == 1){
-                RECOMMEND_PAGE_DEFAULT += 1;
+                RECOMMEND_PAGE_DEFAULT = 1;
                 page = RECOMMEND_PAGE_DEFAULT;
                 url = INIT_VIDEO_URL;
             }else{
-                SUBSCRIBE_PAGE_DEFAULT += 1;
+                SUBSCRIBE_PAGE_DEFAULT = 1;
                 page = SUBSCRIBE_PAGE_DEFAULT;
                 url = INIT_SUBSCRIBE_VIDEO_LIST;
             }
@@ -244,9 +244,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
      */
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
-        if(contentType == 1){
+        if(contentType == 1 && RECOMMEND_PAGE_DEFAULT != 1){
             RECOMMEND_PAGE_DEFAULT += 1;
-        }else{
+        }
+        if(contentType == 0){
             SUBSCRIBE_PAGE_DEFAULT += 1;
         }
 
@@ -279,7 +280,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
                 EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
-
+                if(contentType == 1 && RECOMMEND_PAGE_DEFAULT == 1){
+                    RECOMMEND_PAGE_DEFAULT += 1;
+                }
                 if(!videoList.isEmpty()){
                     //如果拿到了视频数据，则放到eventinfo的list中去
                     videoEvent.setContentList(videoList);
