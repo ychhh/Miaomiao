@@ -32,22 +32,32 @@ public class EditUserPresenterCompl implements EditUserPresenter {
     EditProfileView editProfileView;
     Callback callback;
     OkHttpUtils okHttpUtils;
-   public  EditUserPresenterCompl(EditProfileView editProfileView){
-        this.editProfileView=editProfileView;
+
+    public EditUserPresenterCompl(EditProfileView editProfileView) {
+        this.editProfileView = editProfileView;
     }
 
     @Override
     public boolean editUser(String jsonStr) {
 
-
-        callback=new Callback() {
+        callback = new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e("任务","失败");
+                Log.e("任务", "失败");
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+<<<<<<< HEAD
+                Log.e("已经成功接收到修改之后的客户信息", "真好");
+            }
+        };
+        String url = Constant.GET_USER_URL + "edit";
+        okHttpUtils = new OkHttpUtils();
+        okHttpUtils.postJson(url, jsonStr, callback);
+        EventBus.getDefault().post(jsonStr);
+//        editProfileView.Okfinish();
+=======
                // Log.e("已经成功接收到修改之后的客户信息","真好");
             }
         };
@@ -72,6 +82,7 @@ public class EditUserPresenterCompl implements EditUserPresenter {
 
 
         editProfileView.Okfinish();
+>>>>>>> 6222ef7332a14934981494e47fc21db6d29ac9eb
         return true;
     }
 

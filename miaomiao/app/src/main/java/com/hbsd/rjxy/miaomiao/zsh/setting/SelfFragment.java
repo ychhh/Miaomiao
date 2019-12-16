@@ -124,13 +124,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
         /*监听setting按钮*/
         initEvent();
 
-
-
         //监听菜单
         menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
-
-
-
 
     }
 
@@ -139,26 +134,24 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     }
 
-
     /*实现接口方法，获取当下的用户信息*/
     @Override
     public void initUserView(User user0) {
-
         user=user0;
-
         if(tx_intro!=null){
             Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
             tx_intro.setText(user.getUserIntro());
         }
-
-
     }
 
+    @Override
+    public void refresh() {
+        initUserView(user);
+    }
 
 
     public void initDrawerList(){
         String[] titles={"个人名片","我的订阅","修改密码","小程序"};
-
         listItems=new ArrayList<Map<String, Object>>();
         for(int i=0;i<titles.length;i++){
             Map<String ,Object> map=new HashMap<>();
@@ -168,12 +161,9 @@ public class SelfFragment extends Fragment implements SelfMainView {
         }
         adapter=new AddItemAdapter(this.getContext(),listItems,R.layout.self_setting_item);
 
-
-
     }
     /*实现全局按钮的监听*/
     private void initEvent(){
-
         ButtonClickListener buttonClickListener=new ButtonClickListener();
         btn_setting.setOnClickListener(buttonClickListener);
         btn_editF.setOnClickListener(buttonClickListener);
@@ -184,7 +174,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     /*全局监听类*/
     public class ButtonClickListener implements View.OnClickListener{
-
         /**
          * Called when a view has been clicked.
          *
@@ -209,11 +198,12 @@ public class SelfFragment extends Fragment implements SelfMainView {
                         startActivity(intent);
                     }
                     else {
-                        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
 
-                        String str = gson.toJson(user);
-                        intent.putExtra("user", str);
-                        startActivity(intent);
+                    Intent intent=new Intent(getActivity(), EditProfileActivity.class);
+                    Gson gson=new Gson();
+                    String str=gson.toJson(user);
+                    intent.putExtra("user",str);
+                    startActivity(intent);
                     }
                     break;
                 }
@@ -257,7 +247,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
     }
     @Override
     public void onDestroy() {
-
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
@@ -266,20 +255,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
         Log.e("event=",str);
         user=gson.fromJson(str,User.class);
         refresh();
-    }
-
-
-    @Override
-    public void refresh() {
-
-
-        tx_intro.setText(user.getUserIntro());
-
-
-
-
-
-
     }
 
 
