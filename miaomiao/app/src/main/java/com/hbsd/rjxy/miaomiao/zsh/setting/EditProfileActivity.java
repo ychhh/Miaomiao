@@ -1,38 +1,28 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting.presenter;
+package com.hbsd.rjxy.miaomiao.zsh.setting;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+
 import androidx.core.os.BuildCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Response;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import com.bumptech.glide.Glide;
@@ -40,13 +30,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
-import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
-import com.hbsd.rjxy.miaomiao.ych.view.AddCatActivity;
-import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
+
+
+import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditUserPresenterCompl;
+
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditProfileView;
 import com.luck.picture.lib.PictureSelector;
@@ -59,13 +49,11 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static com.hbsd.rjxy.miaomiao.utils.Constant.PERMISSION_NECESSARY;
-import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_CAMERA;
-import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_VIDEO;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.UPLOAD_USERHEAD_TOKEN_URL;
 
 
@@ -251,7 +239,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     }
 
-
     /**
      * 选择图片完成后
      *
@@ -264,11 +251,11 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            String localImgPath=null;
-            if (Build.VERSION.SDK_INT>Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()){
-                localImgPath=selectResultList.get(0).getAndroidQToPath();
-            }else{
-                localImgPath= selectResultList.get(0).getPath();
+            String localImgPath = null;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()) {
+                localImgPath = selectResultList.get(0).getAndroidQToPath();
+            } else {
+                localImgPath = selectResultList.get(0).getPath();
             }
             //返回到界面时显示图片
             RequestOptions options = new RequestOptions().circleCrop();
