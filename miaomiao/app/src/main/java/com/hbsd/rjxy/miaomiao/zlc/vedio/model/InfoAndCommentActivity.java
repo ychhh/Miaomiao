@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.BuildCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -246,21 +248,33 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         if(requestCode == PICTURESELECT_VIDEO && resultCode == Activity.RESULT_OK){
             Log.e("这是","拍摄视频");
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
-            String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
+            String Qpath;
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()){
+                Qpath = selectResultList.get(0).getAndroidQToPath();
+            }else{
+                Qpath = selectResultList.get(0).getPath();
+            }
+            int dotPos = Qpath.lastIndexOf(".");
+            String fileExt = Qpath.substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
             Log.e("文件大小为：",""+selectResultList.get(0).getSize());
             type = 0;
-            startPublishActivity(type,selectResultList.get(0).getPath());
+            startPublishActivity(type,Qpath);
 
         }else if(requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK){
             Log.e("这是","相册选择");
 
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
-            String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
+            String Qpath;
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()){
+                Qpath = selectResultList.get(0).getAndroidQToPath();
+            }else{
+                Qpath = selectResultList.get(0).getPath();
+            }
+            int dotPos = Qpath.lastIndexOf(".");
+            String fileExt = Qpath.substring(dotPos + 1).toLowerCase();
             Log.e("选择的类型是",""+fileExt);
-            Log.e("文件大小为：",""+selectResultList.get(0).getSize());
+            Log.e("路径：",""+Qpath);
             if("mp4".equals(fileExt)){
                 type = 0;
             }else if("jpg".equals(fileExt) || "png".equals(fileExt) || "jpeg".equals(fileExt)){
@@ -269,7 +283,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 Log.e("未能识别的文件格式",""+fileExt);
             }
             if(type != -1){
-                startPublishActivity(type,selectResultList.get(0).getPath());
+                startPublishActivity(type,Qpath);
             }
         }else{
             Log.e("未识别的requestCode",""+requestCode);
@@ -330,7 +344,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
 
         }else{
             //视频
-            bundle.putSerializable("path",selectResultList.get(0).getPath());
+            bundle.putSerializable("path",path);
         }
         intent.putExtras(bundle);
         startActivity(intent);

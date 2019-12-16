@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.scwang.smartrefresh.layout.SmartRefreshLayout android:layout_width="match_parent"
+
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
-            <TextView
-                    android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/back"
+                    android:id="@+id/back_mycat"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="我的喵主子"
                     android:textSize="32dp" />
+
+                <Button
+                    android:id="@+id/btn_addcat"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:text="添加"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
@@ -26,5 +44,4 @@
         </LinearLayout>
 
     </FrameLayout>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
