@@ -295,11 +295,23 @@ class GetChead extends AsyncTask<Object,Object,String>{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Cat cat = gson.fromJson(s,Cat.class);
-        Glide.with(context)
-                .load(cat.getHpath())
-                .into((ImageView) helper.getView(R.id.iv_cathead));
-        Log.e("asda",""+cat.getHpath());
+        if(!s.equals("")){
+            Cat cat = gson.fromJson(s,Cat.class);
+            if(cat != null && cat.getHpath() != null){
+                Glide.with(context)
+                        .load(cat.getHpath())
+                        .dontAnimate()
+                        .into((ImageView) helper.getView(R.id.iv_cathead));
+                Log.e("asda",""+cat.getHpath());
+            }else{
+
+            }
+        }else{
+
+        }
+
+
+
 
     }
 
@@ -327,7 +339,7 @@ class GetChead extends AsyncTask<Object,Object,String>{
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
 }
 
