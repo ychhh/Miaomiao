@@ -86,7 +86,7 @@
                 android:background="#fff"
                 android:layout_marginBottom="10dp"/>
             <Button
-                android:id="@+id/self_"
+                android:id="@+id/btn_self_pwd"
                 android:layout_width="200dp"
                 android:layout_height="20dp"
                 android:text="修改密码"

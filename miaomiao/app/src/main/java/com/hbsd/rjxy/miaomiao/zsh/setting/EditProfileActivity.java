@@ -1,34 +1,23 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting.presenter;
+package com.hbsd.rjxy.miaomiao.zsh.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import okhttp3.Response;
 
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
-import com.hbsd.rjxy.miaomiao.utils.Constant;
+
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
+import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditUserPresenterCompl;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditProfileView;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileView {
@@ -38,8 +27,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private ImageView tx_reImg;
     private TextView tx_reSbp;
     private TextView tx_reSex;
-    private OkHttpUtils okHttpUtils;
-    private  okhttp3.Callback callback;
+
    private Intent intent;
    private User user;
    private EditUserPresenterCompl editUserPresenterCompl;
@@ -127,7 +115,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                             obj.put("newIntro",newsbp);
                             obj.put("newSex",newSex);
                             String jsonStr=obj.toString();
-                            Log.e("json",jsonStr);
+                            //Log.e("json",jsonStr);
+
                             editUserPresenterCompl.editUser(jsonStr);
 
                         } catch (JSONException e) {
