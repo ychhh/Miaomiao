@@ -72,6 +72,21 @@ public class VideoController {
     }
 
 
+    @RequestMapping("/video/pagingVideoByUid")
+    @ResponseBody
+    public String findVideoByUid(HttpServletRequest request, HttpServletResponse response){
+        JSONObject receive = null;
+        try {
+            receive = new JSONObject(RequestUtil.getJson(request));
+            return gson.toJson(videoService.findVideoPagingByUid(receive.getInt("page"),receive.getInt("uid")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "fail";
+
+    }
+
+
 
 
 }

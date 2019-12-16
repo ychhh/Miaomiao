@@ -45,11 +45,11 @@ public class Cat {
         this.miid = miid;
     }
 
-    public String getHid() {
+    public String getHpath() {
         return hpath;
     }
 
-    public void setHid(String hpath) {
+    public void setHpath(String hpath) {
         this.hpath = hpath;
     }
 

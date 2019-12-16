@@ -1,5 +1,6 @@
-package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
+package com.hbsd.rjxy.miaomiao.wq;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,93 +13,135 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import com.daimajia.numberprogressbar.NumberProgressBar;
+
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import pub.devrel.easypermissions.EasyPermissions;
+
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PERMISSION_NECESSARY;
-import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_CAMERA;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_VIDEO;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_SP_NAME;
-import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.REMIND_PUBLISH_ONCE;
 
+public class CatFCActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+    /** Called when the activity is first created. */
+    private TabHost tabHost;
+    private ImageButton ibfanhui;
+    private ImageButton ibfabu;
+    private RecyclerView mRvTextList;
 
-/*
-    TODO    用户退出登录一定要删除sp中的草稿信息
- */
-public class InfoAndCommentActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
-
-    @BindView(R.id.cc_viewPager)
-    ViewPager viewPager;
-
-    @BindView(R.id.tv_videocomment)
-    TextView tvComment;
-
-    List<Fragment> fragments;
+    //zlc
     List<LocalMedia> selectResultList;
 
     PopupWindow popupWindow;
     View popupView;
-
-    PopupWindow popupConfirmWindow;
-    View popupConfirmView;
-
-    @BindView(R.id.pb_upload)
-    NumberProgressBar progressBar;
-
     private int type = -1;  //0：视频，1：图片，2：纯文字
 
-    private int miid;
-    private int currentItem;
-
-
-
-
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.catinfo_comment_layout);
-
+        setContentView(R.layout.activity_cat_fc);
+        findViews();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle.getSerializable("from").equals("commentPic")){
-            currentItem = 1;
-        }else{
-            currentItem = 0;
+        handle(bundle);
+
+        mRvTextList=findViewById(R.id.my_recycler_view);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(CatFCActivity.this);
+//        layoutManager.setOrientation(OrientationHelper.VERTICAL);
+        mRvTextList.setLayoutManager(new LinearLayoutManager(CatFCActivity.this,RecyclerView.VERTICAL,true));
+        mRvTextList.setAdapter(new TextListAdapter(this));
+
+
+        try{
+            tabHost = (TabHost) this.findViewById(R.id.TabHost01);
+            tabHost.setup();
+
+            tabHost.addTab(tabHost.newTabSpec("tab_1")
+                    .setContent(R.id.L1)
+                    .setIndicator("one",this.getResources().getDrawable(R.drawable.miao_head)));
+            tabHost.addTab(tabHost.newTabSpec("tab_2")
+                    .setContent(R.id.L2)
+                    .setIndicator("two", this.getResources().getDrawable(R.drawable.miao_head)));
+            tabHost.addTab(tabHost.newTabSpec("tab_3")
+                    .setContent(R.id.L3)
+                    .setIndicator("three", this.getResources().getDrawable(R.drawable.miao_head)));
+            tabHost.setCurrentTab(0);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Log.d("EXCEPTION", ex.getMessage());
         }
-        Log.e("currentItem",""+currentItem);
-        miid = (int) bundle.getSerializable("miid");
 
-        ButterKnife.bind(this);
-        fragments = new ArrayList<>();
-        fragments.add(new CatinfoFragment());
-        fragments.add(new CommentFragment(miid));
-        viewPager.setAdapter(new CustomPageAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        viewPager.setCurrentItem(currentItem);
+        //初始化发布按钮
+        initPublishButton();
 
+    }
+
+    //获取cid
+    private void handle(Bundle bundle) {
+
+    }
+
+    private void  findViews(){
+        ibfanhui = findViewById(R.id.fanhui);
+        ibfabu = findViewById(R.id.fabu);
+    }
+    public void  onClick(View v){
+        switch (v.getId()){
+            case R.id.fanhui:
+                finish();
+//                Intent intent = new Intent(MainActivity.this,CatMainActivity.class);
+//                startActivity(intent);
+                break;
+        }
+    }
+
+
+
+//    private class setOnLongClickListener implements View.OnLongClickListener{
+//
+//        @Override
+//        public boolean onLongClick(View v) {
+//            Intent intent1 = new Intent(MainActivity.this,fabu_wenzi.class);
+//            startActivity(intent1);
+//            return true;
+////            return false;
+//        }
+//    }
+
+
+
+    /*
+        TODO:   下面是zlc写的发布按钮的逻辑
+     */
+
+    public void initPublishButton(){
         SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME,MODE_PRIVATE);
 
-        tvComment.setOnClickListener(new View.OnClickListener() {
+        /*
+            TODO:点击事件
+         */
+        ibfabu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*
@@ -116,7 +159,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 if(checkHaveDraft(sp)){
                     int type = sp.getInt("type",-1);
                     if(type == 0 || type == 1){
-                        Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
+                        Intent intent = new Intent(CatFCActivity.this,PublishActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("type",type);
                         bundle.putSerializable("isdraft","true");
@@ -135,14 +178,14 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 }else{
                     popupwindow(v);
                 }
-
             }
         });
-        /*
-            TODO    纯文本草稿
 
+        /*
+            TODO:长点击事件
          */
-        tvComment.setOnLongClickListener(new View.OnLongClickListener() {
+
+        ibfabu.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 /*
@@ -162,7 +205,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                     //直接调用
                     if(checkHaveTextDraft(sp)){
 
-                        Intent intent = new Intent(InfoAndCommentActivity.this,PublishActivity.class);
+                        Intent intent = new Intent(CatFCActivity.this,PublishActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("type",2);
                         bundle.putSerializable("isdraft","true");
@@ -178,8 +221,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                 return true;
             }
         });
-
-
 
     }
 
@@ -208,28 +249,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         }
         return false;
     }
-
-
-    private class CustomPageAdapter extends FragmentPagerAdapter {
-
-
-        public CustomPageAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-    }
-
-
 
 
     /*
@@ -321,7 +340,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
         TODO    跳转方法，传入一个type类型和一个nullable的String path
      */
     private void startPublishActivity(int i, @Nullable String path) {
-        Intent intent = new Intent(InfoAndCommentActivity.this, PublishActivity.class);
+        Intent intent = new Intent(CatFCActivity.this, PublishActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("type",i);
         bundle.putSerializable("isdraft","false");
@@ -406,7 +425,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     启动相机
      */
     private void startVideo(){
-        PictureSelector.create(InfoAndCommentActivity.this)
+        PictureSelector.create(CatFCActivity.this)
                 .openCamera(PictureMimeType.ofVideo())
                 .loadImageEngine(GlideEngine.createGlideEngine())
                 .recordVideoSecond(15)//视频秒数录制 默认60s int
@@ -419,7 +438,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     启动相册
      */
     private void startAlbum() {
-        PictureSelector.create(InfoAndCommentActivity.this)
+        PictureSelector.create(CatFCActivity.this)
                 .openGallery(PictureMimeType.ofAll())
                 .loadImageEngine(GlideEngine.createGlideEngine())
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)// 设置相册Activity方向，不设置默认使用系统
@@ -463,7 +482,6 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Toast.makeText(this,"没有授予权限不能上传哦~",Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

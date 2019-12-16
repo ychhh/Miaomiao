@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="20dp"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/self_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/u2"/>
+            android:background="@drawable/u2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="50px"
             android:layout_gravity="center_horizontal"
-            android:text="修改个人资料" />
+            android:text="修改个人资料"
+            android:textSize="50px" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
         <ImageView
-            android:id="@+id/self_reImg"
+            android:id="@+id/iv_reImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/u45"/>
+            android:src="@drawable/u45" />
+
         <TextView
-            android:id="@+id/self_changeHead"
-            android:layout_marginTop="5dp"
+            android:id="@+id/tv_changeHead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击更换头像"/>
+            android:layout_marginTop="5dp"
+            android:text="点击更换头像" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
-                    android:text="姓名"/>
+                    android:text="姓名" />
+
                 <EditText
                     android:id="@+id/self_reName"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
-                    android:text="豆豆"/>
+                    android:text="豆豆" />
 
             </LinearLayout>
 
@@ -71,46 +79,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal">
+
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
-                    android:text="简介"/>
+                    android:text="简介" />
+
                 <EditText
                     android:id="@+id/self_reSbp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
-                    android:text="编辑资料获得关注哦"/>
+                    android:text="编辑资料获得关注哦" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
-                    android:text="性别"/>
+                    android:text="性别" />
+
                 <EditText
                     android:id="@+id/self_reSex"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
-                    android:text="男"/>
+                    android:text="男" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
+
                 <Button
                     android:id="@+id/self_reCommit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="提交"/>
+                    android:text="保存" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -80,6 +80,7 @@ public class ScrollCalculatorHelper {
     }
 
 
+
     void playVideo(RecyclerView view) {
 
         if (view == null) {
@@ -123,6 +124,7 @@ public class ScrollCalculatorHelper {
         if (gsyBaseVideoPlayer != null && needPlay) {
             if (runnable != null) {
                 GSYBaseVideoPlayer tmpPlayer = runnable.gsyBaseVideoPlayer;
+                Log.e("onScrollStateChanged","onScrollStateChanged");
                 playHandler.removeCallbacks(runnable);
                 runnable = null;
                 if (tmpPlayer == gsyBaseVideoPlayer) {

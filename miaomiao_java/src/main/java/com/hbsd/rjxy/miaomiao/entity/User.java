@@ -18,6 +18,7 @@ public class User {
     private String username;
     private String uintro;
     private String hpath;
+    private Integer hid;
     private Integer is_vip;
     private Integer is_admin;
     private Integer bid;

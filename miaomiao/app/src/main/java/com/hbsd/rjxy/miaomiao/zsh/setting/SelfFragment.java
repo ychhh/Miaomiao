@@ -21,8 +21,12 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
+
 import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
+
+import com.hbsd.rjxy.miaomiao.ych.view.FollowActivity;
+
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfMainView;
@@ -96,7 +100,9 @@ public class SelfFragment extends Fragment implements SelfMainView {
         btn_setting=view.findViewById(R.id.btn_setting);
         btn_editF=view.findViewById(R.id.btn_editF);
         tx_order=view.findViewById(R.id.self_order);
+
         btn_self_pwd=view.findViewById(R.id.btn_self_pwd);
+
         tx_intro=view.findViewById(R.id.self_main_intro);
 
         getUserPresenterCompl=new GetUserPresenterCompl(this);
@@ -213,10 +219,15 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 }
                 case R.id.self_order:{
 
+
                     /*TODO
                         我的订阅
                     * */
 
+
+                    Intent intent=new Intent(getActivity(), FollowActivity.class);
+                    intent.putExtra("uid",user.getUserId());
+                    startActivity(intent);
                     break;
                 }
                 case R.id.btn_self_pwd:{

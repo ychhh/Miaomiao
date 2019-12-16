@@ -2,6 +2,7 @@ package com.hbsd.rjxy.miaomiao.ych.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.google.gson.JsonParser;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.utils.CircleImageView;
+import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,11 +40,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.BindViews;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_SUB_CAT;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_UNFOLLOW_CAT;
 
 public class FollowActivity extends Activity {
@@ -52,13 +58,14 @@ public class FollowActivity extends Activity {
     Handler handler;
     BaseAdapter adapter=null;
     Map<String,String> map=new HashMap<>();
+    ImageView img_back;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_cat);
         listView=findViewById(R.id.list_follow);
+        img_back=findViewById(R.id.follow_back);
         map.put("uid","2");
-        Log.e(TAG, "onCreate: 123" );
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -88,7 +95,12 @@ public class FollowActivity extends Activity {
                 handler.sendMessage(msg);
             }
         });
-
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
 
@@ -126,6 +138,7 @@ public class FollowActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater=LayoutInflater.from(context);
             Cat cat=dataSource.get(position);
+            Log.e(TAG, "getView: aaaaaa"+cat );
 //        View newView=inflater.inflate(R.layout.activity_follow_cat,null);
             ViewHolder viewHolder=null;
             if (convertView==null){
@@ -141,14 +154,17 @@ public class FollowActivity extends Activity {
             }
             viewHolder.cat_name.setText(cat.getCname());
             viewHolder.cat_intro.setText(cat.getCintro());
-            Glide.with(context).load(cat.getHid()).into(viewHolder.cat_head);
+            Glide.with(context).load(cat.getHpath()).into(viewHolder.cat_head);
             viewHolder.btn_unfollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dataSource.remove(position);
                     Map<String,String> map=new HashMap<>();
+                    SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    String uid = sp.getString("uid","unregist");
                     map.put("uid","2");
-                    map.put("cid","2");
+                    map.put("cid",cat.getCid()+"");
+//                    Log.e(TAG, "onClick:uid :"+uid );
                     Log.e(TAG, "onClick: "+map.get("uid")+map.get("cid") );
                     OkHttpUtils.getInstance().postForm(URL_UNFOLLOW_CAT, map, new Callback() {
                         @Override

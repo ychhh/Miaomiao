@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,11 @@ import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainFragmentView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
@@ -54,9 +58,11 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_SUBSCRIBE_VIDEO_LIST;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.RECOMMEND_PAGE_DEFAULT;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.SUBSCRIBE_PAGE_DEFAULT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_SUBSCRIPTION_LIST;
 
 
@@ -82,6 +88,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
     private View view;
     private int contentType = 1;//TODO ：1推荐，0订阅
     private String uid;
+    private boolean nomoreVideo = false;
 
     Gson gson = new Gson();
 
@@ -121,7 +128,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 //没登录，不去请求订阅列表
                 //现在写的是登录的情况
                 askforSubscriptionList();
-
+//                askforRecommend();
             }else {
                 //没登录这样
             askforRecommend();
@@ -140,7 +147,16 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setHeaderHeight(190);
         rlVideo.setHeaderMaxDragRate(2.0f);
         rlVideo.setHeaderTriggerRate(0.7f);
+        rlVideo.setEnableLoadMore(false);
+        rlVideo.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                String uid = sp.getString("uid","1");
+                askforRefreshVideoList(uid);
 
+            }
+        });
 
 
     }
@@ -163,6 +179,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
 //                Log.e("askforSubscriptionList",""+response.body().string());
 
+                //不知道什么问题
+                if(subscriptionRecords.get(0).getSrid() == 0){
+                    subscriptionRecords = null;
+                }
 
                 askforRecommend();
             }
@@ -171,14 +191,79 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     }
 
+    private void askforRefreshVideoList(@Nullable String uid){
+        if(!nomoreVideo){
+            int page;
+            String url;
+            if(contentType == 1){
+                RECOMMEND_PAGE_DEFAULT += 1;
+                page = RECOMMEND_PAGE_DEFAULT;
+                url = INIT_VIDEO_URL;
+            }else{
+                SUBSCRIBE_PAGE_DEFAULT += 1;
+                page = SUBSCRIBE_PAGE_DEFAULT;
+                url = INIT_SUBSCRIBE_VIDEO_LIST;
+            }
+
+            JSONObject jo = new JSONObject();
+            try {
+                jo.put("page",page);
+                if(contentType == 0){
+                    jo.put("uid",uid);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            OkHttpUtils.getInstance().postJson(url, jo.toString(), new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    //这个要替换当前的这些视频
+                    List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                    Log.e("refresh",""+videoList.toString());
+                    EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                    videoEvent.setContentList(videoList);
+                    videoEvent.setContentString("refreshVideoList");
+                    EventBus.getDefault().post(videoEvent);
+                }
+            });
+        }else{
+            //已经没有更多的没看过的视频了
+        }
+    }
+
+
+
+    /*
+        TODO   :    根据contenType改变请求内容，这里是预加载的加载请求url有变化
+     */
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
         try {
-            jo.put("page",RECOMMEND_PAGE_DEFAULT);
+            if(contentType == 1){
+                jo.put("page",RECOMMEND_PAGE_DEFAULT);
+            }else{
+                jo.put("page",SUBSCRIBE_PAGE_DEFAULT);
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                String uid = sp.getString("uid","1");
+                jo.put("uid",uid);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        OkHttpUtils.getInstance().postJson(INIT_VIDEO_URL, jo.toString(), new Callback() {
+        String url;
+        if(contentType == 1){
+            url = INIT_VIDEO_URL;
+        }else{
+            url = INIT_SUBSCRIBE_VIDEO_LIST ;
+        }
+        OkHttpUtils.getInstance().postJson(url, jo.toString(), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -298,9 +383,20 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                //这里是预加载请求，当前推荐页++
-                RECOMMEND_PAGE_DEFAULT += 1;
-                askforRecommend();
+                if(contentType == 1){
+                    //这里是预加载请求，当前推荐页++
+                    RECOMMEND_PAGE_DEFAULT += 1;
+                    askforRecommend();
+                }else{
+                    //订阅视频的预加载请求
+                    SUBSCRIBE_PAGE_DEFAULT += 1;
+
+                    /*
+                        TODO:订阅视频的预加载
+                     */
+                    askforRecommend();
+                }
+
             }
         },recyclerView);
 
@@ -364,12 +460,57 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             }else{
                 //如果返回失败，那么根据map判断状态
                 if("complete".equals(videoEvent.getContentMap().get("status"))){
-                    RECOMMEND_PAGE_DEFAULT -= 1;
-                    Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                    if(contentType == 1){
+                        RECOMMEND_PAGE_DEFAULT -= 1;
+                        Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                        nomoreVideo = true;
+                    }else{
+                        SUBSCRIBE_PAGE_DEFAULT -= 1;
+                        Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
 
             }
+        }else if("refreshVideoList".equals(videoEvent.getContentString())){
+            //如果返回是空
+            if(videoEvent.getContentList().isEmpty()){
+                rlVideo.finishRefresh(500);
+                Toast.makeText(getContext(),"没有更多视频了",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            GSYVideoManager.releaseAllVideos();
+            this.videoList.clear();
+            for(Multi_info multi_info : videoEvent.getContentList()){
+                this.videoList.add(multi_info);
+            }
+            adapter.notifyItemChanged(0);
+            firstOpenVideo = true;
+            rlVideo.finishRefresh(1000);
+            recyclerView.swapAdapter(adapter,true);
+            recyclerView.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            layoutManager.onItemsChanged(recyclerView);
+            MeGSYVideoPlayer meGSYVideoPlayer = recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.videoPlayer);
+            meGSYVideoPlayer.startAfterPrepared();
+
+
+
+        }else if("subscribeInit".equals(videoEvent.getContentString())){
+            GSYVideoManager.releaseAllVideos();
+            this.videoList.clear();
+            for(Multi_info multi_info : videoEvent.getContentList()){
+                this.videoList.add(multi_info);
+            }
+            adapter.notifyItemChanged(0);
+            firstOpenVideo = true;
+            recyclerView.swapAdapter(adapter,true);
+            recyclerView.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            layoutManager.onItemsChanged(recyclerView);
+            MeGSYVideoPlayer meGSYVideoPlayer = recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.videoPlayer);
+            meGSYVideoPlayer.startAfterPrepared();
         }
 
         Log.e("loadMoreComplete","loadMoreComplete");
@@ -414,6 +555,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                         //以后下面的内容放到else分支里，1改成unregist
                         setTextViewColor(tv_subscribed,tv_recommend);
                         //请求订阅的视频内容...
+                        askforSubscribedVideoList(uid);
 
 
 
@@ -446,7 +588,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     setTextViewColor(tv_recommend,tv_subscribed);
                     contentType = 1;
                     //请求推荐视频的数据
-
+                    askforRefreshVideoList(null);
                 }else{
                     //表示已经是推荐内容了
                 }
@@ -500,5 +642,38 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         EventBus.getDefault().register(this);
         super.onStart();
     }
+
+
+    /*
+        TODO:下拉刷新和预加载都应该判断当前的contentType=0/1，根据这个来请求更多的视频
+     */
+    private void askforSubscribedVideoList(String uid){
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("page",SUBSCRIBE_PAGE_DEFAULT);
+            jo.put("uid",uid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.getInstance().postJson(INIT_SUBSCRIBE_VIDEO_LIST, jo.toString(), new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                //这个要替换当前的这些视频
+                List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                videoEvent.setContentList(videoList);
+                videoEvent.setContentString("subscribeInit");
+                EventBus.getDefault().post(videoEvent);
+            }
+        });
+    }
+
+
+
 
 }
