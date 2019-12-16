@@ -3,20 +3,20 @@ package com.hbsd.rjxy.miaomiao.zsh.setting;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/EditProfileActivity.java
-=======
+
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Response;
 
 import android.Manifest;
->>>>>>> b0392c1d1941dd0f841942f836a41c05fb7702cf:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/presenter/EditProfileActivity.java
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,24 +29,22 @@ import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
 
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
-<<<<<<< HEAD:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/EditProfileActivity.java
+
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditUserPresenterCompl;
-=======
+
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
->>>>>>> b0392c1d1941dd0f841942f836a41c05fb7702cf:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/presenter/EditProfileActivity.java
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditProfileView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-<<<<<<< HEAD:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/EditProfileActivity.java
-=======
+
 import java.io.File;
 import java.io.IOException;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.UPLOAD_USERHEAD_TOKEN_URL;
 
->>>>>>> b0392c1d1941dd0f841942f836a41c05fb7702cf:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/presenter/EditProfileActivity.java
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileView {
     private Button btn_back;
@@ -56,22 +54,13 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private TextView tv_changeHead;
     private TextView tx_reSbp;
     private TextView tx_reSex;
-<<<<<<< HEAD:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/EditProfileActivity.java
 
    private Intent intent;
    private User user;
    private EditUserPresenterCompl editUserPresenterCompl;
-=======
-    private OkHttpUtils okHttpUtils;
-    private okhttp3.Callback callback;
-    private Integer id;
-    private Intent intent;
-    private EditUserPresenterCompl editUserPresenterCompl;
-    private String localImgPath;
-    private String qiNiuImgPath;
-    private User user;
+     private String localImgPath;
 
->>>>>>> b0392c1d1941dd0f841942f836a41c05fb7702cf:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/presenter/EditProfileActivity.java
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +119,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     finish();
                     break;
                 }
-<<<<<<< HEAD:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/EditProfileActivity.java
                 case R.id.self_reCommit:{
 
 
@@ -160,26 +148,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
 
 
-=======
-                case R.id.self_reCommit: {
-                    String newName = tx_reName.getText().toString();
-                    String newsbp = tx_reSbp.getText().toString();
-                    String newSex = tx_reSex.getText().toString();
-                    //Log.e("读取到当下想修改的用户名为",newName);
-                    JSONObject obj = new JSONObject();
-                    try {
-                        obj.put("uid", user.getUserId());
-                        obj.put("newName", newName);
-                        obj.put("newIntro", newsbp);
-                        obj.put("newSex", newSex);
-                        String jsonStr = obj.toString();
-                        Log.e("json", jsonStr);
-                        editUserPresenterCompl.editUser(jsonStr);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
->>>>>>> b0392c1d1941dd0f841942f836a41c05fb7702cf:miaomiao/app/src/main/java/com/hbsd/rjxy/miaomiao/zsh/setting/presenter/EditProfileActivity.java
                     break;
                 }
                 case R.id.tv_changeHead:
@@ -251,7 +220,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     private void startRealUpload(String token) {
         UploadUtils uploadUtils = new UploadUtils(token, localImgPath, new File(localImgPath).getName());
-        qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
+       // qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
         uploadUtils.upload();
     }
 }

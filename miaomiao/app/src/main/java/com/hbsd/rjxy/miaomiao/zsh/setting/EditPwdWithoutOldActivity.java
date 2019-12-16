@@ -91,6 +91,7 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity {
                     if(newPwd.equals(confirm)){
                         Integer id=user.getUserId();
                         editPwdPresenterCompl.editPwdWithoutOld(id,newPwd);
+
                         Log.e("新密码为",newPwd);
                         Log.e("确认密码为：",confirm);
                     }
