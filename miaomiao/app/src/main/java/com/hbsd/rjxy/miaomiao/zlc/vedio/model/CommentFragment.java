@@ -252,7 +252,6 @@ public class CommentFragment extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
                 recordLikes = gson.fromJson(response.body().string(),new TypeToken<List<RecordLikes>>(){}.getType());
                 initData();
             }

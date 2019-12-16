@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
 
     private Context context;

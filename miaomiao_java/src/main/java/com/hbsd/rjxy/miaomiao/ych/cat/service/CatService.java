@@ -20,7 +20,4 @@ public class CatService {
         return catDao.findAllByUid(uid);
     }
     public Cat findAllByCid(int cid){ return catDao.findAllByCid(cid); }
-    public Cat saveCat(Cat cat){
-        return catDao.save(cat);
-    }
 }
