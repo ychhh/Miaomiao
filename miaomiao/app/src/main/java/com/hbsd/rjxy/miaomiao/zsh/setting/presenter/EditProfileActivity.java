@@ -2,20 +2,25 @@ package com.hbsd.rjxy.miaomiao.zsh.setting.presenter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.os.BuildCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,8 +40,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
+import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
+import com.hbsd.rjxy.miaomiao.ych.view.AddCatActivity;
+import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
@@ -46,6 +54,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +69,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_VIDEO;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.UPLOAD_USERHEAD_TOKEN_URL;
 
 
-public class EditProfileActivity extends AppCompatActivity implements EditProfileView,EasyPermissions.PermissionCallbacks{
+public class EditProfileActivity extends AppCompatActivity implements EditProfileView {
     private Button btn_back;
     private Button btn_commit;
     private TextView tx_reName;
@@ -68,8 +77,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private TextView tv_changeHead;
     private TextView tx_reSbp;
     private TextView tx_reSex;
-    private OkHttpUtils okHttpUtils;
-    private okhttp3.Callback callback;
     private Integer id;
     private Intent intent;
     private EditUserPresenterCompl editUserPresenterCompl;
@@ -78,9 +85,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private User user;
     private UploadUtils uploadUtils;
     List<LocalMedia> selectResultList;
-
-    PopupWindow popupWindow;
-    View popupView;
+    private boolean isEditedHead = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +96,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         intent = getIntent();
         String str = intent.getStringExtra("user");
         //todo 拿到服务器端图片地址
-        qiNiuImgPath=intent.getStringExtra("hpath");
+        qiNiuImgPath = intent.getStringExtra("hpath");
         Gson gson = new Gson();
         user = gson.fromJson(str, User.class);
 
@@ -143,73 +148,28 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     break;
                 }
                 case R.id.self_reCommit: {
-                    String newName = tx_reName.getText().toString();
-                    String newsbp = tx_reSbp.getText().toString();
-                    String newSex = tx_reSex.getText().toString();
-                    //Log.e("读取到当下想修改的用户名为",newName);
-                    JSONObject obj = new JSONObject();
-                    try {
-                        obj.put("uid", user.getUserId());
-                        obj.put("newName", newName);
-                        obj.put("newIntro", newsbp);
-                        obj.put("newSex", newSex);
-                        obj.put("newHpath",qiNiuImgPath);
-                        String jsonStr = obj.toString();
-                        Log.e("json", jsonStr);
-                        //开始上传头像到服务器
-                        startRealUpload(uploadUtils);
-                        //todo 有待解决因为网络原因暂时拿不到服务器端图片地址的情况
-                        editUserPresenterCompl.editUser(jsonStr);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    buttonInactive();
+                    if (isEditedHead) {
+                        //准备上传
+                        tv_changeHead.setText("正在上传···");
+                        startUploadProgress();
+                    } else {
+                        postEditMsg();
                     }
                     break;
                 }
                 case R.id.tv_changeHead:
                     //动态申请权限
-                    popupwindow(v);
-//                    ActivityCompat.requestPermissions(EditProfileActivity.this,
-//                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+                    isEditedHead = true;
+                    askPermission();
+                    break;
+                case R.id.iv_reImg:
+                    isEditedHead = true;
+                    askPermission();
                     break;
             }
         }
     }
-
-//    //用户允许权限
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == 100) {
-//            Intent intent = new Intent();
-//            intent.setAction(Intent.ACTION_PICK);
-//            intent.setType("image/*");
-//            startActivityForResult(intent, 200);
-//        }
-//    }
-
-//    //选择图片返回后执行此方法
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 200 && resultCode == RESULT_OK) {
-//            Uri uri = data.getData();
-//            Cursor cursor = getContentResolver().query(uri, null, null,
-//                    null, null);
-//            if (cursor.moveToFirst()) {
-//                localImgPath = cursor.getString(cursor.getColumnIndex("_data"));
-//                Log.e("imgPath", localImgPath);
-//                RequestOptions options = new RequestOptions().circleCrop();
-//                //返回到界面时显示图片
-//                Glide.with(this)
-//                        .load(localImgPath)
-//                        .apply(options)
-//                        .into(iv_reImg);
-//                //准备上传头像到服务器端
-//                startUploadProgress();
-//            }
-//
-//        }
-//    }
 
     /**
      * 获取token，准备上传
@@ -224,181 +184,149 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         OkHttpUtils.getInstance().postJson(UPLOAD_USERHEAD_TOKEN_URL, jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
+                Looper.prepare();
+                Toast.makeText(EditProfileActivity.this, "连接服务器失败", Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
+
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String token = response.body().string();
                 uploadUtils = new UploadUtils(token, localImgPath, new File(localImgPath).getName());
                 qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
-                Log.e("Edit--qiniuImgPath",qiNiuImgPath);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        buttonActive();
+                        tv_changeHead.setText("点击更换头像");
+                    }
+                });
+                postEditMsg();
+                startRealUpload(uploadUtils);
+                Log.e("Edit--qiniuImgPath", qiNiuImgPath);
             }
         });
     }
 
     /**
      * 开始上传
+     *
      * @param uploadUtils
      */
     private void startRealUpload(UploadUtils uploadUtils) {
         uploadUtils.upload();
     }
 
-    /*
-       这是点击选择头像上传之后弹出的选择框
+    private void askPermission() {
+        String[] perms = {Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            startSelectPic();
+        } else {
+            EasyPermissions.requestPermissions(EditProfileActivity.this, "程序必须的权限", 4513, perms);
+        }
+    }
+
+    /**
+     * 选择图片
      */
-    private void popupwindow(View v) {
-        popupView = LayoutInflater.from(this).inflate(R.layout.uploadhead_popupwidow,null);
-        popupWindow=new PopupWindow(popupView, dip2px(this,350) , dip2px(this,90), true);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(false);
-        popupWindow.setTouchable(true);
-
-        Button btnAlbum = popupView.findViewById(R.id.btn_album);
-        Button btnCamera = popupView.findViewById(R.id.btn_camera);
-
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                askPermissionForCamera();
-            }
-        });
-
-        btnAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                askPermissionForAlbum();
-            }
-        });
-
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 0.3f;
-        this.getWindow().setAttributes(lp);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = getWindow().getAttributes();
-                lp.alpha = 1f;
-                getWindow().setAttributes(lp);
-            }
-        });
-
-        popupWindow.showAtLocation(v, Gravity.CENTER,0,20);
-    }
-
-    private void askPermissionForAlbum(){
-        if(EasyPermissions.hasPermissions(this,PERMISSION_NECESSARY)){
-            startAlbum();
-        }else{
-            EasyPermissions.requestPermissions(this,"打开相册必须的权限",5001,PERMISSION_NECESSARY);
-        }
-    }
-
-
-    private void askPermissionForCamera(){
-        if(EasyPermissions.hasPermissions(this,PERMISSION_NECESSARY)){
-            startCamera();
-        }else{
-            EasyPermissions.requestPermissions(this,"拍摄照片必须的权限",5002,PERMISSION_NECESSARY);
-        }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PICTURESELECT_CAMERA:
-                    Log.e("上传","拍照");
-                    selectResultList = PictureSelector.obtainMultipleResult(data);
-                    localImgPath=selectResultList.get(0).getPath();
-                    Log.e("地址",selectResultList.get(0).getPath());
-                    int dotPos = selectResultList.get(0).getPath().lastIndexOf(".");
-                    String fileExt = selectResultList.get(0).getPath().substring(dotPos + 1).toLowerCase();
-                    Log.e("选择的类型是",""+fileExt);
-                    break;
-                case PictureConfig.CHOOSE_REQUEST:
-                    //图片选择结果回调
-                    Log.e("上传","相册选择");
-                    selectResultList = PictureSelector.obtainMultipleResult(data);
-                    localImgPath=selectResultList.get(0).getPath();
-                    Log.e("地址",selectResultList.get(0).getPath());
-                    int dotPos1 = selectResultList.get(0).getPath().lastIndexOf(".");
-                    String fileExt1 = selectResultList.get(0).getPath().substring(dotPos1 + 1).toLowerCase();
-                    Log.e("选择的类型是",""+fileExt1);
-                    break;
-
-            }
-        }
-    }
-
-    /*
-    启动相册
-     */
-    private void startAlbum() {
+    private void startSelectPic() {
         PictureSelector.create(EditProfileActivity.this)
-                .openGallery(PictureMimeType.ofAll())
-                .loadImageEngine(GlideEngine.createGlideEngine())
-                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)// 设置相册Activity方向，不设置默认使用系统
+                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .isWeChatStyle(true)// 是否开启微信图片选择风格，此开关开启了才可使用微信主题！！！
                 .theme(R.style.picture_WeChat_style)
+                .loadImageEngine(GlideEngine.createGlideEngine())
                 .maxSelectNum(1)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
-                .queryMaxFileSize(10)// 只查多少M以内的图片、视频、音频  单位M
-                .isSingleDirectReturn(false)// 单选模式下是否直接返回，PictureConfig.SINGLE模式下有效
                 .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-//                .previewVideo(true)// 是否可预览视频 true or false
-//                .enablePreviewAudio(true) // 是否可播放音频 true or false
+                .previewImage(true)// 是否可预览图片 true or false
+                .previewVideo(false)// 是否可预览视频 true or false
+                .enablePreviewAudio(false) // 是否可播放音频 true or false
                 .isCamera(true)// 是否显示拍照按钮 true or false
-                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .compress(true)// 是否压缩 true or false
-//                .openClickSound(true)// 是否开启点击声音 true or false
-                .synOrAsy(true)//同步true或异步false 压缩 默认同步
-//                .videoQuality(1)// 视频录制质量 0 or 1 int
-//                .videoMaxSecond(30)// 显示多少秒以内的视频or音频也可适用 int
-//                .videoMinSecond(2)// 显示多少秒以内的视频or音频也可适用 int
-//                .recordVideoSecond(15)//视频秒数录制 默认60s int
+                .isZoomAnim(true)//图片列表点击缩放效果
                 .enableCrop(false)// 是否裁剪 true or false
+                .withAspectRatio(1, 1)//一比一剪裁
                 .rotateEnabled(false)//禁止旋转
-                .forResult(PictureConfig.CHOOSE_REQUEST);
-        popupWindow.dismiss();
-    }
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
-    /*
-    启动相机
-     */
-    private void startCamera(){
-        PictureSelector.create(EditProfileActivity.this)
-                .openCamera(PictureMimeType.ofImage())
-                .loadImageEngine(GlideEngine.createGlideEngine())// 外部传入图片加载引擎，必传项
-                .forResult(PICTURESELECT_CAMERA);       //request码是相机请求
-        popupWindow.dismiss();
     }
-
 
 
     /**
-     *分别返回授权成功和失败的权限
+     * 选择图片完成后
+     *
      * @param requestCode
-     * @param perms
+     * @param resultCode
+     * @param data
      */
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if(requestCode == 5001){
-            startAlbum();
-        }else if(requestCode == 5002){
-            startCamera();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
+            selectResultList = PictureSelector.obtainMultipleResult(data);
+            String localImgPath=null;
+            if (Build.VERSION.SDK_INT>Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()){
+                localImgPath=selectResultList.get(0).getAndroidQToPath();
+            }else{
+                localImgPath= selectResultList.get(0).getPath();
+            }
+            //返回到界面时显示图片
+            RequestOptions options = new RequestOptions().circleCrop();
+            Glide.with(this)
+                    .load(localImgPath)
+                    .apply(options)
+                    .into(iv_reImg);
         }
-
     }
+
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Toast.makeText(this,"没有授予权限不能上传哦~",Toast.LENGTH_SHORT).show();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    //  将物理像素换成真实像素
-    private int dip2px(Context context, float dpValue) {
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    private void postEditMsg() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("uid", 8);
+            obj.put("newName", tx_reName.getText().toString());
+            obj.put("newIntro", tx_reSbp.getText().toString());
+            obj.put("newSex", tx_reSex.getText().toString());
+            obj.put("isEditedHead", isEditedHead);
+            if (isEditedHead) {
+                obj.put("newHpath", qiNiuImgPath);
+            }
+            // todo 注意服务器端的调整
+            String jsonStr = obj.toString();
+            Log.e("json", jsonStr);
+            EventBus.getDefault().post(jsonStr);
+            OkHttpUtils.getInstance().postJson(Constant.GET_USER_URL + "edit", jsonStr, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    Looper.prepare();
+                    Toast.makeText(EditProfileActivity.this, "保存失败，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    Looper.prepare();
+                    buttonActive();
+                    Toast.makeText(EditProfileActivity.this, "信息保存成功", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buttonActive() {
+        btn_back.setEnabled(true);
+    }
+
+    public void buttonInactive() {
+        btn_back.setEnabled(false);
     }
 }

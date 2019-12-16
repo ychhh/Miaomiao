@@ -67,7 +67,10 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 container,
                 false
         );
-        EventBus.getDefault().register(this);
+        if(EventBus.getDefault().isRegistered(this)){
+
+        }
+        else{EventBus.getDefault().register(this);}
         return view;
     }
 

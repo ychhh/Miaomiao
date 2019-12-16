@@ -54,7 +54,7 @@ public class EditUserPresenterCompl implements EditUserPresenter {
         okHttpUtils = new OkHttpUtils();
         okHttpUtils.postJson(url, jsonStr, callback);
         EventBus.getDefault().post(jsonStr);
-        editProfileView.Okfinish();
+//        editProfileView.Okfinish();
         return true;
     }
 

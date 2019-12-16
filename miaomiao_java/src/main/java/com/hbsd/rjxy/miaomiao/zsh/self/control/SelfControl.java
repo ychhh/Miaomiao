@@ -45,11 +45,14 @@ public class SelfControl {
             String sex=object.getString("newSex");
             String uintro=object.getString("newIntro");
             Integer uid=object.getInt("uid");
-            String hpath=object.getString("newHpath");
-            System.out.println("============="+hpath);
+            System.out.println("用户"+uid);
+            if(object.getBoolean("isEditedHead")){
+                String hpath=object.getString("newHpath");
+                int rtn2=selfService.updateUserHpathById(hpath,uid);
+                System.out.println("============="+hpath);
+                System.out.println("rtn2"+rtn2);
+            }
             int rtn=selfService.updateUserMsgById(username,sex,uintro,uid);
-            int rtn2=selfService.updateUserHpathById(hpath,uid);
-            System.out.println("rtn2"+rtn2);
 //            if (rtn>0 ){
 //                res.put("edited","ok");
 //            }else{
