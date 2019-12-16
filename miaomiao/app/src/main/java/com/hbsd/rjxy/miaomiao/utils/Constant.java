@@ -72,7 +72,7 @@ public class Constant {
     public static final String URL_ADD_CAT_INFO= "http://47.94.171.160:8081/cat/setcatinfo";//设置猫的信息
     public static final String URL_YUN = "47.94.171.160";
     public  final String URL_ZZZ = "10.7.87.224";
-
+    public static final String URL_GET_CAT = "http://47.94.171.160:8081/cat/findbycid";//通过cid找猫
     //192.168.11.211
 
 }
