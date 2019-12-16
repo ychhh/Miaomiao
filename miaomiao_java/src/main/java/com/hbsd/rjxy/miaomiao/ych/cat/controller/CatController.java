@@ -50,4 +50,9 @@ public class CatController {
         System.out.println(gson.toJson(cat));
         return gson.toJson(catService.saveCat(cat));
     }
+    @RequestMapping("/gettoken")
+    @ResponseBody
+    public String getToken(String str){
+        return catService.getToken();
+    }
 }

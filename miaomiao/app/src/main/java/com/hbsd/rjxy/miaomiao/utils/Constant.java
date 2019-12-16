@@ -49,7 +49,7 @@ public class Constant {
     public static final String ADD_HOT_URl = "http://192.168.11.211:8081/video/addHot";//点击小鱼干发送的Url
     public static final String PUBLISH_URL_TOKEN = "http://192.168.11.211:8081/publish/getToken";//发布获取token
     public static final String PUBLISH_URL_PUBLISH = "http://192.168.11.211:8081/publish/publish";//发布
-
+    public static final String CAT_HEAD_TOKEN ="http://47.94.171.160:8081/cat/gettoken";//cathead获取token
     public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
     public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
     public static final String UNFOLLOW = "http://47.94.171.160:8081/sub/unfollow";

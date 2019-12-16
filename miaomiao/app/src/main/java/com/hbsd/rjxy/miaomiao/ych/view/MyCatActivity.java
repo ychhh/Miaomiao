@@ -87,7 +87,7 @@ public class MyCatActivity extends Activity {
 
             }
         };
-        map1.put("uid","2");
+        map1.put("uid","1");
         OkHttpUtils.getInstance().postForm(FIND_SUB_CAT, map1, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
