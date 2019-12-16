@@ -7,9 +7,11 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,14 +23,23 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 
+import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +49,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_CAT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
 
 public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implements View.OnClickListener {
@@ -258,7 +270,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 }
 
 
-class GetChead extends AsyncTask<Object,Object,String>{
+class GetChead extends AsyncTask<Object,Object,String> {
 
     GetChead(int cid ,MeViewHolder helper,Context context){
         this.cid = cid;
