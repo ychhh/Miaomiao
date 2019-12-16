@@ -2,6 +2,7 @@ package com.hbsd.rjxy.miaomiao.ych.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.utils.CircleImageView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
+import com.hbsd.rjxy.miaomiao.wq.CatFCActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +44,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import butterknife.OnItemClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -155,6 +158,14 @@ public class FollowActivity extends Activity {
             viewHolder.cat_name.setText(cat.getCname());
             viewHolder.cat_intro.setText(cat.getCintro());
             Glide.with(context).load(cat.getHpath()).into(viewHolder.cat_head);
+            viewHolder.cat_head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(FollowActivity.this, CatFCActivity.class);
+                    intent.putExtra("uid",cat.getCid());
+                    startActivity(intent);
+                }
+            });
             viewHolder.btn_unfollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

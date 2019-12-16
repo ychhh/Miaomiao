@@ -52,7 +52,7 @@ public class Constant {
     public static final String FIND_USER_CAT = "http://47.94.171.160:8081/cat/findbyuid";//通过uid寻找猫
     public static final String FIND_SUB_CAT = "http://47.94.171.160:8081/sub/findsubcatbyuid";//通过uid寻找订阅的猫
     public static final String UNFOLLOW = "http://47.94.171.160:8081/sub/unfollow";
-
+    public static final String CAT_HEAD_TOKEN="http://47.94.171.160:8081/cat/gettoken";
     public static final String PUBLISH_URL_COMMENT = "http://47.94.171.160:8081/comment/addComment";//发布评论
     public static final String URL_FINDCOMMENTPAGING = "http://47.94.171.160:8081/comment/findCommentsByMiidAndPage";//分页查询当前视频的评论
     public static final String URL_GET_TIME = "http://47.94.171.160:8081/comment/getTime";//获取服务器时间

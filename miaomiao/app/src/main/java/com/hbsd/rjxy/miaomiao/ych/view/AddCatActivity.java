@@ -224,7 +224,7 @@ public class AddCatActivity extends Activity {
     }
     public String updateData(String key){
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        RequestBody requestBody = builder.addFormDataPart("uid","1").addFormDataPart("url",QINIU_URL+"/"+key).build();
+        RequestBody requestBody = builder.addFormDataPart("uid","1").addFormDataPart("url","http://"+QINIU_URL+"/"+key).build();
         Request request = new Request.Builder()
                 .url(URL_ADD_CAT_HEAD)
                 .post(requestBody)

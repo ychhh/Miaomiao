@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.321 s - in com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.573 s - in com.hbsd.rjxy.miaomiao.MiaomiaoApplicationTests

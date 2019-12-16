@@ -1,5 +1,6 @@
 package com.hbsd.rjxy.miaomiao.ych.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.utils.CircleImageView;
+import com.hbsd.rjxy.miaomiao.wq.CatFCActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,26 +61,29 @@ public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
                     Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat3));
             }
         }
-//
-
-
-//    @Override
-//    protected void convert(@NonNull BaseViewHolder helper, Cat item) {
-//        if (item.getCid()%3==0){
-//        Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat1));}
-//        else if (item.getCid()%3==1){
-//            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat2));
-//        }else {
-//            Glide.with(context).load(item.getHid()).into((ImageView) helper.getView(R.id.img_cat3));
-//        }
-//        helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent();
-//                intent.putExtra("cid",item.getCid());
-//                Log.e(TAG, "convert: 跳转"+item.getCid() );
-//            }
-//        });
-
+        helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), CatFCActivity.class);
+                intent.putExtra("cid",item.get(0).getCid());
+                v.getContext().startActivity(intent);
+            }
+        });
+        helper.getView(R.id.img_cat2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), CatFCActivity.class);
+                intent.putExtra("cid",item.get(1).getCid());
+                v.getContext().startActivity(intent);
+            }
+        });
+        helper.getView(R.id.img_cat3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), CatFCActivity.class);
+                intent.putExtra("cid",item.get(2).getCid());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 }
