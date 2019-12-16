@@ -113,7 +113,7 @@ public class TextListAdapter extends RecyclerView.Adapter<TextListAdapter.TextHo
 
     @Override
     public int getItemCount() {
-        return 20;
+        return mTextStateList.size();
     }
 
 
