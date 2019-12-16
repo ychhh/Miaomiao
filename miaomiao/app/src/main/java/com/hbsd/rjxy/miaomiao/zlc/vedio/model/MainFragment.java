@@ -512,6 +512,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             layoutManager.onItemsChanged(recyclerView);
             MeGSYVideoPlayer meGSYVideoPlayer = recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.videoPlayer);
             meGSYVideoPlayer.startAfterPrepared();
+
         }
 
         Log.e("loadMoreComplete","loadMoreComplete");
