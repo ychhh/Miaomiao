@@ -244,6 +244,12 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
      */
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
+        if(contentType == 1){
+            RECOMMEND_PAGE_DEFAULT += 1;
+        }else{
+            SUBSCRIBE_PAGE_DEFAULT += 1;
+        }
+
         try {
             if(contentType == 1){
                 jo.put("page",RECOMMEND_PAGE_DEFAULT);
@@ -273,6 +279,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
                 EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+
                 if(!videoList.isEmpty()){
                     //如果拿到了视频数据，则放到eventinfo的list中去
                     videoEvent.setContentList(videoList);
@@ -383,26 +390,15 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                if(contentType == 1){
-                    //这里是预加载请求，当前推荐页++
-                    RECOMMEND_PAGE_DEFAULT += 1;
-                    askforRecommend();
-                }else{
-                    //订阅视频的预加载请求
-                    SUBSCRIBE_PAGE_DEFAULT += 1;
-
-                    /*
-                        TODO:订阅视频的预加载
-                     */
-                    askforRecommend();
-                }
-
+                askforRecommend();
+                Log.e("预加载了","...");
             }
         },recyclerView);
 
         //倒数第一个的时候预加载
         adapter.setPreLoadNumber(1);
         adapter.setEnableLoadMore(true);
+
         //载入动画
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         /**-----------------------点击事件------------------------**/
@@ -410,7 +406,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //position是序号 0开始
-                Toast.makeText(getContext(),"onItemClick:"+position,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -463,7 +458,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     if(contentType == 1){
                         RECOMMEND_PAGE_DEFAULT -= 1;
                         Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
-                        nomoreVideo = true;
+//                        nomoreVideo = true;
                     }else{
                         SUBSCRIBE_PAGE_DEFAULT -= 1;
                         Toast.makeText(getContext(),"看完了",Toast.LENGTH_SHORT).show();
@@ -498,6 +493,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
         }else if("subscribeInit".equals(videoEvent.getContentString())){
+            if(videoEvent.getContentList().isEmpty()){
+                return;
+            }
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
             for(Multi_info multi_info : videoEvent.getContentList()){
@@ -555,10 +553,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                         //以后下面的内容放到else分支里，1改成unregist
                         setTextViewColor(tv_subscribed,tv_recommend);
                         //请求订阅的视频内容...
+                        RECOMMEND_PAGE_DEFAULT -= 1;
+                        adapter.loadMoreComplete();
                         askforSubscribedVideoList(uid);
-
-
-
                         //修改当前contentType为 0
                         contentType = 0;
                     }else{
@@ -588,6 +585,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     setTextViewColor(tv_recommend,tv_subscribed);
                     contentType = 1;
                     //请求推荐视频的数据
+//                    if(SUBSCRIBE_PAGE_DEFAULT != 1){
+//                        SUBSCRIBE_PAGE_DEFAULT -= 1;
+//                    }
+                    adapter.loadMoreComplete();
                     askforRefreshVideoList(null);
                 }else{
                     //表示已经是推荐内容了
