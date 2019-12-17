@@ -57,17 +57,33 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity implements Edit
 
     @Override
     public void okFinish() {
-        Looper.prepare();
-        Toast.makeText(this,"密码更换成功",Toast.LENGTH_LONG).show();
-        Looper.prepare();
+
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Toast.makeText(EditPwdWithoutOldActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         finish();
     }
 
     @Override
     public void failFinish() {
-        Looper.prepare();
-        Toast.makeText(this,"密码更换失败",Toast.LENGTH_LONG).show();
-        Looper.loop();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Toast.makeText(EditPwdWithoutOldActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         finish();
     }
 

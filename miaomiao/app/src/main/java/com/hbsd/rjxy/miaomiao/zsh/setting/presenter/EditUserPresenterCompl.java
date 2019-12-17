@@ -57,6 +57,7 @@ public class EditUserPresenterCompl implements EditUserPresenter {
         EventBus.getDefault().post(jsonStr);
         editProfileView.Okfinish();
         return true;
+
     }
 
 
