@@ -46,7 +46,7 @@ public class PhoneLoginPresenterCompl implements IPhoneLoginPresenter{
                     jsonObject = new JSONObject(content);
                     String result=jsonObject.getString("result");//1.密码正确(附带返回用户id)
                     if (result.equals("true")){
-                        iPhoneLoginView.onLoginResult(result,jsonObject.getInt("uid"),jsonObject.getString("hasPasswod"));
+                        iPhoneLoginView.onLoginResult(result,jsonObject);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

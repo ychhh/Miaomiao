@@ -31,7 +31,7 @@ public class EditUserPresenterCompl implements EditUserPresenter {
     EditProfileView editProfileView;
     Callback callback;
     OkHttpUtils okHttpUtils;
-   public  EditUserPresenterCompl(EditProfileView editProfileView){
+    public  EditUserPresenterCompl(EditProfileView editProfileView){
         this.editProfileView=editProfileView;
     }
 

@@ -23,6 +23,7 @@ import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.regex.Matcher;
@@ -181,21 +182,30 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     /**
      *
      * @param result
-     * @param uid 用户的id
-     * @param hasPassword  1.true 代表有密码 2.false 代表无密码
+     * @param object
      */
     @Override
-    public void onLoginResult(String result, int uid,String hasPassword) {
+    public void onLoginResult(String result,JSONObject object) {
         if (result.equals("true")) {
             //登录成功后将用户id进行存储,是否有密码进行存储
             SharedPreferences sharedPreferences = getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("uid", uid + "");
-            editor.putString(Constant.HAS_PASSWORD,hasPassword);
+            try {
+                String uid = object.getString("uid");
+                editor.putString("uid", uid);
+                String username=object.getString("username");
+                editor.putString(Constant.LOGIN_USERNAME,username);
+                String userHeadPath=object.getString("userHeadPath");
+                editor.putString(Constant.LOGIN_HEADPATH,userHeadPath);
+                String hasPassword=object.getString("hasPassword");
+                editor.putString(Constant.HAS_PASSWORD,hasPassword);
+                Log.e("用户登录的信息",uid+username+userHeadPath+hasPassword);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             editor.commit();
             SharedPreferences sp=getSharedPreferences(Constant.PUBLISH_SP_NAME,MODE_PRIVATE);
             sp.edit().putString(Constant.REMIND_PUBLISH_ONCE,"NEEDREMIND").commit();
-            Log.e("用户登录的id", uid + "");
             Intent intent=new Intent();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setClass(PhoneLoginActivity.this, MainActivity.class);
