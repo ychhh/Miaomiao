@@ -56,6 +56,7 @@ public class PleaseLoginActivity extends AppCompatActivity implements View.OnCli
             case R.id.btn_jumpTologin:
 
                 //登陆逻辑
+
                 startActivity(new Intent(PleaseLoginActivity.this, PhoneLoginActivity.class));
                 finish();
                 break;

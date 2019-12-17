@@ -4,6 +4,8 @@ import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.ych.cat.dao.CatDao;
 import com.hbsd.rjxy.miaomiao.ych.subscription.dao.SubDao;
+import com.hbsd.rjxy.miaomiao.zlc.utils.QiniuUtils;
+import com.qiniu.common.QiniuException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,8 @@ public class CatService {
     public Cat findAllByCid(int cid){ return catDao.findAllByCid(cid); }
     public Cat saveCat(Cat cat){
         return catDao.save(cat);
+    }
+    public String getToken(){
+        return new QiniuUtils().getUpToken();
     }
 }

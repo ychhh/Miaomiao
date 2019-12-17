@@ -29,83 +29,46 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:theme">
 
-        <activity android:name=".zsh.setting.EditPwdWithOldActivity"></activity>
-        <activity android:name=".zsh.setting.EditPwdWithoutOldActivity" />
-        <activity android:name=".zsh.setting.ShowCardActivity" />
-        <activity android:name=".zsh.setting.EditProfileActivity" />
-
-
-        <activity android:name=".wq.CatFCActivity" >
+        <activity android:name=".wq.CatFCActivity">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-
-        <activity android:name=".zsh.setting.ShowCardActivity"
-            ></activity>
+        <activity android:name=".zsh.setting.ShowCardActivity"></activity>
+        <activity android:name=".zsh.setting.EditPwdWithOldActivity" />
+        <activity android:name=".zsh.setting.EditPwdWithoutOldActivity" />
         <activity android:name=".zsh.setting.EditProfileActivity" />
 
         <activity
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity" />
-        <activity android:name=".ljt.login.ShowServiceActivity" />
-        <activity android:name=".ljt.login.PasswordLoginActivity" />
-        <activity android:name=".ljt.login.ShowProblemActivity" />
-        <activity android:name=".ljt.login.LoginProblemsActivity" />
-        <activity android:name=".ych.view.MyCatActivity" />
-        <activity android:name=".ych.view.FollowActivity" />
-        <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /> <!-- 提示登陆页面 -->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/> <!-- 点击猫头像或评论跳转到额activity -->
 
+        <activity android:name=".ljt.login.PhoneLoginActivity">
 
-
-
-
-
-
-
-        <activity android:name=".ych.view.AddCatActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".ljt.login.PhoneLoginActivity" />
         <activity android:name=".ljt.login.ShowServiceActivity" />
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
         <activity android:name=".ljt.login.LoginProblemsActivity" />
         <activity android:name=".zlc.vedio.model.PleaseLoginActivity" /> <!-- 提示登陆页面 -->
-        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity"/> <!-- 点击猫头像或评论跳转到额activity -->
+        <activity android:name=".zlc.vedio.model.InfoAndCommentActivity" /> <!-- 点击猫头像或评论跳转到额activity -->
         <activity android:name=".ych.view.MyCatActivity">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ych.view.FollowActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
 
         <activity

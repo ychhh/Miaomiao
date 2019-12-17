@@ -75,11 +75,14 @@ public class GetUserPresenterCompl implements GetUserPresenter {
                 String intro = obj.getString("uIntro");
                 String sex = obj.getString("uSex");
 
+                String imgHead=obj.getString("hpath");
                 user.setUserName(name);
                 user.setUserIntro(intro);
                 user.setUserSex(sex);
                 user.setUserId(id);
+                user.sethPath(imgHead);
                 selfMainView.initUserView(user);
+
                //Log.e("当前用户为：",user.getUserName()+user.getUserSex()+user.getUserIntro());
 
             } catch (JSONException e) {

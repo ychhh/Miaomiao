@@ -49,6 +49,8 @@ public class LoginController {
                         if (user.getPwd().equals(password)){//密码正确
                             res.put("result","true");
                             res.put("uid",user.getUid());
+                            res.put("username",user.getUsername());
+                            res.put("userHeadPath",user.getHpath()+"");
                         }else {
                             res.put("result","error");
                         }
@@ -98,14 +100,19 @@ public class LoginController {
                     User userSave=loginService.findUserByTel(phone);
                     res.put("result","true");
                     res.put("uid",userSave.getUid());
-                    res.put("hasPasswod","false");
+                    res.put("hasPassword","false");
+                    res.put("username",userSave.getUsername());
+                    res.put("userHeadPath",userSave.getHpath()+"");
                 }else {
+                    System.out.println("用户验证码登录");
                     res.put("result","true");
                     res.put("uid",user.getUid());
+                    res.put("username",user.getUsername());
+                    res.put("userHeadPath",user.getHpath()+"");
                     if (user.getPwd()==null){
-                        res.put("hasPasswod","false");
+                        res.put("hasPassword","false");
                     }else {
-                        res.put("hasPasswod","true");
+                        res.put("hasPassword","true");
                     }
                 }
             }

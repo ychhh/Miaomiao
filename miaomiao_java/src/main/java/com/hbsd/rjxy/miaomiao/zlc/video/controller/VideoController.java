@@ -72,18 +72,24 @@ public class VideoController {
     }
 
 
-    @RequestMapping("/video/pagingVideoByUid")
+    /**
+     * 根据cid查询所有multi，时间倒序
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/video/getAll")
     @ResponseBody
-    public String findVideoByUid(HttpServletRequest request, HttpServletResponse response){
+    public String getAll(HttpServletRequest request, HttpServletResponse response){
         JSONObject receive = null;
         try {
             receive = new JSONObject(RequestUtil.getJson(request));
-            return gson.toJson(videoService.findVideoPagingByUid(receive.getInt("page"),receive.getInt("uid")));
+            return gson.toJson(videoService.getAllByCid(receive.getInt("cid")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "fail";
 
+        return "fail";
     }
 
 
