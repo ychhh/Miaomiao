@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,10 @@ public class EditPwdWithOldActivity extends AppCompatActivity implements EditPwd
     private Button btn_commit;
     private Intent intent;
     private User user;
+    private ImageView show_old;
+    private ImageView show_new;
+    private ImageView show_confirm;
+
     private EditPwdPresenterCompl editPwdPresenterCompl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,48 @@ public class EditPwdWithOldActivity extends AppCompatActivity implements EditPwd
         tx_newPwd=findViewById(R.id.self_new_pwd);
         tx_confirmPwd=findViewById(R.id.self_confirm_pwd);
         btn_commit=findViewById(R.id.self_btn_pwd_commit);
+        show_old=findViewById(R.id.iv_show_old_pwd);
+        show_new=findViewById(R.id.iv_login_show_pwd);
+        show_confirm=findViewById(R.id.iv_login_show_confirm_pwd);
+        show_old.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tx_oldPwd.getInputType()==128){
+                    tx_oldPwd.setInputType(129);
+                    show_old.setImageResource(R.drawable.eye_close);
+                }
+                else if(tx_oldPwd.getInputType()==129){
+                    tx_oldPwd.setInputType(128);
+                    show_old.setImageResource(R.drawable.eye_open);
+                }
+            }
+        });
+        show_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tx_newPwd.getInputType()==128){
+                    tx_newPwd.setInputType(129);
+                    show_new.setImageResource(R.drawable.eye_close);
+                }
+                else if(tx_newPwd.getInputType()==129){
+                    tx_newPwd.setInputType(128);
+                    show_new.setImageResource(R.drawable.eye_open);
+                }
+            }
+        });
+        show_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tx_confirmPwd.getInputType()==128){
+                    tx_confirmPwd.setInputType(129);
+                    show_confirm.setImageResource(R.drawable.eye_close);
+                }
+                else if(tx_confirmPwd.getInputType()==129){
+                    tx_confirmPwd.setInputType(128);
+                    show_confirm.setImageResource(R.drawable.eye_open);
+                }
+            }
+        });
 
         btn_commit.setOnClickListener(new View.OnClickListener() {
             @Override
