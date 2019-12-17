@@ -331,6 +331,7 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
                         TODO    以type = 2 跳转
                  */
                 startPublishActivity(2,null);
+                popupWindow.dismiss();
             }
         });
 

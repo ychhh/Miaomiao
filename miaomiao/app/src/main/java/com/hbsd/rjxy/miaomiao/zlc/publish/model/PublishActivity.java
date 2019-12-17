@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.text.Editable;
@@ -502,6 +503,34 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     isUploadComplete = true;
                 }
             }
+            Log.e("path",""+path);
+            if(type == 0){
+                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+                mediaMetadataRetriever.setDataSource(path);
+                Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
+                ivFrameImage.setImageBitmap(bitmap);
+                Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+                //如果是视频上传,生成帧图jpg文件，记录coverPath
+                File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+                OutputStream stream = null;
+                try {
+                    stream = new FileOutputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //拿到了需要上传的cover的path
+                coverPath = file.getPath();
+            }
+            if(type == 1){
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                ivFrameImage.setImageBitmap(bitmap);
+            }
             etEdit.setText(multi_info.getMcontent());
         } else {
             /*
@@ -544,6 +573,10 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 //拿到了需要上传的cover的path
                 coverPath = file.getPath();
+            }
+            if(type == 1){
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                ivFrameImage.setImageBitmap(bitmap);
             }
 
 

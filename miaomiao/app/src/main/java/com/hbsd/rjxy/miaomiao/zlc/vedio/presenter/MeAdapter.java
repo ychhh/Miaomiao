@@ -142,6 +142,75 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     }
                 });
             }
+        }else{
+            helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                /*
+                    TODO:   （1）先判断是否登录了，没登录，去登陆！
+                            （2）已经登陆了，那之前在fragment里一定拿到过订阅列表的信息
+                            （3）对比订阅列表的cid和本视频的cid，判断是否显示这个订阅的视图
+                            （4）订阅：
+                                        （1）动画效果，（2）订阅的业务逻辑
+
+                 */
+
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
+                    animator.setDuration(1000);
+                    animator.start();
+                    ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
+                    animator1.setDuration(1500);
+                    animator1.start();
+                    ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
+                    animator2.setDuration(1500);
+                    animator2.start();
+                    animator2.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            v.setVisibility(View.INVISIBLE);
+                            ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
+                            animator3.setDuration(1000);
+                            animator3.start();
+                            helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
+                            animator3.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+                        }
+                    });
+
+                    SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    String uid = sp.getString("uid", "1");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("uid", uid);
+                    map.put("cid", item.getCid() + "");
+                    OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                        }
+
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            subscriptionRecords =
+                                    gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                    }.getType());
+                            Log.e("updated SubList", "" + subscriptionRecords.toString());
+
+                            //我要更新这个subscriptionRecords
+                        }
+                    });
+
+
+                }
+            });
         }
 
 
