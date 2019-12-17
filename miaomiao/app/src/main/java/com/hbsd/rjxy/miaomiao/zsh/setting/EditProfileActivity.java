@@ -251,7 +251,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            String localImgPath = null;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()) {
                 localImgPath = selectResultList.get(0).getAndroidQToPath();
             } else {
@@ -284,7 +283,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             if (isEditedHead) {
                 obj.put("newHpath", qiNiuImgPath);
             }
-            // todo 注意服务器端的调整
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
             EventBus.getDefault().post(jsonStr);

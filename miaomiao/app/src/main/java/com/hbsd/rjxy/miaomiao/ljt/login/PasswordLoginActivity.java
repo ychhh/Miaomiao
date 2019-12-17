@@ -27,6 +27,9 @@ import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,19 +123,28 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
      * 对登录请求的结果进行操作
      *
      * @param result 结果（1.true 登录成功，uid值有效 2.error登录密码错误 3.false 未注册 4.null 未设置密码）
-     * @param uid    用户id
+     * @param
      */
     @Override
-    public void onLoginResult(String result, int uid) {
+    public void onLoginResult(String result, JSONObject object) {
         if (result.equals("true")) {
             //登录成功后将用户id进行存储
             SharedPreferences sharedPreferences = getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("uid", uid + "");
+            try {
+                String uid = object.getString("uid");
+                editor.putString("uid", uid);
+                String username=object.getString("username");
+                editor.putString(Constant.LOGIN_USERNAME,username);
+                String userHeadPath=object.getString("userHeadPath");
+                editor.putString(Constant.LOGIN_HEADPATH,userHeadPath);
+                Log.e("用户登录的信息",uid+username+userHeadPath);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             editor.commit();
             SharedPreferences sp=getSharedPreferences(Constant.PUBLISH_SP_NAME,MODE_PRIVATE);
             sp.edit().putString(Constant.REMIND_PUBLISH_ONCE,"NEEDREMIND").commit();
-            Log.e("用户登录的id", uid + "");
             Intent intent=new Intent();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setClass(PasswordLoginActivity.this, MainActivity.class);

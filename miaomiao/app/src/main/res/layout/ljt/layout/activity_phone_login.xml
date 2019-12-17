@@ -52,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="9"
-            android:text="phone"
             android:hint="请输入手机号"
             android:textSize="23sp" />
 
