@@ -57,6 +57,9 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
 
 
 
+    @Query(value = "SELECT * from multi_info where cid=? order by mupload_time desc",nativeQuery = true)
+    List<Multi_info> getAllByCid(int cid);
+
 
 
 }

@@ -63,5 +63,9 @@ public class VideoService {
     }
 
 
+    public List<Multi_info> getAllByCid(int cid){
+        return videoDao.getAllByCid(cid);
+    }
+
 
 }

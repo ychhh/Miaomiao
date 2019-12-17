@@ -72,6 +72,27 @@ public class VideoController {
     }
 
 
+    /**
+     * 根据cid查询所有multi，时间倒序
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/video/getAll")
+    @ResponseBody
+    public String getAll(HttpServletRequest request, HttpServletResponse response){
+        JSONObject receive = null;
+        try {
+            receive = new JSONObject(RequestUtil.getJson(request));
+            return gson.toJson(videoService.getAllByCid(receive.getInt("cid")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "fail";
+    }
+
+
 
 
 }

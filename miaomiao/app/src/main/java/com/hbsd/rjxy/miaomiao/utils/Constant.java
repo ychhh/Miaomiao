@@ -67,6 +67,7 @@ public class Constant {
     public  final String URL_ZZZ = "10.7.87.224";
 
     public static final String URL_GET_CAT = "http://47.94.171.160:8081/video/getCat";//通过cid找猫
+    public static final String URL_ADD_CAT_HEAD = "http://47.94.171.160:8081/cat/setcathead";//通过cid找猫
     //192.168.11.211
 
 }

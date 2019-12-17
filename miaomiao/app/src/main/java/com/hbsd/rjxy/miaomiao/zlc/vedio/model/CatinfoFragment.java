@@ -45,8 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class CatinfoFragment extends Fragment  {
 
-    @BindView(R.id.tv_publish)
-    TextView tvPublish;
+
 
 
     List<LocalMedia> selectResultList;
@@ -58,16 +57,7 @@ public class CatinfoFragment extends Fragment  {
         View view = inflater.inflate(R.layout.catinfo_fragment,null);
         ButterKnife.bind(this,view);
 
-        tvPublish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-
-//                Intent intent = new Intent(getContext(), PublishActivity.class);
-//                startActivity(intent);
-            }
-        });
 
 
 
