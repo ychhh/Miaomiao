@@ -5,19 +5,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <FrameLayout
+
+        <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="20dp"
-
-        android:background="#FFDAB9">
+        android:background="#473C88"
+            >
         <!--self-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/self_background"/>
+            </LinearLayout>
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="horizontal">
@@ -27,17 +37,20 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
+                    android:id="@+id/img_head"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/u45"/>
+                    android:src="@drawable/preson"
+
+                    />
                 <TextView
                     android:id="@+id/self_main_intro"
                     android:layout_marginTop="10dp"
                     android:layout_width="90dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:background="#aaa"
-                    android:text="请登录"/>
+                    android:background="#aa9"
+                    android:text="请完善信息"/>
 
             </LinearLayout>
             <!--编辑资料-->
@@ -65,40 +78,63 @@
                     android:id="@+id/btn_setting"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/u180"/>
+                    android:background="@drawable/set"/>
             </LinearLayout>
 
         </LinearLayout>
         <!--订阅和修改密码-->
-        <LinearLayout
+             <LinearLayout
             android:layout_width="380dp"
             android:layout_height="match_parent"
-            android:background="#F4A460"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
+
+
             <Button
                 android:id="@+id/self_order"
-                android:layout_width="200dp"
-                android:layout_height="20dp"
+                android:layout_width="370dp"
+                android:layout_height="40dp"
                 android:text="我的订阅"
                 android:textColor="#000"
-                android:background="#fff"
-                android:layout_marginBottom="10dp"/>
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ben_self_bg"
+                />
             <Button
-                android:id="@+id/btn_self_pwd"
-                android:layout_width="200dp"
-                android:layout_height="20dp"
+                android:id="@+id/btn_self_edPwd"
+                android:layout_width="370dp"
+                android:layout_height="35dp"
                 android:text="修改密码"
                 android:textColor="#000"
-                android:background="#fff"/>
+                android:background="@drawable/ben_self_bg"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"/>
+            <Button
+
+                android:layout_width="370dp"
+                android:layout_height="35dp"
+                android:text="小程序"
+                android:textColor="#000"
+                android:background="@drawable/ben_self_bg"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"/>
+            <Button
+
+                android:layout_width="370dp"
+                android:layout_height="35dp"
+                android:text="未成年人安全"
+                android:textColor="#000"
+                android:background="@drawable/ben_self_bg"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"/>
 
 
         </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 
-    <RelativeLayout
+        <RelativeLayout
         android:id="@+id/menu_layout_right"
         android:layout_width="300dp"
         android:layout_height="match_parent"
@@ -113,4 +149,5 @@
 
         </ListView>
     </RelativeLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -54,7 +54,7 @@ public class SubController {
     @RequestMapping("/findsubcatbyuid")
     @ResponseBody
     public String getSubCatByUid(int uid){
-        List<Cat> cats=new ArrayList<Cat>();
+        List<Cat> cats=new ArrayList<>();
         List<Subscription_record> records=subService.findAllByUid(uid);
         for (Subscription_record record :records){
             System.out.println(record.toString());

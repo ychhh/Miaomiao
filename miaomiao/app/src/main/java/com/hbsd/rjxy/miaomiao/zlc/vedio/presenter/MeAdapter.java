@@ -2,7 +2,6 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -24,14 +23,12 @@ import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 
 import com.hbsd.rjxy.miaomiao.entity.Cat;
-import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,17 +39,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.Response;
 
-import static com.hbsd.rjxy.miaomiao.utils.Constant.ADD_HOT_URl;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_CAT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
@@ -61,7 +55,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
     private Context context;
     private List<Subscription_record> subscriptionRecords;
-    private List<Cat> cats;
     Gson gson = new Gson();
 
     public MeAdapter(int layoutResId, @Nullable List data, Context context, List<Subscription_record> subscriptionRecords) {
@@ -70,7 +63,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         if (subscriptionRecords != null) {
             this.subscriptionRecords = subscriptionRecords;
         }
-        cats = new ArrayList<>();
     }
 
 
@@ -79,6 +71,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
         //设置视频小鱼干数量  评论数量
         helper.setText(R.id.tv_video_fish, "" + item.getMhot()).setText(R.id.tv_comment_amount, "" + item.getMcomment_count());
+
 
         if (subscriptionRecords != null) {
             int flag = 0;
@@ -160,6 +153,75 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     }
                 });
             }
+        }else{
+            helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                /*
+                    TODO:   （1）先判断是否登录了，没登录，去登陆！
+                            （2）已经登陆了，那之前在fragment里一定拿到过订阅列表的信息
+                            （3）对比订阅列表的cid和本视频的cid，判断是否显示这个订阅的视图
+                            （4）订阅：
+                                        （1）动画效果，（2）订阅的业务逻辑
+
+                 */
+
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
+                    animator.setDuration(1000);
+                    animator.start();
+                    ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
+                    animator1.setDuration(1500);
+                    animator1.start();
+                    ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
+                    animator2.setDuration(1500);
+                    animator2.start();
+                    animator2.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            v.setVisibility(View.INVISIBLE);
+                            ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
+                            animator3.setDuration(1000);
+                            animator3.start();
+                            helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
+                            animator3.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+                        }
+                    });
+
+                    SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    String uid = sp.getString("uid", "1");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("uid", uid);
+                    map.put("cid", item.getCid() + "");
+                    OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                        }
+
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            subscriptionRecords =
+                                    gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                    }.getType());
+                            Log.e("updated SubList", "" + subscriptionRecords.toString());
+
+                            //我要更新这个subscriptionRecords
+                        }
+                    });
+
+
+                }
+            });
         }
 
 
@@ -170,11 +232,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
         int cid = item.getCid();
         //通过cid请求头像
-
-        Glide.with(context)
-                .load(R.drawable.u45)
-                .into((ImageView) helper.getView(R.id.iv_cathead));
-        new GetChead(item.getCid(),helper,context).execute();
         helper.getView(R.id.iv_cathead).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,7 +337,8 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
     }
 }
 
-class GetChead extends AsyncTask<Object,Object,String>{
+
+class GetChead extends AsyncTask<Object,Object,String> {
 
     GetChead(int cid ,MeViewHolder helper,Context context){
         this.cid = cid;
@@ -295,11 +353,23 @@ class GetChead extends AsyncTask<Object,Object,String>{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Cat cat = gson.fromJson(s,Cat.class);
-        Glide.with(context)
-                .load(cat.getHpath())
-                .into((ImageView) helper.getView(R.id.iv_cathead));
-        Log.e("asda",""+cat.getHpath());
+        if(!s.equals("")){
+            Cat cat = gson.fromJson(s,Cat.class);
+            if(cat != null && cat.getHpath() != null){
+                Glide.with(context)
+                        .load(cat.getHpath())
+                        .dontAnimate()
+                        .into((ImageView) helper.getView(R.id.iv_cathead));
+                Log.e("asda",""+cat.getHpath());
+            }else{
+
+            }
+        }else{
+
+        }
+
+
+
 
     }
 
@@ -327,7 +397,7 @@ class GetChead extends AsyncTask<Object,Object,String>{
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
 }
 

@@ -96,6 +96,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSbp = findViewById(R.id.self_reSbp);
         tx_reSex = findViewById(R.id.self_reSex);
         tv_changeHead = findViewById(R.id.tv_changeHead);
+
         /*数据初始化*/
         initView();
         /*大监听*/
@@ -113,6 +114,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSex.setText(user.getUserSex());
         tx_reSbp.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
+        RequestOptions options = new RequestOptions().circleCrop();
+        Glide.with(this).load(user.gethPath()).apply(options).into(iv_reImg);
         editUserPresenterCompl = new EditUserPresenterCompl(this);
     }
 
@@ -251,7 +254,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            String localImgPath = null;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()) {
                 localImgPath = selectResultList.get(0).getAndroidQToPath();
             } else {
@@ -281,12 +283,13 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             obj.put("newIntro", tx_reSbp.getText().toString());
             obj.put("newSex", tx_reSex.getText().toString());
             obj.put("isEditedHead", isEditedHead);
+
             if (isEditedHead) {
-                obj.put("newHpath", qiNiuImgPath);
+                obj.put("newHpath",qiNiuImgPath);
             }
-            // todo 注意服务器端的调整
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
+
             EventBus.getDefault().post(jsonStr);
             OkHttpUtils.getInstance().postJson(Constant.GET_USER_URL + "edit", jsonStr, new Callback() {
                 @Override
@@ -298,10 +301,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Looper.prepare();
-                    buttonActive();
-                    Toast.makeText(EditProfileActivity.this, "信息保存成功", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
+
                 }
             });
         } catch (JSONException e) {

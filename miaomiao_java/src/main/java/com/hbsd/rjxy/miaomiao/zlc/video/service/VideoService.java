@@ -45,15 +45,6 @@ public class VideoService {
 
 
     /**
-     * 分页查询，根据订阅
-     */
-    public List<Multi_info> findVideoPagingByUid(int page,int uid){
-        System.out.println(videoDao.findVideoPagingByUid((page-1)*PAGING_STEP,PAGING_STEP,uid));
-        return videoDao.findVideoPagingByUid(uid,(page-1)*PAGING_STEP,PAGING_STEP);
-    }
-
-
-    /**
      *
      * 获取token
      * @return
@@ -71,6 +62,10 @@ public class VideoService {
         return videoDao.publishMulti(multi_info.getType(),multi_info.getCid(),multi_info.getUid(),multi_info.getMpath(),multi_info.getMupload_time(),multi_info.getMcontent(),multi_info.getMformat(),multi_info.getMcover());
     }
 
+
+    public List<Multi_info> getAllByCid(int cid){
+        return videoDao.getAllByCid(cid);
+    }
 
 
 }

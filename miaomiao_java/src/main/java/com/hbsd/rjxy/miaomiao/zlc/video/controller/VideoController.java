@@ -2,7 +2,6 @@ package com.hbsd.rjxy.miaomiao.zlc.video.controller;
 
 
 import com.google.gson.Gson;
-import com.hbsd.rjxy.miaomiao.ych.cat.service.CatService;
 import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.VideoService;
 import org.json.JSONException;
@@ -20,8 +19,6 @@ public class VideoController {
 
     @Autowired
     VideoService videoService;
-    @Autowired
-    CatService catService;
 
     Gson gson = new Gson();
 
@@ -75,34 +72,25 @@ public class VideoController {
     }
 
 
-    @RequestMapping("/video/pagingVideoByUid")
+    /**
+     * 根据cid查询所有multi，时间倒序
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/video/getAll")
     @ResponseBody
-    public String findVideoByUid(HttpServletRequest request, HttpServletResponse response){
+    public String getAll(HttpServletRequest request, HttpServletResponse response){
         JSONObject receive = null;
         try {
             receive = new JSONObject(RequestUtil.getJson(request));
-            return gson.toJson(videoService.findVideoPagingByUid(receive.getInt("page"),receive.getInt("uid")));
+            return gson.toJson(videoService.getAllByCid(receive.getInt("cid")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "fail";
 
-    }
-
-
-    @RequestMapping("/video/getCat")
-    @ResponseBody
-    public String getCat(HttpServletRequest request, HttpServletResponse response){
-        JSONObject re = null;
-        try {
-            re = new JSONObject(RequestUtil.getJson(request));
-            return gson.toJson(catService.findAllByCid(re.getInt("cid")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return "fail";
     }
-
 
 
 

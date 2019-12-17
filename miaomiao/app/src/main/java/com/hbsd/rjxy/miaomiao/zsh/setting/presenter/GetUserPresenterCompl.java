@@ -37,54 +37,53 @@ public class GetUserPresenterCompl implements GetUserPresenter {
     OkHttpUtils okHttpUtils;
     String url;
     NewCallBack callBack;
-
-    public GetUserPresenterCompl(SelfMainView selfMainView) {
-        this.selfMainView = selfMainView;
+    public GetUserPresenterCompl(SelfMainView selfMainView){
+        this.selfMainView=selfMainView;
     }
-
     @Override
     public User getUser(Integer uid) {
-        okHttpUtils = new OkHttpUtils();
-        url = Constant.GET_USER_URL + "find";
-        callBack = new NewCallBack();
-        JSONObject jsonObject = new JSONObject();
+         okHttpUtils=new OkHttpUtils();
+         url=Constant.GET_USER_URL+"find";
+         callBack=new NewCallBack();
+        JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("uid", uid);
-            okHttpUtils.postJson(url, jsonObject.toString(), callBack);
+            jsonObject.put("uid",uid);
+            okHttpUtils.postJson(url, jsonObject.toString(),callBack);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return user;
     }
-
-    public class NewCallBack implements okhttp3.Callback {
+    public class NewCallBack implements okhttp3.Callback{
 
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-            Log.e("获取用户信息", "失败");
+            Log.e("获取用户信息","失败");
         }
 
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            user = new User();
-            String json = response.body().string();
+            user= new User();
+            String json=response.body().string();
             try {
-                JSONObject obj = new JSONObject(json);
-                Integer id = obj.getInt("uid");
+                JSONObject obj=new JSONObject(json);
+                Integer id=obj.getInt("uid");
 
-                String name = obj.getString("uName");
+                String name=obj.getString("uName");
                 String intro = obj.getString("uIntro");
                 String sex = obj.getString("uSex");
-                String hpath = obj.getString("hpath");
+
+                String imgHead=obj.getString("hpath");
                 user.setUserName(name);
                 user.setUserIntro(intro);
                 user.setUserSex(sex);
                 user.setUserId(id);
-                user.sethPath(hpath);
+                user.sethPath(imgHead);
                 selfMainView.initUserView(user);
-                //Log.e("当前用户为：",user.getUserName()+user.getUserSex()+user.getUserIntro());
+
+               //Log.e("当前用户为：",user.getUserName()+user.getUserSex()+user.getUserIntro());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -93,6 +92,10 @@ public class GetUserPresenterCompl implements GetUserPresenter {
         }
     }
     /*使用OKHttp获取用户信息*/
+
+
+
+
 
 
 }

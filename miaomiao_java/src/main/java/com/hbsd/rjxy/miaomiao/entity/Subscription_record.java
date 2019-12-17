@@ -14,7 +14,6 @@ import java.util.Date;
 public class Subscription_record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "srid")
     private int srid;
     @Column(name = "cid")
     private int cid;
