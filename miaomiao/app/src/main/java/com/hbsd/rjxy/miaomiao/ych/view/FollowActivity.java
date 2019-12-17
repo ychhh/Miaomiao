@@ -68,7 +68,7 @@ public class FollowActivity extends Activity {
         setContentView(R.layout.activity_follow_cat);
         listView=findViewById(R.id.list_follow);
         img_back=findViewById(R.id.follow_back);
-        map.put("uid","2");
+        map.put("uid","1");
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -79,7 +79,7 @@ public class FollowActivity extends Activity {
                     Cat cat= gson.fromJson(element, Cat.class);
                     cats.add(cat);
                 }
-                Log.e(TAG, "handleMessage: "+cats.toString() );
+                Log.e(TAG, "handleMessage cats: "+cats.toString() );
                 adapter=new FollowAdapter(FollowActivity.this,cats,R.layout.item_follow_cat);
                 listView.setAdapter((ListAdapter) adapter);
             }
@@ -146,7 +146,7 @@ public class FollowActivity extends Activity {
             ViewHolder viewHolder=null;
             if (convertView==null){
                 viewHolder=new ViewHolder();
-                convertView = inflater.inflate(R.layout.item_follow_cat, null);
+                convertView = inflater.inflate(item_layout_id, null);
                 viewHolder.btn_unfollow=(Button) convertView.findViewById(R.id.btn_unfollow);
                 viewHolder.cat_head=(CircleImageView) convertView.findViewById(R.id.img_chead);
                 viewHolder.cat_intro=(TextView) convertView.findViewById(R.id.tv_cintro);

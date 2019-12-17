@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.os.BuildCompat;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +46,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,18 +130,29 @@ public class AddCatActivity extends Activity {
 //
         });
         commit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 Map map=new HashMap();
                 String breed= et_breed.getText().toString();
                 Log.e(TAG, "onClick: "+breed );
                 cat.setCbreed(breed);
+                cat.setUid(1);
                 cat.setCfood(et_food.getText().toString());
                 cat.setCname(et_name.getText().toString());
                 cat.setCintro(et_intro.getText().toString());
                 cat.setCsex(et_sex.getText().toString());
                 cat.setCtoy(et_toy.getText().toString());
-//                cat.setCbirthday(tv_meetday.getText() );
+                SimpleDateFormat simpleDateFormat = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    simpleDateFormat = new SimpleDateFormat("yyyy年mm月dd");
+                }
+                try {
+                    Date date = simpleDateFormat.parse(tv_meetday.getText().toString());
+                    cat.setCbirthday( date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 String str= gson.toJson(cat);
                 Log.e(TAG, "onClick: str:"+str );
                 map.put("str",str);
@@ -153,7 +167,7 @@ public class AddCatActivity extends Activity {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         Log.e(TAG, "onResponse: cggggggggg" );
-                        Toast.makeText(AddCatActivity.this,"上传成功",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(AddCatActivity.this,"上传成功",Toast.LENGTH_SHORT).show();
 //                        finish();
                     }
                 });
