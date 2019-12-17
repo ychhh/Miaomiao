@@ -150,20 +150,20 @@ public class SelfControl {
             if(object.length()!=0){
                 int id=object.getInt("uid");
                 System.out.println(id+"");
-
                 User user=selfService.findUserById(id);
                 /*发送给用户的信息*/
-                System.out.print(user.getUid());
-                System.out.print(user.getUsername());
-                System.out.print(user.getUintro());
-                System.out.print(user.getUsex());
+                if(user!=null){
+                    System.out.print(user.getUid());
+                    System.out.print(user.getUsername());
+                    System.out.print(user.getUintro());
+                    System.out.print(user.getUsex());
 
-                res.put("uid",user.getUid());
-                res.put("uName",user.getUsername());
-                res.put("uSex",user.getUsex());
-                res.put("uIntro",user.getUintro());
-                res.put("hpath",user.getHpath());
-
+                    res.put("uid",user.getUid());
+                    res.put("uName",user.getUsername());
+                    res.put("uSex",user.getUsex());
+                    res.put("uIntro",user.getUintro());
+                    res.put("hpath",user.getHpath());
+                }
             }
             is.close();
             response.getWriter().append(res.toString());
