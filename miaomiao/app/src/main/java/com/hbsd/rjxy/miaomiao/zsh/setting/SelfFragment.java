@@ -29,6 +29,9 @@ import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfMainView;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,6 +64,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
     private Button btn_setting;
     private Button btn_editF;
     private Button tx_order;
+    private Button btn_editPwd;
     private GetUserPresenterCompl getUserPresenterCompl;
     private User user;
     private  TextView tx_intro;
@@ -77,7 +81,12 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 container,
                 false
         );
-        EventBus.getDefault().register(this);
+
+
+        if(EventBus.getDefault().isRegistered(this)){
+
+        }
+        else{EventBus.getDefault().register(this);}
         return view;
     }
 
@@ -95,23 +104,22 @@ public class SelfFragment extends Fragment implements SelfMainView {
         tx_order=view.findViewById(R.id.self_order);
 
         tx_intro=view.findViewById(R.id.self_main_intro);
-
+        btn_editPwd=view.findViewById(R.id.btn_self_edPwd);
         getUserPresenterCompl=new GetUserPresenterCompl(this);
-
-        user=new User();
 
         /*通过sp获取当下user的uid*/
 
         sp=this.getActivity().getSharedPreferences(Constant.LOGIN_SP_NAME,MODE_PRIVATE);
         editor = sp.edit();
 
+        gson=new Gson();
         int uid=Integer.parseInt(sp.getString("uid","0"));
-
+        if(uid==0){
+            Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
+            startActivity(intent);
+        }
+        user=new User();
         user.setUserId(uid);
-
-
-        user.setUserId(8);
-
 
         /*初始化UserData*/
         initData();
@@ -142,10 +150,10 @@ public class SelfFragment extends Fragment implements SelfMainView {
     public void initUserView(User user0) {
 
         user=user0;
-
+        Log.e("user",user.getUserId()+"和"+user.getUserName()+user.getUserIntro()+user.getUserSex());
         if(tx_intro!=null){
             Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
-            tx_intro.setText(user.getUserIntro());
+            tx_intro.setText(user.getUserName());
         }
 
 
@@ -186,6 +194,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
         btn_setting.setOnClickListener(buttonClickListener);
         btn_editF.setOnClickListener(buttonClickListener);
         tx_order.setOnClickListener(buttonClickListener);
+        btn_editPwd.setOnClickListener(buttonClickListener);
     }
 
 
@@ -241,7 +250,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
                     break;
                 }
-                case R.id.btn_self_editPwd:{
+                case R.id.btn_self_edPwd:{
                     /*TODO
                         修改密码
                     * */
