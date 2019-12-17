@@ -1,5 +1,6 @@
 package com.hbsd.rjxy.miaomiao.ych.model;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.google.gson.JsonParser;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
+import com.hbsd.rjxy.miaomiao.ych.view.AddCatActivity;
 import com.hbsd.rjxy.miaomiao.ych.view.MyCatActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +46,7 @@ public class MyCatFragment extends Fragment {
     RecyclerView recyclerView;
     String TAG="MyCatActivity";
     Handler handler;
+    Button btn_addcat;
     Gson gson=new Gson();
     Map<String,String> map1=new HashMap<String, String>();
     Map<String,String> map=new HashMap<String, String>();
@@ -52,6 +56,7 @@ public class MyCatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.activity_my_cat, null);
         recyclerView = view.findViewById(R.id.recycler);
+        btn_addcat=view.findViewById(R.id.btn_addcat);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -86,6 +91,13 @@ public class MyCatFragment extends Fragment {
 
             }
         };
+        btn_addcat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), AddCatActivity.class);
+                startActivity(intent);
+            }
+        });
         map1.put("uid", "2");
         OkHttpUtils.getInstance().postForm(FIND_SUB_CAT, map1, new Callback() {
             @Override
