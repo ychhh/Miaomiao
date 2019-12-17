@@ -64,6 +64,13 @@ public class SelfService {
      * 根据uid改变头像
      *
      */
+    @Transactional
+    public int updateUserHpathById(String hpath,Integer uid){
+        return selfDao.updateUserHpathById("http://q20jftoug.bkt.clouddn.com/"+hpath,uid);
+    }
+
+
+
 
     /**
      * 根据uid更改用户信息（姓名、性别、简介）
@@ -71,12 +78,12 @@ public class SelfService {
      * @param sex
      * @param uintro
      * @param uid
-     * @param hpath
+     *
      * @return
      */
     @Transactional
-    public int updateUserMsgById(String username,String sex,String uintro,Integer uid,String hpath){
-        return selfDao.updateUserMsgById(username,sex,uintro,uid,hpath);
+    public int updateUserMsgById(String username,String sex,String uintro,Integer uid){
+        return selfDao.updateUserMsgById(username,sex,uintro,uid);
     }
 
     /**

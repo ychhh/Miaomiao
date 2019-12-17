@@ -45,14 +45,17 @@ public class SelfControl {
             String username=object.getString("newName");
             String sex=object.getString("newSex");
             String uintro=object.getString("newIntro");
-            String hpath=object.getString("newHpath");
             Integer uid=object.getInt("uid");
-            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid,hpath);
-            if (rtn>0){
-                res.put("edited","ok");
-            }else{
-                res.put("edited","error");
+            System.out.println("用户"+uid);
+            if(object.getBoolean("isEditedHead")){
+                String hpath=object.getString("newHpath");
+                int rtn2=selfService.updateUserHpathById(hpath,uid);
+                System.out.println("============="+hpath);
+                System.out.println("rtn2"+rtn2);
             }
+            int rtn=selfService.updateUserMsgById(username,sex,uintro,uid);
+
+            res.put("edited","ok");
             response.getWriter().append(res.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -60,6 +63,7 @@ public class SelfControl {
             e.printStackTrace();
         }
     }
+
     /**
      * @Param request
      * @Param response

@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
@@ -169,8 +170,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                        Glide.with(getActivity()).load(user.gethPath()).into(imgView);
+                        RequestOptions options = new RequestOptions().circleCrop();
+                        Glide.with(getActivity()).load(user.gethPath()).apply(options).into(imgView);
 
 
                 }
@@ -317,7 +318,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
             user.setUserIntro(jsonObject.getString("newIntro"));
             user.setUserName(jsonObject.getString("newName"));
             user.setUserSex(jsonObject.getString("newSex"));
-            String qiNiuImgPath=jsonObject.getString("newHpath");
+            String qiNiuImgPath="http://"+Constant.QINIU_URL+"/"+jsonObject.getString("newHpath");
             imgUrl=qiNiuImgPath;
             /*Test*/
             user.sethPath(imgUrl);

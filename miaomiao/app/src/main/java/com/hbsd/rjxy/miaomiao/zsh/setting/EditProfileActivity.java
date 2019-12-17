@@ -114,7 +114,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSex.setText(user.getUserSex());
         tx_reSbp.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
-        Glide.with(this).load(user.gethPath()).into(iv_reImg);
+        RequestOptions options = new RequestOptions().circleCrop();
+        Glide.with(this).load(user.gethPath()).apply(options).into(iv_reImg);
         editUserPresenterCompl = new EditUserPresenterCompl(this);
     }
 
@@ -284,7 +285,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             obj.put("isEditedHead", isEditedHead);
 
             if (isEditedHead) {
-                obj.put("newHpath",Constant.QINIU_URL+qiNiuImgPath);
+                obj.put("newHpath",qiNiuImgPath);
             }
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
