@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,6 +70,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
     private ListView menu_listview_r;
     private Gson gson;
     private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,10 +114,16 @@ public class SelfFragment extends Fragment implements SelfMainView {
         gson=new Gson();
         /*通过sp获取当下user的uid*/
         sp=this.getActivity().getSharedPreferences(Constant.LOGIN_SP_NAME,MODE_PRIVATE);
-        int uid=Integer.parseInt(sp.getString("uid","8"));
-        uid=8;
-        user.setUserId(uid);
+        editor = sp.edit();
 
+        int uid=Integer.parseInt(sp.getString("uid","0"));
+
+        user.setUserId(uid);
+        if((user.getUserId()+"").equals("0")){
+            Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
+
+            startActivity(intent);
+        }
         /*初始化UserData*/
         initData();
         /*初始化抽屉*/
@@ -155,7 +164,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
     }
 
 
-
+        /*抽屉的初始化*/
     public void initDrawerList(){
         String[] titles={"个人名片","我的订阅","修改密码","小程序"};
 
@@ -204,13 +213,16 @@ public class SelfFragment extends Fragment implements SelfMainView {
                     break;
                 }
                 case R.id.btn_editF:{
-                    if(user.getUserId()==0){
+                    Log.e("btn_edit",user.getUserId()+"");
+                    /*如果未登录，则跳到登录界面*/
+                    if((user.getUserId()+"").equals("0")){
                         Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
                         startActivity(intent);
                     }
+                    /*如果登录了，跳到修改信息界面*/
                     else {
-                        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
 
+                        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                         String str = gson.toJson(user);
                         intent.putExtra("user", str);
                         startActivity(intent);
@@ -235,13 +247,22 @@ public class SelfFragment extends Fragment implements SelfMainView {
                         修改密码
                     * */
 
-                    if(sp.getString(Constant.LOGIN_SP_NAME,"null").equals("null")){
+                    if((user.getUserId()+"").equals("0")){
+                        /*如果用户处于非登录*/
+                        Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
+                        startActivity(intent);
+                    }
+                    /*如果用户处于登录状态但从未设置过密码*/
+                    else if( (sp.getString("hasPassword","false").equals("false"))){
+                        editor.putString("hasPassword","true");
+                        editor.commit();
                         Intent intent=new Intent(getActivity(), EditPwdWithoutOldActivity.class);
                         String str = gson.toJson(user);
                         intent.putExtra("user", str);
                         startActivity(intent);
                     }
                     else{
+                        /*有旧密码的情况下修改密码*/
                         Intent intent=new Intent(getActivity(), EditPwdWithOldActivity.class);
                         String str = gson.toJson(user);
                         intent.putExtra("user", str);
@@ -302,24 +323,46 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 {
                     case 0:
                         Intent intent0=new Intent(getActivity(), ShowCardActivity.class);
-                        Gson gson=new Gson();
                         String str=gson.toJson(user);
                         intent0.putExtra("user",str);
                         startActivity(intent0);
 
                         break;
                     case 1:
-                        Intent intent1=new Intent(getActivity(),ShowCardActivity.class);
-                        startActivity(intent1);
+                        Intent intent=new Intent(getActivity(), FollowActivity.class);
+                        intent.putExtra("uid",user.getUserId());
+                        startActivity(intent);
                         break;
                     case 2:{
-                        Intent intent2=new Intent(getActivity(),ShowCardActivity.class);
-                        startActivity(intent2);
+                        if((user.getUserId()+"").equals("0")){
+                            /*如果用户处于非登录*/
+                            Intent intent2=new Intent(getActivity(), PhoneLoginActivity.class);
+                            startActivity(intent2);
+                        }
+                        /*如果用户处于登录状态但从未设置过密码*/
+                        else if( (sp.getString("hasPassword","false").equals("false"))){
+                            editor.putString("hasPassword","true");
+                            editor.commit();
+                            Intent intent1=new Intent(getActivity(), EditPwdWithoutOldActivity.class);
+                            String sss = gson.toJson(user);
+                            intent1.putExtra("user", sss);
+                            startActivity(intent1);
+                        }
+                        else{
+                            /*有旧密码的情况下修改密码*/
+                            Intent intent00=new Intent(getActivity(), EditPwdWithOldActivity.class);
+                            String s = gson.toJson(user);
+                            intent00.putExtra("user", s);
+                            startActivity(intent00);
+                        }
+
                         break;
 
                     }
                     case 3:{
-                        break;
+                        Toast.makeText(view.getContext(),"正在开发",Toast.LENGTH_SHORT).show();
+
+
                     }
                 }
 

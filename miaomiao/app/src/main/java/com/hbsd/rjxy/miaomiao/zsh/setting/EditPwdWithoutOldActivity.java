@@ -4,18 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditPwdPresenterCompl;
+import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditPwdView;
 
-public class EditPwdWithoutOldActivity extends AppCompatActivity {
+public class EditPwdWithoutOldActivity extends AppCompatActivity implements EditPwdView{
     private TextView tx_pwd;
     private  TextView tx_confirm;
     private Button btn_commit;
@@ -51,6 +54,23 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity {
         iv_login_show_confirm_pwd.setOnClickListener(myAllListener);
         iv_login_show_pwd.setOnClickListener(myAllListener);
     }
+
+    @Override
+    public void okFinish() {
+        Looper.prepare();
+        Toast.makeText(this,"密码更换成功",Toast.LENGTH_LONG).show();
+        Looper.prepare();
+        finish();
+    }
+
+    @Override
+    public void failFinish() {
+        Looper.prepare();
+        Toast.makeText(this,"密码更换失败",Toast.LENGTH_LONG).show();
+        Looper.loop();
+        finish();
+    }
+
     private class  MyAllListener implements View.OnClickListener {
 
         /**
@@ -72,6 +92,7 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity {
                         tx_confirm.setInputType(128);
                         iv_login_show_confirm_pwd.setImageResource(R.drawable.eye_open);
                     }
+                    break;
 
                 }
                 case R.id.iv_login_show_pwd:{
@@ -83,19 +104,22 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity {
                         tx_pwd.setInputType(128);
                         iv_login_show_pwd.setImageResource(R.drawable.eye_open);
                     }
+                    break;
                 }
                 case R.id.self_btn_pwd_commit:{
-                    editPwdPresenterCompl=new EditPwdPresenterCompl();
+                    editPwdPresenterCompl=new EditPwdPresenterCompl(EditPwdWithoutOldActivity.this);
                     String newPwd=tx_pwd.getText().toString();
                     String confirm=tx_confirm.getText().toString();
                     if(newPwd.equals(confirm)){
                         Integer id=user.getUserId();
                         editPwdPresenterCompl.editPwdWithoutOld(id,newPwd);
+                        finish();
 
-                        Log.e("新密码为",newPwd);
-                        Log.e("确认密码为：",confirm);
                     }
-
+                    else{
+                        Toast.makeText(EditPwdWithoutOldActivity.this,"前后密码不一致",Toast.LENGTH_SHORT);
+                    }
+                    break;
 
                 }
             }

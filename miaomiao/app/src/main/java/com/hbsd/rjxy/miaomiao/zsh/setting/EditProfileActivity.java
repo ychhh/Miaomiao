@@ -130,6 +130,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     String newSex=tx_reSex.getText().toString();
 
 
+
                         //Log.e("读取到当下想修改的用户名为",newName);
                         JSONObject obj=new JSONObject();
                         try {
@@ -137,6 +138,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                             obj.put("newName",newName);
                             obj.put("newIntro",newsbp);
                             obj.put("newSex",newSex);
+                            obj.put("newHpath","hahha");
                             String jsonStr=obj.toString();
                             //Log.e("json",jsonStr);
 

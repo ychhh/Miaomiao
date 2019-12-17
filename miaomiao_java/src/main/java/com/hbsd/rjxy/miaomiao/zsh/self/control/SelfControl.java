@@ -1,6 +1,7 @@
 package com.hbsd.rjxy.miaomiao.zsh.self.control;
 
 import com.hbsd.rjxy.miaomiao.entity.User;
+import com.hbsd.rjxy.miaomiao.ljt.Login.util.DecodeUtil;
 import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.VideoService;
 import com.hbsd.rjxy.miaomiao.zsh.self.service.SelfService;
@@ -59,6 +60,74 @@ public class SelfControl {
             e.printStackTrace();
         }
     }
+    /**
+     * @Param request
+     * @Param response
+     */
+    @RequestMapping("/editPwd")
+    @ResponseBody
+    public void editUserPwd(HttpServletRequest request, HttpServletResponse response){
+        response.setCharacterEncoding("UTF-8");
+        InputStream is= null;
+        String param=null;
+        try {
+            is = request.getInputStream();
+            byte[]buffer=new byte[1024];
+            int len=is.read(buffer);
+            param=new String(buffer,0,len);
+            JSONObject object=new JSONObject(param);
+
+            String newPwd= DecodeUtil.decodeToString(object.getString("newPwd"));
+
+            Integer uid=object.getInt("uid");
+
+            int e=selfService.updatePwdById(newPwd,uid);
+
+            response.getWriter().append(e+"");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @Param request
+     * @Param response
+     */
+    @RequestMapping("/editWithOldPwd")
+    @ResponseBody
+    public void editPwdWithOldPwd(HttpServletRequest request, HttpServletResponse response){
+        response.setCharacterEncoding("UTF-8");
+        System.out.println("来修改密码啦");
+        InputStream is= null;
+        String param=null;
+        try {
+            is = request.getInputStream();
+            byte[]buffer=new byte[1024];
+            int len=is.read(buffer);
+            param=new String(buffer,0,len);
+            JSONObject object=new JSONObject(param);
+
+            String newPwd= DecodeUtil.decodeToString(object.getString("newPwd"));
+            String oldPwd=DecodeUtil.decodeToString(object.getString("oldPwd"));
+            Integer uid=object.getInt("uid");
+            if(selfService.confirmPwd(uid,oldPwd)){
+                int e=selfService.updatePwdById(newPwd,uid);
+                response.getWriter().append(e+"");
+            }
+            else{
+                System.out.println("旧密码输入错误");
+                response.getWriter().append("false");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * @Param request

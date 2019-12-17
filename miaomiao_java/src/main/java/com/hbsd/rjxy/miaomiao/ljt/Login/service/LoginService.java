@@ -48,11 +48,4 @@ public class LoginService {
         return user;
     }
 
-//    /**
-//     *
-//     */
-//    @Transactional
-//    public void updateUserUlast_LoginById(Date lastLoginTime,Integer uid){
-//        loginDao.updateUserUlast_LoginById(lastLoginTime,uid);
-//    }
 }
