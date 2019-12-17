@@ -15,7 +15,7 @@ public class Constant {
 
     public static String LOGIN_URL="http://10.7.88.98:8081/login/";//登录的URL
 
-    public static String UPLOAD_USERHEAD_TOKEN_URL="http://10.7.88.102:8080/Self/getToken";//上传用户头像获取token
+    public static String UPLOAD_USERHEAD_TOKEN_URL="http://10.7.88.98:8081/Self/getToken";//上传用户头像获取token
 
     public static String GET_USER_URL="http://10.7.88.98:8081/Self/";//操作当前登录的用户信息
     //http://10.7.88.102:8080/Self/

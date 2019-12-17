@@ -75,6 +75,7 @@ public class GetUserPresenterCompl implements GetUserPresenter {
                 String intro = obj.getString("uIntro");
                 String sex = obj.getString("uSex");
 
+                
                 user.setUserName(name);
                 user.setUserIntro(intro);
                 user.setUserSex(sex);

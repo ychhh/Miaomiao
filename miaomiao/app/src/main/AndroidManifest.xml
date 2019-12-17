@@ -37,23 +37,23 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".zsh.setting.ShowCardActivity"></activity>
-        <activity android:name=".zsh.setting.presenter.EditProfileActivity" />
         <activity android:name=".zsh.setting.EditPwdWithOldActivity" />
         <activity android:name=".zsh.setting.EditPwdWithoutOldActivity" />
+        <activity android:name=".zsh.setting.EditProfileActivity" />
 
         <activity
             android:name=".zlc.vedio.model.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".ljt.login.PhoneLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".ljt.login.PhoneLoginActivity">
+
         </activity>
         <activity android:name=".ljt.login.ShowServiceActivity" />
         <activity android:name=".ljt.login.PasswordLoginActivity" />

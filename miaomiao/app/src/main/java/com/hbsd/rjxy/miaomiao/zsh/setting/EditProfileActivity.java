@@ -280,11 +280,13 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             obj.put("newIntro", tx_reSbp.getText().toString());
             obj.put("newSex", tx_reSex.getText().toString());
             obj.put("isEditedHead", isEditedHead);
+
             if (isEditedHead) {
                 obj.put("newHpath", qiNiuImgPath);
             }
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
+
             EventBus.getDefault().post(jsonStr);
             OkHttpUtils.getInstance().postJson(Constant.GET_USER_URL + "edit", jsonStr, new Callback() {
                 @Override

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,16 +27,14 @@ import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.ych.view.FollowActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
-import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfMainView;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +71,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
     private Gson gson;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+    private ImageView imgView;
+    private String imgUrl;
 
     @Nullable
     @Override
@@ -107,7 +108,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
         tx_order = view.findViewById(R.id.self_order);
         btn_editPwd=view.findViewById(R.id.btn_self_edPwd);
         tx_intro = view.findViewById(R.id.self_main_intro);
-
+        imgView=view.findViewById(R.id.img_head);
         getUserPresenterCompl = new GetUserPresenterCompl(this);
 
 
@@ -169,6 +170,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
     public void refresh() {
 
         initUserView(user);
+
 
 
     }
@@ -296,10 +298,23 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetMessage(String str) {
-        Gson gson = new Gson();
-        user = gson.fromJson(str, User.class);
+
+        try {
+            JSONObject jsonObject=new JSONObject(str);
+
+
+            user.setUserIntro(jsonObject.getString("newIntro"));
+            user.setUserName(jsonObject.getString("newName"));
+            user.setUserSex(jsonObject.getString("newSex"));
+            String qiNiuImgPath=Constant.QINIU_URL+jsonObject.getString("qiNiuImgPath");
+            Log.e("头像的位置",qiNiuImgPath);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         refresh();
-        Log.e("event=", str);
+
     }
 
     /**
