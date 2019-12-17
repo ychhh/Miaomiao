@@ -10,7 +10,6 @@ public class Cat {
     private int cid;
     private int uid;
     private int miid;
-    @Column(name = "hpath")
     private String hpath;
     private int chot;
     private int is_ste;

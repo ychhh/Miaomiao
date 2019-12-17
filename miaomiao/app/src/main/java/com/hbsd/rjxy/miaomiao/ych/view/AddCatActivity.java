@@ -6,24 +6,36 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.BuildCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideType;
+import com.bumptech.glide.load.engine.executor.GlideExecutor;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
+import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +55,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.hbsd.rjxy.miaomiao.utils.Constant.CAT_HEAD_TOKEN;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_ADD_CAT_HEAD;
+
 public class AddCatActivity extends Activity {
     ImageView img_back;
+    String key;
+    Handler handler;
     ImageView cat_head;
     TextView tx_head;
     private List<LocalMedia> selectResultList = null;
@@ -52,13 +70,20 @@ public class AddCatActivity extends Activity {
     private Gson gson = new Gson();
     private DatePickerDialog dpd;
     private OkHttpClient okHttpClient;
+    private Cat cat;
+    String uid;
+    String filename="cat_head";
+    String filepath;
+    String TAG="AddCatActivity";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cat);
-        img_back=findViewById(R.id.img_back);
-        cat_head=findViewById(R.id.cat_head);
-        tx_head=findViewById(R.id.tx_head);
+        img_back = findViewById(R.id.img_back);
+        cat_head = findViewById(R.id.cat_head);
+        tx_head = findViewById(R.id.tx_head);
+        Log.e(TAG, "onCreate: 111111111111" );
+        okHttpClient=new OkHttpClient();
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,24 +93,28 @@ public class AddCatActivity extends Activity {
         cat_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.e(TAG, "onCreate: 22222222222" );
                 askPermission();
             }
         });
     }
-    private void askPermission(){
-        String[] perms = {Manifest.permission.INTERNET,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
 
-        if(EasyPermissions.hasPermissions(this,perms)){
+    private void askPermission() {
+        String[] perms = {Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+
+        if (EasyPermissions.hasPermissions(this, perms)) {
             startSelectPic();
-        }else{
-            EasyPermissions.requestPermissions(AddCatActivity.this,"程序必须的权限",4513,perms);
+        } else {
+            EasyPermissions.requestPermissions(AddCatActivity.this, "程序必须的权限", 4513, perms);
         }
     }
 
-    private void startSelectPic(){
+    private void startSelectPic() {
         PictureSelector.create(AddCatActivity.this)
-                .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                .theme(R.style.picture_QQ_style)
+                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .loadImageEngine(GlideEngine.createGlideEngine())
+                .theme(R.style.picture_WeChat_style)
                 .maxSelectNum(1)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
@@ -96,19 +125,28 @@ public class AddCatActivity extends Activity {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .isZoomAnim(true)//图片列表点击缩放效果
                 .enableCrop(true)// 是否裁剪 true or false
-                .withAspectRatio(1,1)//一比一剪裁
+                .withAspectRatio(1, 1)//一比一剪裁
                 .rotateEnabled(false)//禁止旋转
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK){
+        Log.e(TAG, "onActivityResult: 3333333333333333" );
+        if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            for(LocalMedia localMedia : selectResultList){
-                Log.e("Path:",""+localMedia.getCutPath());
+            String QPath;
+            if (Build.VERSION.SDK_INT>Build.VERSION_CODES.P|| BuildCompat.isAtLeastQ()){
+                QPath=selectResultList.get(0).getAndroidQToPath();
+            }else {
+                QPath=selectResultList.get(0).getPath();
             }
+            for (LocalMedia localMedia : selectResultList) {
+                Log.e("QPath:", "" + localMedia.getCutPath());
+            }
+
             uploadFile();
 
         }
@@ -117,64 +155,93 @@ public class AddCatActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
     //上传文件
     private void uploadFile() {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         //表单参数
-       // builder.addFormDataPart("uid",""+user.getUid());
+        // builder.addFormDataPart("uid",""+user.getUid());
         /**
          * pictureType中，图片是image/jpeg，视频是video/mp4
          *
          * 文件名可以通过path的/分割字符串如何提出最后一段就是文件名
          *
          */
-        for(LocalMedia localMedia : selectResultList){
-            RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"),new File(localMedia.getCutPath()));
-            Log.e("Cutpath",""+localMedia.getCutPath());
-            if(localMedia.getMimeType().equals("image/jpeg")){
-                builder.addFormDataPart("type","jpeg");
-            }else if(localMedia.getMimeType().equals("video/mp4")){
-                builder.addFormDataPart("type","mp4");
-            }else{
+        for (LocalMedia localMedia : selectResultList) {
+            RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), new File(localMedia.getCutPath()));
+            Log.e("Cutpath", "" + localMedia.getCutPath());
+            if (localMedia.getMimeType().equals("image/jpeg")) {
+                builder.addFormDataPart("type", "jpeg");
+            } else if (localMedia.getMimeType().equals("video/mp4")) {
+                builder.addFormDataPart("type", "mp4");
+            } else {
                 //剪裁的话就不是jpeg了
 //                return;
             }
             //获取剪裁后的路径，而不是getPath
             String[] args = localMedia.getCutPath().split("/");
-            builder.addFormDataPart("file",""+args[args.length-1],fileBody);
-            String filename=localMedia.getCutPath();
-            cat_head.setImageURI(Uri.fromFile(new File(filename)));
+            builder.addFormDataPart("file", "" + args[args.length - 1], fileBody);
+            filepath = localMedia.getCutPath();
+            filename =new File(filepath).getName();
+            cat_head.setImageURI(Uri.fromFile(new File(filepath)));
         }
-
-//        RequestBody requestBody = builder.build();
-//        Request request = new Request.Builder()
-//                .url(URL_HEAD_UPLOAD)
-//                .post(requestBody)
-//                .build();
-//        Call call = okHttpClient.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-                //TODO 网络连接超时
-               // EventInfo<String,String,User> eventInfo = new EventInfo();
-//                Map<String ,String> map = new HashMap<>();
-//                map.put("status","failUpload");
-//                eventInfo.setContentMap(map);
-//                EventBus.getDefault().post(eventInfo);
+//        UploadUtils uploadUtils = new UploadUtils();
+        RequestBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(CAT_HEAD_TOKEN)
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "onFailure: "+"请求失败" );
             }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Log.e(TAG, "onResponse: "+response.body().string() );
+                Log.e(TAG, "onResponse: "+filename );
+                Log.e(TAG, "onResponse: "+filepath );
+                UploadUtils uploadUtils=new UploadUtils(response.body().string()+"",filepath,filename);
+
+                key=uploadUtils.getKey() ;
+                uploadUtils.upload();
+                updateData(key);
+                tx_head.setText("上传成功");
+            }
+        });
+//        handler=new Handler(){
 //            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                EventInfo<String,String,User> eventInfo = new EventInfo();
-//                Map<String ,String> map = new HashMap<>();
-//                map.put("status","finishUpload");
-//                eventInfo.setContentString(response.body().string());
-//                eventInfo.setContentMap(map);
-//                EventBus.getDefault().post(eventInfo);
+//            public void handleMessage(Message msg) {
+//                UploadUtils uploadUtils=new UploadUtils(msg.obj+"",filepath,filename);
 //            }
-//        });
-//        tx_head.setText("正在上传....");
+//        };
+
+        tx_head.setText("正在上传....");
     }
+    public String updateData(String key){
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        RequestBody requestBody = builder.addFormDataPart("uid","1").addFormDataPart("url","http://"+QINIU_URL+"/"+key).build();
+        Request request = new Request.Builder()
+                .url(URL_ADD_CAT_HEAD)
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.e(TAG, "onFailure: sb" );
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                Log.e(TAG, "onResponse: cg" );
+            }
+        });
+        return null;
+    }
+}
 

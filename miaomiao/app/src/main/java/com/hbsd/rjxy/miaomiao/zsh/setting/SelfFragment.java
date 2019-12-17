@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,13 +22,11 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
-
 import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
-
 import com.hbsd.rjxy.miaomiao.ych.view.FollowActivity;
-
 import com.hbsd.rjxy.miaomiao.zsh.setting.model.AddItemAdapter;
+import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditProfileActivity;
 import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.GetUserPresenterCompl;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.SelfMainView;
 
@@ -62,13 +61,14 @@ public class SelfFragment extends Fragment implements SelfMainView {
     private Button btn_setting;
     private Button btn_editF;
     private Button tx_order;
-    private Button btn_self_pwd;
     private GetUserPresenterCompl getUserPresenterCompl;
     private User user;
     private  TextView tx_intro;
     private ListView menu_listview_r;
     private Gson gson;
     private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,16 +77,9 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 container,
                 false
         );
-
-        if(EventBus.getDefault().isRegistered(this)) {
-
-        }
-        else{
-            EventBus.getDefault().register(this);
-        }
+        EventBus.getDefault().register(this);
         return view;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -101,19 +94,24 @@ public class SelfFragment extends Fragment implements SelfMainView {
         btn_editF=view.findViewById(R.id.btn_editF);
         tx_order=view.findViewById(R.id.self_order);
 
-        btn_self_pwd=view.findViewById(R.id.btn_self_pwd);
-
         tx_intro=view.findViewById(R.id.self_main_intro);
 
         getUserPresenterCompl=new GetUserPresenterCompl(this);
 
         user=new User();
-        gson=new Gson();
+
         /*通过sp获取当下user的uid*/
+
         sp=this.getActivity().getSharedPreferences(Constant.LOGIN_SP_NAME,MODE_PRIVATE);
-        int uid=Integer.parseInt(sp.getString("uid","8"));
-        uid=8;
+        editor = sp.edit();
+
+        int uid=Integer.parseInt(sp.getString("uid","0"));
+
         user.setUserId(uid);
+
+
+        user.setUserId(8);
+
 
         /*初始化UserData*/
         initData();
@@ -124,8 +122,12 @@ public class SelfFragment extends Fragment implements SelfMainView {
         /*监听setting按钮*/
         initEvent();
 
+
+
         //监听菜单
         menu_listview_r.setOnItemClickListener(new DrawerItemClickListenerRight());
+
+
 
     }
 
@@ -134,24 +136,37 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     }
 
+
     /*实现接口方法，获取当下的用户信息*/
     @Override
     public void initUserView(User user0) {
+
         user=user0;
+
         if(tx_intro!=null){
             Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
             tx_intro.setText(user.getUserIntro());
         }
+
+
     }
 
     @Override
     public void refresh() {
+
         initUserView(user);
+
+
+
+
+
     }
 
 
+        /*抽屉的初始化*/
     public void initDrawerList(){
         String[] titles={"个人名片","我的订阅","修改密码","小程序"};
+
         listItems=new ArrayList<Map<String, Object>>();
         for(int i=0;i<titles.length;i++){
             Map<String ,Object> map=new HashMap<>();
@@ -161,19 +176,22 @@ public class SelfFragment extends Fragment implements SelfMainView {
         }
         adapter=new AddItemAdapter(this.getContext(),listItems,R.layout.self_setting_item);
 
+
+
     }
     /*实现全局按钮的监听*/
     private void initEvent(){
+
         ButtonClickListener buttonClickListener=new ButtonClickListener();
         btn_setting.setOnClickListener(buttonClickListener);
         btn_editF.setOnClickListener(buttonClickListener);
         tx_order.setOnClickListener(buttonClickListener);
-        btn_self_pwd.setOnClickListener(buttonClickListener);
     }
 
 
     /*全局监听类*/
     public class ButtonClickListener implements View.OnClickListener{
+
         /**
          * Called when a view has been clicked.
          *
@@ -193,45 +211,57 @@ public class SelfFragment extends Fragment implements SelfMainView {
                     break;
                 }
                 case R.id.btn_editF:{
-                    if(user.getUserId()==0){
+                    Log.e("btn_edit",user.getUserId()+"");
+                    /*如果未登录，则跳到登录界面*/
+                    if((user.getUserId()+"").equals("0")){
                         Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
                         startActivity(intent);
                     }
+                    /*如果登录了，跳到修改信息界面*/
                     else {
+
+                        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                        String str = gson.toJson(user);
+                        intent.putExtra("user", str);
+                        startActivity(intent);
+                    }
 
                     Intent intent=new Intent(getActivity(), EditProfileActivity.class);
                     Gson gson=new Gson();
                     String str=gson.toJson(user);
                     intent.putExtra("user",str);
                     startActivity(intent);
-                    }
+
                     break;
                 }
                 case R.id.self_order:{
-
-
-                    /*TODO
-                        我的订阅
-                    * */
-
-
-                    Intent intent=new Intent(getActivity(), FollowActivity.class);
-                    intent.putExtra("uid",user.getUserId());
+                    Intent intent =new Intent(getActivity(), FollowActivity.class);
+                    intent.putExtra("uid",user.getUserTel());
                     startActivity(intent);
+
                     break;
                 }
-                case R.id.btn_self_pwd:{
+                case R.id.btn_self_editPwd:{
                     /*TODO
                         修改密码
                     * */
 
-                    if(sp.getString(Constant.LOGIN_SP_NAME,"null").equals("null")){
+                    if((user.getUserId()+"").equals("0")){
+                        /*如果用户处于非登录*/
+                        Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
+                        startActivity(intent);
+                    }
+                    /*如果用户处于登录状态但从未设置过密码*/
+                    else if( (sp.getString("hasPassword","false").equals("false"))){
+                        editor.putString("hasPassword","true");
+                        editor.commit();
                         Intent intent=new Intent(getActivity(), EditPwdWithoutOldActivity.class);
                         String str = gson.toJson(user);
                         intent.putExtra("user", str);
                         startActivity(intent);
                     }
                     else{
+                        /*有旧密码的情况下修改密码*/
                         Intent intent=new Intent(getActivity(), EditPwdWithOldActivity.class);
                         String str = gson.toJson(user);
                         intent.putExtra("user", str);
@@ -247,17 +277,17 @@ public class SelfFragment extends Fragment implements SelfMainView {
     }
     @Override
     public void onDestroy() {
+
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetMessage(String str){
-        Log.e("event=",str);
+        Gson gson=new Gson();
         user=gson.fromJson(str,User.class);
         refresh();
+        Log.e("event=",str);
     }
-
-
     /**
      * 右侧列表点击事件
      * @author busy_boy
@@ -265,44 +295,60 @@ public class SelfFragment extends Fragment implements SelfMainView {
      */
     private class DrawerItemClickListenerRight implements AdapterView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-        {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //根据行号判断所选为哪个item
-            if(user.getUserId()==0){
-                Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
+            if (user.getUserId() == 0) {
+                Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                 startActivity(intent);
-            }
-            else{
-                switch (position)
-                {
+            } else {
+                switch (position) {
                     case 0:
-                        Intent intent0=new Intent(getActivity(), ShowCardActivity.class);
-                        Gson gson=new Gson();
-                        String str=gson.toJson(user);
-                        intent0.putExtra("user",str);
+                        Intent intent0 = new Intent(getActivity(), ShowCardActivity.class);
+                        String str = gson.toJson(user);
+                        intent0.putExtra("user", str);
                         startActivity(intent0);
 
                         break;
                     case 1:
-                        Intent intent1=new Intent(getActivity(),ShowCardActivity.class);
-                        startActivity(intent1);
+                        Intent intent =new Intent(getActivity(), FollowActivity.class);
+                        intent.putExtra("uid",user.getUserTel());
+                        startActivity(intent);
                         break;
-                    case 2:{
-                        Intent intent2=new Intent(getActivity(),ShowCardActivity.class);
-                        startActivity(intent2);
+                    case 2: {
+                        if ((user.getUserId() + "").equals("0")) {
+                            /*如果用户处于非登录*/
+                            Intent intent2 = new Intent(getActivity(), PhoneLoginActivity.class);
+                            startActivity(intent2);
+                        }
+                        /*如果用户处于登录状态但从未设置过密码*/
+                        else if ((sp.getString("hasPassword", "false").equals("false"))) {
+                            editor.putString("hasPassword", "true");
+                            editor.commit();
+                            Intent intent1 = new Intent(getActivity(), EditPwdWithoutOldActivity.class);
+                            String sss = gson.toJson(user);
+                            intent1.putExtra("user", sss);
+                            startActivity(intent1);
+                        } else {
+                            /*有旧密码的情况下修改密码*/
+                            Intent intent00 = new Intent(getActivity(), EditPwdWithOldActivity.class);
+                            String s = gson.toJson(user);
+                            intent00.putExtra("user", s);
+                            startActivity(intent00);
+                        }
+
                         break;
 
                     }
-                    case 3:{
-                        break;
+                    case 3: {
+                        Toast.makeText(view.getContext(), "正在开发", Toast.LENGTH_SHORT).show();
+
+
                     }
+
+                    mDrawer_layout.closeDrawer(mMenu_layout_right);//关闭mMenu_layout
                 }
-
-            mDrawer_layout.closeDrawer(mMenu_layout_right);//关闭mMenu_layout
-        }
-        }
-    }
+            }
 
 
-
+        }}
 }

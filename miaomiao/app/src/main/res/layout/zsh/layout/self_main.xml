@@ -37,7 +37,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:background="#aaa"
-                    android:text="请登录"/>
+                    android:text="请完善信息"/>
 
             </LinearLayout>
             <!--编辑资料-->
@@ -86,7 +86,7 @@
                 android:background="#fff"
                 android:layout_marginBottom="10dp"/>
             <Button
-                android:id="@+id/btn_self_pwd"
+                android:id="@+id/btn_self_editPwd"
                 android:layout_width="200dp"
                 android:layout_height="20dp"
                 android:text="修改密码"
