@@ -170,7 +170,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 @Override
                 public void run() {
 
-                        Glide.with(getActivity()).load(imgUrl).into(imgView);
+                        Glide.with(getActivity()).load(user.gethPath()).into(imgView);
 
 
                 }
@@ -179,7 +179,13 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
 
 
-    }}
+    }
+        else{
+            user.sethPath("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
+    }
+
+
+    }
 
     @Override
     public void refresh() {
@@ -249,11 +255,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
                         startActivity(intent);
                     }
 
-                    Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                    Gson gson = new Gson();
-                    String str = gson.toJson(user);
-                    intent.putExtra("user", str);
-                    startActivity(intent);
 
                     break;
                 }
@@ -316,8 +317,11 @@ public class SelfFragment extends Fragment implements SelfMainView {
             user.setUserIntro(jsonObject.getString("newIntro"));
             user.setUserName(jsonObject.getString("newName"));
             user.setUserSex(jsonObject.getString("newSex"));
-            String qiNiuImgPath=Constant.QINIU_URL+jsonObject.getString("qiNiuImgPath");
-            user.sethPath(qiNiuImgPath);
+            String qiNiuImgPath=jsonObject.getString("newHpath");
+            imgUrl=qiNiuImgPath;
+            /*Test*/
+            user.sethPath(imgUrl);
+            Log.e("修改回来之后的user",user.getUserName()+user.gethPath());
             Log.e("头像的位置",qiNiuImgPath);
 
         } catch (JSONException e) {

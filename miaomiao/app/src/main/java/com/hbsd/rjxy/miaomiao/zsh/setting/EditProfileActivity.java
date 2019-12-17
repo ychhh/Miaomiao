@@ -96,6 +96,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSbp = findViewById(R.id.self_reSbp);
         tx_reSex = findViewById(R.id.self_reSex);
         tv_changeHead = findViewById(R.id.tv_changeHead);
+
         /*数据初始化*/
         initView();
         /*大监听*/
@@ -113,6 +114,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSex.setText(user.getUserSex());
         tx_reSbp.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
+        Glide.with(this).load(user.gethPath()).into(iv_reImg);
         editUserPresenterCompl = new EditUserPresenterCompl(this);
     }
 
@@ -282,7 +284,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             obj.put("isEditedHead", isEditedHead);
 
             if (isEditedHead) {
-                obj.put("newHpath", qiNiuImgPath);
+                obj.put("newHpath",Constant.QINIU_URL+qiNiuImgPath);
             }
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
@@ -298,10 +300,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Looper.prepare();
-                    buttonActive();
-                    Toast.makeText(EditProfileActivity.this, "信息保存成功", Toast.LENGTH_SHORT).show();
-                    Looper.loop();
+
                 }
             });
         } catch (JSONException e) {
