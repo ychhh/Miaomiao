@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
@@ -162,19 +163,28 @@ public class SelfFragment extends Fragment implements SelfMainView {
             tx_intro.setText(user.getUserName());
 
         }
+        Log.e("打印userPath",user.gethPath());
+        if(!user.gethPath().equals("null")){
+            imgUrl=user.gethPath();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                        Glide.with(getActivity()).load(imgUrl).into(imgView);
 
 
-    }
+                }
+            });
+
+
+
+
+    }}
 
     @Override
     public void refresh() {
-
         initUserView(user);
-
-
-
     }
-
 
     /*抽屉的初始化*/
     public void initDrawerList() {
@@ -307,6 +317,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
             user.setUserName(jsonObject.getString("newName"));
             user.setUserSex(jsonObject.getString("newSex"));
             String qiNiuImgPath=Constant.QINIU_URL+jsonObject.getString("qiNiuImgPath");
+            user.sethPath(qiNiuImgPath);
             Log.e("头像的位置",qiNiuImgPath);
 
         } catch (JSONException e) {
