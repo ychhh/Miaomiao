@@ -20,12 +20,14 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class EditPwdPresenterCompl implements EditPwdPresenter {
+public class EditPwdPresenterCompl {
     private EditPwdView editPwdView;
+
+
     public EditPwdPresenterCompl(EditPwdView editPwdView){
         this.editPwdView=editPwdView;
     }
-    @Override
+
     public void editPwdWithoutOld(Integer id,String newPwd) {
         /*TODO
             直接将id,新的密码发送到服务器
@@ -61,7 +63,6 @@ public class EditPwdPresenterCompl implements EditPwdPresenter {
 
     }
 
-    @Override
     public void editPwdWithOld(Integer id,String oldPwd, String newPwd) {
         /*TODO
             将id，旧密码，新密码发送到服务器

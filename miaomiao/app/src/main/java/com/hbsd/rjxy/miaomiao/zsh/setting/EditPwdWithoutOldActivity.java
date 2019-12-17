@@ -31,7 +31,7 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity implements Edit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_pwd_without_old);
+        setContentView(R.layout.activity_edit_pwd_with_old);
         /*接收我的界面传来的数据*/
         intent=getIntent();
         String str=intent.getStringExtra("user");
