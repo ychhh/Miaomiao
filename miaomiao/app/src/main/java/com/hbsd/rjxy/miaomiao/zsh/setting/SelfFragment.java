@@ -81,20 +81,15 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 container,
                 false
         );
-<<<<<<< HEAD
+
         if (EventBus.getDefault().isRegistered(this)) {
 
         } else {
             EventBus.getDefault().register(this);
         }
-=======
 
 
-        if(EventBus.getDefault().isRegistered(this)){
 
-        }
-        else{EventBus.getDefault().register(this);}
->>>>>>> 218a34206af482071ed318343515cfe24b983cc4
         return view;
     }
 
@@ -110,37 +105,27 @@ public class SelfFragment extends Fragment implements SelfMainView {
         btn_setting = view.findViewById(R.id.btn_setting);
         btn_editF = view.findViewById(R.id.btn_editF);
         tx_order = view.findViewById(R.id.self_order);
-
-<<<<<<< HEAD
+        btn_editPwd=view.findViewById(R.id.btn_self_edPwd);
         tx_intro = view.findViewById(R.id.self_main_intro);
 
         getUserPresenterCompl = new GetUserPresenterCompl(this);
 
-        user = new User();
 
-=======
-        tx_intro=view.findViewById(R.id.self_main_intro);
-        btn_editPwd=view.findViewById(R.id.btn_self_edPwd);
-        getUserPresenterCompl=new GetUserPresenterCompl(this);
 
->>>>>>> 218a34206af482071ed318343515cfe24b983cc4
+
         /*通过sp获取当下user的uid*/
 
         sp = this.getActivity().getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
         editor = sp.edit();
 
-<<<<<<< HEAD
-        int uid = Integer.parseInt(sp.getString("uid", "0"));
 
-=======
         gson=new Gson();
         int uid=Integer.parseInt(sp.getString("uid","0"));
         if(uid==0){
             Intent intent=new Intent(getActivity(), PhoneLoginActivity.class);
             startActivity(intent);
         }
-        user=new User();
->>>>>>> 218a34206af482071ed318343515cfe24b983cc4
+        user = new User();
         user.setUserId(uid);
 
         /*初始化UserData*/
@@ -169,19 +154,12 @@ public class SelfFragment extends Fragment implements SelfMainView {
     @Override
     public void initUserView(User user0) {
 
-<<<<<<< HEAD
-        user = user0;
-
-        if (tx_intro != null) {
-            Log.e("user", user.getUserName() + user.getUserIntro() + user.getUserSex());
-            tx_intro.setText(user.getUserIntro());
-=======
         user=user0;
         Log.e("user",user.getUserId()+"和"+user.getUserName()+user.getUserIntro()+user.getUserSex());
         if(tx_intro!=null){
             Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
             tx_intro.setText(user.getUserName());
->>>>>>> 218a34206af482071ed318343515cfe24b983cc4
+
         }
 
 
@@ -274,11 +252,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
                     break;
                 }
-<<<<<<< HEAD
-                case R.id.btn_self_editPwd: {
-=======
                 case R.id.btn_self_edPwd:{
->>>>>>> 218a34206af482071ed318343515cfe24b983cc4
+
                     /*TODO
                         修改密码
                     * */
