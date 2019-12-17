@@ -1,15 +1,13 @@
-package com.hbsd.rjxy.miaomiao.zsh.setting;
+package com.hbsd.rjxy.miaomiao.zsh.setting.presenter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Response;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,24 +19,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
-
+import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
-
-import com.hbsd.rjxy.miaomiao.zsh.setting.presenter.EditUserPresenterCompl;
-
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.hbsd.rjxy.miaomiao.zsh.setting.view.EditProfileView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -54,12 +51,14 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private TextView tv_changeHead;
     private TextView tx_reSbp;
     private TextView tx_reSex;
-
-   private Intent intent;
-   private User user;
-   private EditUserPresenterCompl editUserPresenterCompl;
-     private String localImgPath;
-
+    private OkHttpUtils okHttpUtils;
+    private okhttp3.Callback callback;
+    private Integer id;
+    private Intent intent;
+    private EditUserPresenterCompl editUserPresenterCompl;
+    private String localImgPath;
+    private String qiNiuImgPath;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +148,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                         }
 
 
-
-
                     break;
                 }
                 case R.id.tv_changeHead:
@@ -222,7 +219,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     private void startRealUpload(String token) {
         UploadUtils uploadUtils = new UploadUtils(token, localImgPath, new File(localImgPath).getName());
-       // qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
+        qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
         uploadUtils.upload();
     }
 }

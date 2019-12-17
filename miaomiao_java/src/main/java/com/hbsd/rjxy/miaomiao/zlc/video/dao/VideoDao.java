@@ -35,16 +35,8 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
      * @param step 每页显示的数量
      * @return
      */
-    @Query(value = "SELECT * FROM multi_info where type=0 order by mupload_time desc limit ?,?",nativeQuery = true)
+    @Query(value = "SELECT * FROM multi_info where type=0 limit ?,?",nativeQuery = true)
     List<Multi_info> findVideoPaging(int start,int step);
-
-    /**
-     * 分页查询订阅视频
-     *
-     */
-    @Query(value = "select * from multi_info m,subscription_record s where s.uid=? and m.cid=s.cid and m.type=0 order by m.mupload_time desc " +
-            " limit ?,?",nativeQuery = true)
-    List<Multi_info> findVideoPagingByUid(int uid,int start,int step);
 
 
     /**
@@ -64,6 +56,9 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
     int publishMulti(int type, int cid, int uid, String mpath, String mupload_time,String mcontent,String mformat,String cover);
 
 
+
+    @Query(value = "SELECT * from multi_info where cid=? order by mupload_time desc",nativeQuery = true)
+    List<Multi_info> getAllByCid(int cid);
 
 
 

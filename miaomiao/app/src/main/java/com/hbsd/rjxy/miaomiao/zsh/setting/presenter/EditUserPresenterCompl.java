@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
@@ -48,29 +47,14 @@ public class EditUserPresenterCompl implements EditUserPresenter {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-               // Log.e("已经成功接收到修改之后的客户信息","真好");
+                Log.e("已经成功接收到修改之后的客户信息","真好");
             }
         };
         String url=Constant.GET_USER_URL+"edit";
         okHttpUtils=new OkHttpUtils();
         okHttpUtils.postJson(url,jsonStr,callback);
-        try {
-            JSONObject object=new JSONObject(jsonStr);
-            String name=object.getString("newName");
-            Integer uid=object.getInt("uid");
-            String sex=object.getString("newSex");
-            String intro=object.getString("newIntro");
-            JSONObject obj0=new JSONObject();
-            obj0.put("userId",uid);
-            obj0.put("userName",name);
-            obj0.put("userSex",sex);
-            obj0.put("userIntro",intro);
-            EventBus.getDefault().post(obj0.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-
+        EventBus.getDefault().post(jsonStr);
         editProfileView.Okfinish();
         return true;
     }
