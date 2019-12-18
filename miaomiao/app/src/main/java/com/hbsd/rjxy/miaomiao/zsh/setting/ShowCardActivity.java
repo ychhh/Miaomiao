@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.User;
@@ -22,6 +25,7 @@ public class ShowCardActivity extends AppCompatActivity implements ShowCardView 
     Intent intent;
     private User user;
     private GetUserCardPresenter getUserPresenterCompl;
+    private ImageView imageView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,8 @@ public class ShowCardActivity extends AppCompatActivity implements ShowCardView 
         Gson gson=new Gson();
         String str=intent.getStringExtra("user");
         user=gson.fromJson(str,User.class);
+
+        String imgUrl=user.gethPath();
 
 
         initData();
@@ -58,9 +64,13 @@ public class ShowCardActivity extends AppCompatActivity implements ShowCardView 
         TextView tx_intro=findViewById(R.id.self_intro);
         TextView tx_id=findViewById(R.id.self_id);
         TextView tx_sex=findViewById(R.id.self_sex);
+        imageView=findViewById(R.id.self_Img);
+
         tx_intro.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
         tx_id.setText(user.getUserId()+"");
         tx_sex.setText(user.getUserSex());
+        RequestOptions options = new RequestOptions().circleCrop();
+        Glide.with(this).load(user.gethPath()).apply(options).into(imageView);
     }
 }

@@ -27,7 +27,7 @@
         android:orientation="vertical"
         android:gravity="center">
         <ImageView
-            android:id="@+id/self_reImg"
+            android:id="@+id/self_Img"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/u45"/>

@@ -343,12 +343,15 @@ public class SelfFragment extends Fragment implements SelfMainView {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //根据行号判断所选为哪个item
             if (user.getUserId() == 0) {
+
                 Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                 startActivity(intent);
             } else {
                 switch (position) {
                     case 0:
+
                         Intent intent0 = new Intent(getActivity(), ShowCardActivity.class);
+
                         String str = gson.toJson(user);
                         intent0.putExtra("user", str);
                         startActivity(intent0);

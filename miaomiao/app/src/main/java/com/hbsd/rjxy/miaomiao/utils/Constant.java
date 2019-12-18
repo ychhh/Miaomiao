@@ -15,9 +15,9 @@ public class Constant {
 
     public static String LOGIN_URL="http://47.94.171.160:8081/login/";//登录的URL
 
-    public static String UPLOAD_USERHEAD_TOKEN_URL="http://10.7.88.98:8081/Self/getToken";//上传用户头像获取token
+    public static String UPLOAD_USERHEAD_TOKEN_URL="http://47.94.171.160:8081/Self/getToken";//上传用户头像获取token
 
-    public static String GET_USER_URL="http://10.7.88.98:8081/Self/";//操作当前登录的用户信息
+    public static String GET_USER_URL="http://47.94.171.160:8081/Self/";//操作当前登录的用户信息
     //http://10.7.88.102:8080/Self/
     //http://47.94.171.160:8081/Self/
     public static int RECOMMEND_PAGE_DEFAULT = 1;   //推荐视频的当前页
