@@ -1,7 +1,6 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -21,10 +20,8 @@ import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Comment;
 import com.hbsd.rjxy.miaomiao.entity.RecordLikes;
-import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.TimeUtils;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.model.PleaseLoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -138,32 +135,31 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                         先判断是否登录
                  */
                 //登录判断
-                SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-                String uid = sp.getString("uid","default");
-                if(uid.equals("default")) {
-                    context.startActivity(new Intent(context, PhoneLoginActivity.class));
-                }else{
-                    if (helper.isLiked()) {
+//                SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+//                String uid = sp.getString("uid","unregist");
+//                if(uid.equals("unregist")){
+
+                    if(helper.isLiked()){
                     /*
                         TODO    先判断是否有锁，没有锁，上锁，开始请求
                      */
-                        if (helper.isLikeLock()) {
+                        if(helper.isLikeLock()){
                             //当前有锁
-                        } else {
+                        }else{
                             //当前无锁
-                            helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(), R.drawable.comment_like_unpressed));
-                            item.setColike(item.getColike() - 1);
-                            if (item.getColike() != 0) {
-                                helper.setText(R.id.comment_like_account, item.getColike() + "");
-                            } else {
-                                helper.setText(R.id.comment_like_account, "");
+                            helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_unpressed));
+                            item.setColike(item.getColike()-1);
+                            if(item.getColike() != 0){
+                                helper.setText(R.id.comment_like_account,item.getColike()+"");
+                            }else{
+                                helper.setText(R.id.comment_like_account,"");
                             }
                             helper.setLiked(false);
                             JSONObject jsonObject = new JSONObject();
                             try {
-                                jsonObject.put("coid", item.getCoid());
-                                jsonObject.put("uid", currentId);
-                                jsonObject.put("miid", miid);
+                                jsonObject.put("coid",item.getCoid());
+                                jsonObject.put("uid",currentId);
+                                jsonObject.put("miid",miid);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -177,30 +173,29 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                                 @Override
                                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-                                    recordLikes = gson.fromJson(response.body().string(), new TypeToken<List<RecordLikes>>() {
-                                    }.getType());
+                                    recordLikes = gson.fromJson(response.body().string(),new TypeToken<List<RecordLikes>>(){}.getType());
                                     helper.setLikeLock(false);
 
                                 }
                             });
                         }
-                    } else {
-                        if (helper.isLikeLock()) {
+                    }else{
+                        if(helper.isLikeLock()){
                             //当前有锁
-                        } else {
-                            helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(), R.drawable.comment_like_pressed));
-                            item.setColike(item.getColike() + 1);
-                            helper.setText(R.id.comment_like_account, item.getColike() + "");
+                        }else{
+                            helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_pressed));
+                            item.setColike(item.getColike()+1);
+                            helper.setText(R.id.comment_like_account,item.getColike()+"");
                             helper.setLiked(true);
                             JSONObject jsonObject = new JSONObject();
                             try {
-                                jsonObject.put("coid", item.getCoid());
-                                jsonObject.put("uid", currentId);
-                                jsonObject.put("miid", miid);
+                                jsonObject.put("coid",item.getCoid());
+                                jsonObject.put("uid",currentId);
+                                jsonObject.put("miid",miid);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            OkHttpUtils.getInstance().postJson(URL_LIKE_COMMENT, jsonObject.toString(), new Callback() {
+                            OkHttpUtils.getInstance().postJson(URL_LIKE_COMMENT,jsonObject.toString(), new Callback() {
                                 @Override
                                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -208,8 +203,7 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
 
                                 @Override
                                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                    recordLikes = gson.fromJson(response.body().string(), new TypeToken<List<RecordLikes>>() {
-                                    }.getType());
+                                    recordLikes = gson.fromJson(response.body().string(),new TypeToken<List<RecordLikes>>(){}.getType());
                                     helper.setLikeLock(false);
 
 
@@ -218,7 +212,6 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                         }
 
                     }
-                }
 
 
 

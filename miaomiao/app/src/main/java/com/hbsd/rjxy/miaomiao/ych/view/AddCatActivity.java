@@ -3,8 +3,10 @@ package com.hbsd.rjxy.miaomiao.ych.view;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +14,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.os.BuildCompat;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +33,7 @@ import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
+import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.luck.picture.lib.PictureSelector;
@@ -39,6 +46,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +68,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.CAT_HEAD_TOKEN;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.QINIU_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_ADD_CAT_HEAD;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_ADD_CAT_INFO;
 
 public class AddCatActivity extends Activity {
     ImageView img_back;
@@ -70,20 +81,105 @@ public class AddCatActivity extends Activity {
     private Gson gson = new Gson();
     private DatePickerDialog dpd;
     private OkHttpClient okHttpClient;
-    private Cat cat;
+    private Cat cat=new Cat();
     String uid;
     String filename="cat_head";
     String filepath;
     String TAG="AddCatActivity";
+    private EditText et_name;
+    private EditText et_intro;
+    private EditText et_food;
+    private EditText et_toy;
+    private EditText et_breed;
+    private EditText et_weight;
+    private EditText et_sex;
+    private TextView tv_xz;
+    private TextView tv_meetday;
+    Button commit;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cat);
+        tv_meetday=findViewById(R.id.meetday);
         img_back = findViewById(R.id.img_back);
         cat_head = findViewById(R.id.cat_head);
         tx_head = findViewById(R.id.tx_head);
+        et_breed=findViewById(R.id.et_breed);
+        et_food=findViewById(R.id.et_food);
+        et_intro=findViewById(R.id.et_intro);
+        et_name=findViewById(R.id.et_cname);
+        et_weight=findViewById(R.id.et_cweight);
+        et_toy=findViewById(R.id.et_toy);
+        et_sex=findViewById(R.id.et_csex);
+        commit=findViewById(R.id.btn_tj);
+        tv_xz=findViewById(R.id.tv_xz);
         Log.e(TAG, "onCreate: 111111111111" );
         okHttpClient=new OkHttpClient();
+        tv_xz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                dpd = new DatePickerDialog(AddCatActivity.this,this::onDateSet,1999,0,1);
+                dpd.show();
+            }
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = year+"年"+(month+1)+"月"+dayOfMonth+"日";
+                Log.e(TAG, "onDateSet: 12345600"+date );
+                tv_meetday.setText(date);
+            }
+//
+        });
+        commit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Map map=new HashMap();
+                String breed= et_breed.getText().toString();
+                Log.e(TAG, "onClick: "+breed );
+                cat.setCbreed(breed);
+                cat.setUid(1);
+                cat.setCfood(et_food.getText().toString());
+                cat.setCname(et_name.getText().toString());
+                cat.setCintro(et_intro.getText().toString());
+                cat.setCsex(et_sex.getText().toString());
+                cat.setCtoy(et_toy.getText().toString());
+                SimpleDateFormat simpleDateFormat = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    simpleDateFormat = new SimpleDateFormat("yyyy年mm月dd");
+                }
+                try {
+                    Date date = simpleDateFormat.parse(tv_meetday.getText().toString());
+                    cat.setCbirthday( date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String str= gson.toJson(cat);
+                Log.e(TAG, "onClick: str:"+str );
+                map.put("str",str);
+                OkHttpUtils.getInstance().postForm(URL_ADD_CAT_INFO, map, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Log.e(TAG, "onFailure: sbbbbbbbb" );
+                        Toast.makeText(AddCatActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
+//                        finish();
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        Log.e(TAG, "onResponse: cggggggggg" );
+//                        Toast.makeText(AddCatActivity.this,"上传成功",Toast.LENGTH_SHORT).show();
+//                        finish();
+                    }
+                });
+            }
+        });
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                cat= (Cat) msg.obj;
+            }
+        };
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,17 +304,12 @@ public class AddCatActivity extends Activity {
                 UploadUtils uploadUtils=new UploadUtils(response.body().string()+"",filepath,filename);
 
                 key=uploadUtils.getKey() ;
+                Log.e(TAG, "onResponse: key："+key );
                 uploadUtils.upload();
                 updateData(key);
                 tx_head.setText("上传成功");
             }
         });
-//        handler=new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                UploadUtils uploadUtils=new UploadUtils(msg.obj+"",filepath,filename);
-//            }
-//        };
 
         tx_head.setText("正在上传....");
     }
@@ -238,9 +329,14 @@ public class AddCatActivity extends Activity {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                cat=gson.fromJson(response.body().string(),Cat.class);
+                Message msg=Message.obtain();
+                msg.obj=cat;
                 Log.e(TAG, "onResponse: cg" );
+                handler.sendMessage(msg);
             }
         });
+
         return null;
     }
 }

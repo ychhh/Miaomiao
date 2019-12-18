@@ -1,6 +1,5 @@
 package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
-import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hbsd.rjxy.miaomiao.R;
-import com.hbsd.rjxy.miaomiao.ljt.login.PhoneLoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,8 +55,6 @@ public class PleaseLoginActivity extends AppCompatActivity implements View.OnCli
 
                 //登陆逻辑
 
-                startActivity(new Intent(PleaseLoginActivity.this, PhoneLoginActivity.class));
-                finish();
                 break;
 
         }

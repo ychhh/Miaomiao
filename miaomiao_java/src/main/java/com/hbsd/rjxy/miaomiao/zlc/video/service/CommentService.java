@@ -59,15 +59,15 @@ public class CommentService {
         videoDao.addVideoCommentAccount(comment.getMiid());
         //查询uid的upath和uname
         User user = userDao.findUserByUid(comment.getUid());
-//        //插入评论
-//        commentDao.addComment(comment.getMiid()
-//                ,comment.getColike()
-//                ,comment.getCostatus()
-//                ,comment.getUid()
-//                ,comment.getCocontent()
-//                ,comment.getPublishTime()
-//                ,user.getHpath()
-//                ,user.getUsername());
+        //插入评论
+        commentDao.addComment(comment.getMiid()
+                ,comment.getColike()
+                ,comment.getCostatus()
+                ,comment.getUid()
+                ,comment.getCocontent()
+                ,comment.getPublishTime()
+                ,user.getHpath()
+                ,user.getUsername());
         return commentDao.findId(comment.getUid(),comment.getPublishTime());
     }
 

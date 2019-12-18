@@ -9,6 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.util.Date;
+
 @RequestMapping("/cat")
 @Controller
 public class CatController {
@@ -43,6 +48,7 @@ public class CatController {
     public String setCatInfo(String str){
         System.out.println(str);
         Cat cat= gson.fromJson(str,Cat.class);
+        cat.setCregist(new Date());
         System.out.println(gson.toJson(cat));
         return gson.toJson(catService.saveCat(cat));
     }

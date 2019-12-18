@@ -6,11 +6,24 @@
     >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="32dp"
-        android:text="关注的喵"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_margin="15dp"
+            android:id="@+id/follow_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/back"
+            />
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:text="关注的喵"
+            android:gravity="center"
+            />
+
+
     <ListView
         android:id="@+id/list_follow"
         android:layout_width="match_parent"
