@@ -85,6 +85,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 false
         );
 
+
         if (EventBus.getDefault().isRegistered(this)) {
 
         } else {
@@ -119,8 +120,6 @@ public class SelfFragment extends Fragment implements SelfMainView {
         /*通过sp获取当下user的uid*/
 
         sp = this.getActivity().getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
-        editor = sp.edit();
-
 
         gson=new Gson();
         int uid=Integer.parseInt(sp.getString("uid","0"));
@@ -260,10 +259,16 @@ public class SelfFragment extends Fragment implements SelfMainView {
                     break;
                 }
                 case R.id.self_order: {
-                    Intent intent = new Intent(getActivity(), FollowActivity.class);
-                    intent.putExtra("uid", user.getUserTel());
-                    startActivity(intent);
-
+                    /*如果未登录，则跳到登录界面*/
+                    if ((user.getUserId() + "").equals("0")) {
+                        Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(getActivity(), FollowActivity.class);
+                        intent.putExtra("uid", user.getUserTel());
+                        startActivity(intent);
+                    }
                     break;
                 }
                 case R.id.btn_self_edPwd:{

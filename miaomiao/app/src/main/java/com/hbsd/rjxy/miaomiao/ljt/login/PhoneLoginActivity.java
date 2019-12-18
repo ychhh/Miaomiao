@@ -164,6 +164,10 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
                 Intent intent2=new Intent(this,ShowServiceActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.iv_rtn:
+                finish();
+                break;
+
         }
     }
 
