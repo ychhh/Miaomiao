@@ -1,10 +1,10 @@
 package com.hbsd.rjxy.miaomiao.zlc.publish.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,7 +52,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -283,6 +286,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         checkDraft(bundle);
 
         initButton();
+        llPublish.setOnClickListener(this::onClick);
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -498,7 +502,26 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     isUploadComplete = true;
                 }
             }
-            Log.e("path",""+path);
+            etEdit.setText(multi_info.getMcontent());
+        } else {
+            /*
+                TODO ：   拿到uid  cid
+            */
+            Log.e("检查草稿", "不是草稿");
+            if (type != 2) {
+                path = (String) bundle.getSerializable("path");
+                Log.e("检查草稿", "设置当前path为:" + path);
+            }
+            needToUpload = true;
+            isUploadComplete = false;
+            multi_info = new Multi_info();
+
+            /*
+                TODO    :如果是视频的话，生成第一帧帧图的bitmap，然后转文件，上传7牛
+
+             */
+            //生成第一帧帧图
+
             if(type == 0){
                 MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.setDataSource(path);
@@ -522,58 +545,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 //拿到了需要上传的cover的path
                 coverPath = file.getPath();
             }
-            if(type == 1){
-                Bitmap bitmap = BitmapFactory.decodeFile(path);
-                ivFrameImage.setImageBitmap(bitmap);
-            }
-            etEdit.setText(multi_info.getMcontent());
-        } else {
-            /*
-                TODO ：   拿到uid  cid
-            */
-            Log.e("检查草稿", "不是草稿");
-            if (type != 2) {
-                path = (String) bundle.getSerializable("path");
-                Log.e("检查草稿", "设置当前path为:" + path);
-            }
-            needToUpload = true;
-            isUploadComplete = false;
-            multi_info = new Multi_info();
 
-            /*
-                TODO    :如果是视频的话，生成第一帧帧图的bitmap，然后转文件，上传7牛
-
-             */
-            //生成第一帧帧图
-
-
-            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(path);
-            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
-            ivFrameImage.setImageBitmap(bitmap);
-            Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
-            if (type == 0) {
-                //如果是视频上传,生成帧图jpg文件，记录coverPath
-                File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
-                OutputStream stream = null;
-                try {
-                    stream = new FileOutputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //拿到了需要上传的cover的path
-                coverPath = file.getPath();
-            }
-            if(type == 1){
-                Bitmap bitmap = BitmapFactory.decodeFile(path);
-                ivFrameImage.setImageBitmap(bitmap);
-            }
 
         }
         Log.e("检查草稿", "设置当前type为:" + type);
@@ -601,11 +573,35 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+    public void hideSoftKeyboard(Context context, List<View> viewList) {
+        if (viewList == null) return;
+
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        for (View v : viewList) {
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
 
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
+            case R.id.ll_publish_back:
+                List<View> views = new ArrayList<>();
+                views.add(v);
+                hideSoftKeyboard(this,views);
+                if (checkNeedSave()) {
+                    //弹出是否保留此次编辑的popupwindow
+                    popupSaveWindow();
+
+                } else {
+                    //弹出是否退出此次编辑的popupwindow
+                    popupExitWindow();
+                }
+                break;
+        }
     }
 
 
@@ -666,7 +662,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
             } else {
                 //弹出是否退出此次编辑的popupwindow
-
+                popupExitWindow();
             }
         }
 
@@ -779,6 +775,54 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         });
         saveWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 20);
 
+
+    }
+
+    private void popupExitWindow(){
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        this.getWindow().setAttributes(lp);
+        View view = getLayoutInflater().inflate(R.layout.publish_save_popupwindow, null);
+        exitWindow = new PopupWindow(view, dip2px(this, 350), dip2px(this, 150), true);
+        exitWindow.setFocusable(true);
+        exitWindow.setOutsideTouchable(false);
+        exitWindow.setTouchable(true);
+        exitWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });
+        TextView tvSave = view.findViewById(R.id.tv_save_text);
+        tvSave.setText("退出此次编辑？");
+
+
+        Button btnIgnore = view.findViewById(R.id.btn_publish_save_left);
+        btnIgnore.setText("取消");
+        btnIgnore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                        TODO    不保留，检查上传是否完成，如果未完成，取消上传
+                 */
+                exitWindow.dismiss();
+            }
+        });
+
+        Button btnSave = view.findViewById(R.id.btn_publish_save_right);
+        btnSave.setText("退出");
+        btnSave.setTextColor(getResources().getColor(R.color.btnLogin));
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                exitWindow.dismiss();
+                finish();
+            }
+        });
+        exitWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 20);
 
     }
 

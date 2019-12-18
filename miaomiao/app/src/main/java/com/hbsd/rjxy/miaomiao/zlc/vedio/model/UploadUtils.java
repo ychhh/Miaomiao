@@ -100,7 +100,6 @@ l
                 token,
                 completionHandler,
                 options);
-        Log.e("123", "upload: 成功" );
     }
 
 

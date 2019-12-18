@@ -2,15 +2,14 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.presenter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,23 +21,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 
-import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
-import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +38,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
-import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_CAT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
 
 public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implements View.OnClickListener {
@@ -153,75 +142,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     }
                 });
             }
-        }else{
-            helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                /*
-                    TODO:   （1）先判断是否登录了，没登录，去登陆！
-                            （2）已经登陆了，那之前在fragment里一定拿到过订阅列表的信息
-                            （3）对比订阅列表的cid和本视频的cid，判断是否显示这个订阅的视图
-                            （4）订阅：
-                                        （1）动画效果，（2）订阅的业务逻辑
-
-                 */
-
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
-                    animator.setDuration(1000);
-                    animator.start();
-                    ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
-                    animator1.setDuration(1500);
-                    animator1.start();
-                    ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
-                    animator2.setDuration(1500);
-                    animator2.start();
-                    animator2.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            v.setVisibility(View.INVISIBLE);
-                            ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
-                            animator3.setDuration(1000);
-                            animator3.start();
-                            helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
-                            animator3.addListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
-                                }
-                            });
-
-                        }
-                    });
-
-                    SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-                    String uid = sp.getString("uid", "1");
-                    Map<String, String> map = new HashMap<>();
-                    map.put("uid", uid);
-                    map.put("cid", item.getCid() + "");
-                    OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
-                        @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                        }
-
-
-                        @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                            subscriptionRecords =
-                                    gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
-                                    }.getType());
-                            Log.e("updated SubList", "" + subscriptionRecords.toString());
-
-                            //我要更新这个subscriptionRecords
-                        }
-                    });
-
-
-                }
-            });
         }
 
 
@@ -334,70 +254,6 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
 
         }
-    }
-}
-
-
-class GetChead extends AsyncTask<Object,Object,String> {
-
-    GetChead(int cid ,MeViewHolder helper,Context context){
-        this.cid = cid;
-        this.helper = helper;
-        this.context= context;
-    }
-    private MeViewHolder helper;
-    private int cid;
-    private Context context;
-    Gson gson = new Gson();
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if(!s.equals("")){
-            Cat cat = gson.fromJson(s,Cat.class);
-            if(cat != null && cat.getHpath() != null){
-                Glide.with(context)
-                        .load(cat.getHpath())
-                        .dontAnimate()
-                        .into((ImageView) helper.getView(R.id.iv_cathead));
-                Log.e("asda",""+cat.getHpath());
-            }else{
-
-            }
-        }else{
-
-        }
-
-
-
-
-    }
-
-    @Override
-    protected String doInBackground(Object... objects) {
-        try {
-            URL url = new URL(URL_GET_CAT);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            OutputStream os = con.getOutputStream();
-            JSONObject jo = new JSONObject();
-            jo.put("cid",cid);
-            os.write(jo.toString().getBytes());
-
-
-            InputStream is = con.getInputStream();
-            byte[] buffer = MeBufferReader.readInputStream(is);
-            return new String(buffer);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return "";
     }
 }
 

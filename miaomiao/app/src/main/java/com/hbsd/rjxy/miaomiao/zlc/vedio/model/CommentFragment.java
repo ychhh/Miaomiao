@@ -2,7 +2,6 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -253,6 +252,7 @@ public class CommentFragment extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
                 recordLikes = gson.fromJson(response.body().string(),new TypeToken<List<RecordLikes>>(){}.getType());
                 initData();
             }
@@ -481,12 +481,10 @@ public class CommentFragment extends Fragment {
                     TODO    判断当前是否登录，没登录跳转登录页面，登陆了
                  */
                     SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-                    String uid = sp.getString("uid","default");
-                    if("default".equals(uid)){
-                        //如果没有登录
-                        startActivity(new Intent(getContext(),PleaseLoginActivity.class));
-
-                    }else{
+                    String uid = sp.getString("uid","1");
+                    if("1".equals(uid)){
+                        Log.e("没登录","跳转");
+                        //这个一会放到下面
                         if(etComment.getText().toString().length() == 0){
                             Toast.makeText(getContext(),"输入不能为空",Toast.LENGTH_SHORT).show();
                         }else{
@@ -536,10 +534,10 @@ public class CommentFragment extends Fragment {
                                 }
                             });
                         }
+                    }else{
+                        //如果已经登录     可以发表评论
+
                     }
-
-
-
                 }else{
                     Toast.makeText(getContext(),"请等待上一条评论发送成功",Toast.LENGTH_SHORT).show();
                 }
