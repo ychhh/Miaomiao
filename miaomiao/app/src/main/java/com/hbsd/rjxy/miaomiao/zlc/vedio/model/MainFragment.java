@@ -551,19 +551,20 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 if(contentType != 0){
                     //当前不是订阅内容，判断是否登录
                     SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-                    String uid = sp.getString("uid","1");
-                    if("1".equals(uid)){
+                    String uid = sp.getString("uid","default");
+                    if("default".equals(uid)){
+                        //如果没有登录
+                        startActivity(new Intent(getContext(),PleaseLoginActivity.class));
+                    }else{
                         //以后下面的内容放到else分支里，1改成unregist
                         setTextViewColor(tv_subscribed,tv_recommend);
                         //请求订阅的视频内容...
                         RECOMMEND_PAGE_DEFAULT -= 1;
                         adapter.loadMoreComplete();
+                        contentType = 0;
                         askforSubscribedVideoList(uid);
                         //修改当前contentType为 0
-                        contentType = 0;
-                    }else{
-                        //如果没有登录
-                        startActivity(new Intent(getContext(),PleaseLoginActivity.class));
+
                     }
 
                 }else{

@@ -63,7 +63,7 @@ public class FollowActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_cat);
         listView=findViewById(R.id.list_follow);
-        img_back=findViewById(R.id.follow_back);
+//        img_back=findViewById(R.id.follow_back);
         map.put("uid","1");
         handler=new Handler(){
             @Override

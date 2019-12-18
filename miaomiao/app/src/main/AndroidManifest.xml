@@ -43,9 +43,7 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".zsh.setting.ShowCardActivity"
-            ></activity>
-        <activity android:name=".zsh.setting.EditProfileActivity" />
+
 
         <activity
             android:name=".zlc.vedio.model.MainActivity"

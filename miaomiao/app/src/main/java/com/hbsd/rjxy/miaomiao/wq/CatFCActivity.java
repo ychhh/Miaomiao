@@ -1,27 +1,62 @@
 package com.hbsd.rjxy.miaomiao.wq;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
+
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.BuildCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CatFCActivity extends AppCompatActivity {
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PERMISSION_NECESSARY;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PICTURESELECT_VIDEO;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.PUBLISH_SP_NAME;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.REMIND_PUBLISH_ONCE;
+
+public class CatFCActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     /** Called when the activity is first created. */
     private TabHost tabHost;
     private ImageButton ibfanhui;
     private ImageButton ibfabu;
     private RecyclerView mRvTextList;
+
+
+    private List<LocalMedia> selectResultList;
+    private View popupView;
+    private PopupWindow popupWindow;
+    private int type;
 
 
     @Override

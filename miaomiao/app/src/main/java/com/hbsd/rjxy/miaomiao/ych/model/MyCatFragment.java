@@ -63,7 +63,7 @@ public class MyCatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.activity_my_cat, null);
         recyclerView = view.findViewById(R.id.recycler);
-        btn_addcat=view.findViewById(R.id.btn_addcat);
+//        btn_addcat=view.findViewById(R.id.btn_addcat);
         map1.put("uid", "1");
         OkHttpUtils.getInstance().postForm(FIND_SUB_CAT, map1, new Callback() {
             @Override
