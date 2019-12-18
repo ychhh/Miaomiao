@@ -40,7 +40,7 @@
                     android:id="@+id/img_head"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/preson"
+                    android:src="@drawable/pre"
 
                     />
                 <TextView
