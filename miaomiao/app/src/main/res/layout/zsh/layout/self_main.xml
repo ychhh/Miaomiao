@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="20dp"
-        android:background="#473C88"
+        android:background="@drawable/miaoback"
             >
         <!--self-->
         <LinearLayout
@@ -25,7 +25,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/self_background"/>
+                    android:background="@drawable/miao"/>
             </LinearLayout>
             <LinearLayout
             android:layout_width="match_parent"

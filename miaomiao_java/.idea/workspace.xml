@@ -77,6 +77,12 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1520" />
+    <option name="height" value="1015" />
+  </component>
   <component name="ProjectId" id="1UmOKUwUeq5LO5nrKViDzGZ1yjM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
