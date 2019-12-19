@@ -49,9 +49,12 @@
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
         <activity android:name=".ljt.login.LoginProblemsActivity" />
-        <activity android:name=".ych.view.MyCatActivity" >
-
-        </activity>
+        <!--<activity android:name=".ych.view.MyCatActivity" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity android:name=".ych.view.FollowActivity" >
 
         </activity>

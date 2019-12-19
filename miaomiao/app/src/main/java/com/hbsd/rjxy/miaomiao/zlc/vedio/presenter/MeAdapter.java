@@ -295,11 +295,11 @@ class GetChead extends AsyncTask<Object,Object,String>{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Cat cat = gson.fromJson(s,Cat.class);
-        Glide.with(context)
-                .load(cat.getHpath())
-                .into((ImageView) helper.getView(R.id.iv_cathead));
-        Log.e("asda",""+cat.getHpath());
+//        Cat cat = gson.fromJson(s,Cat.class);
+//        Glide.with(context)
+//                .load(cat.getHpath())
+//                .into((ImageView) helper.getView(R.id.iv_cathead));
+//        Log.e("asda",""+cat.getHpath());
 
     }
 

@@ -35,6 +35,7 @@ import com.hbsd.rjxy.miaomiao.entity.Cat;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
+import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -161,13 +162,15 @@ public class AddCatActivity extends Activity {
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         Log.e(TAG, "onFailure: sbbbbbbbb" );
                         Toast.makeText(AddCatActivity.this,"上传失败",Toast.LENGTH_SHORT).show();
-//                        finish();
+                        finish();
                     }
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         Log.e(TAG, "onResponse: cggggggggg" );
 //                        Toast.makeText(AddCatActivity.this,"上传成功",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(AddCatActivity.this, MainActivity.class);
+                        startActivity(intent);
 //                        finish();
                     }
                 });
@@ -242,7 +245,6 @@ public class AddCatActivity extends Activity {
             for (LocalMedia localMedia : selectResultList) {
                 Log.e("QPath:", "" + localMedia.getCutPath());
             }
-
             uploadFile();
 
         }
@@ -315,7 +317,7 @@ public class AddCatActivity extends Activity {
     }
     public String updateData(String key){
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        RequestBody requestBody = builder.addFormDataPart("uid","1").addFormDataPart("url","http://"+QINIU_URL+"/"+key).build();
+        RequestBody requestBody = builder.addFormDataPart("url","http://"+QINIU_URL+"/"+key).build();
         Request request = new Request.Builder()
                 .url(URL_ADD_CAT_HEAD)
                 .post(requestBody)

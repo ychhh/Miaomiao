@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_margin="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/img_cat1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/img_cat2"
         android:layout_width="0dp"

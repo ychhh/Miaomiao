@@ -45,12 +45,13 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_SUB_CAT;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_USER_CAT;
 
 public class MyCatFragment extends Fragment {
     List<Cat> cats=new ArrayList<>();
     List<List<Cat>> catss= new ArrayList<List<Cat>>();
     RecyclerView recyclerView;
-    String TAG="MyCatActivity";
+    String TAG="MyCatFragment";
     Handler handler;
     Button btn_addcat;
     Gson gson=new Gson();
@@ -63,9 +64,18 @@ public class MyCatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.activity_my_cat, null);
         recyclerView = view.findViewById(R.id.recycler);
-        btn_addcat=view.findViewById(R.id.btn_addcat);
+        btn_addcat=view.findViewById(R.id.btn_addc);
         map1.put("uid", "1");
-        OkHttpUtils.getInstance().postForm(FIND_SUB_CAT, map1, new Callback() {
+        btn_addcat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onClick: "+"tiaozhuan" );
+                Intent intent=new Intent(getActivity(), AddCatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        OkHttpUtils.getInstance().postForm(FIND_USER_CAT, map1, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.e(TAG, "onFailure: ");
@@ -82,6 +92,8 @@ public class MyCatFragment extends Fragment {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                catss.clear();
+                cats.clear();
                 Log.e(TAG, "handleMessagecat: " + msg.obj);
                 JsonParser parser = new JsonParser();
                 JsonArray jsonarray = parser.parse(msg.obj.toString()).getAsJsonArray();
@@ -105,20 +117,19 @@ public class MyCatFragment extends Fragment {
                 Log.e(TAG, "handleMessage: catsssize" + catss.size());
                 Log.e(TAG, "handleMessage: catss" + catss);
                 adapter = new MyCatsAdapter(R.layout.item_my_cat, catss, getContext());
-                catss.clear();
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(RecyclerView.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
             }
         };
-        btn_addcat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), AddCatActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btn_addcat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(getActivity(), AddCatActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }
@@ -156,7 +167,8 @@ public class MyCatFragment extends Fragment {
                         Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat3));
                 }
             }
-            adapter.notifyDataSetChanged();
+
+//            adapter.notifyDataSetChanged();
             helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

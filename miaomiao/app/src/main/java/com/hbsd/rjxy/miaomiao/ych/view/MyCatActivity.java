@@ -36,6 +36,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_SUB_CAT;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.FIND_USER_CAT;
 
 public class MyCatActivity extends Activity {
     List<Cat> cats=new ArrayList<>();
@@ -88,7 +89,7 @@ public class MyCatActivity extends Activity {
             }
         };
         map1.put("uid","1");
-        OkHttpUtils.getInstance().postForm(FIND_SUB_CAT, map1, new Callback() {
+        OkHttpUtils.getInstance().postForm(FIND_USER_CAT, map1, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.e(TAG, "onFailure: ");
