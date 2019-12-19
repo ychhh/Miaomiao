@@ -233,6 +233,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         //加载封面
         Glide.with(context)
                 .load(item.getMcover())
+                .placeholder(R.drawable.bg_house)
                 .into(helper.iv_thumb);
         helper.gsyVideoPlayer.setImageView(helper.iv_thumb);
 

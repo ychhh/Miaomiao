@@ -29,6 +29,7 @@ import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
+import com.hbsd.rjxy.miaomiao.utils.StatusBarUtil;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.IVideoPreseter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeAdapter;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.presenter.MeGSYVideoPlayer;
@@ -151,8 +152,13 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-                String uid = sp.getString("uid","1");
-                askforRefreshVideoList(uid);
+                String uid = sp.getString("uid","default");
+                if("default".equals(uid)){
+                    askforRefreshVideoList(null);
+                }else{
+                    askforRefreshVideoList(uid);
+                }
+
 
             }
         });
@@ -176,12 +182,6 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 subscriptionRecords =
                         gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
-//                Log.e("askforSubscriptionList",""+response.body().string());
-
-                //不知道什么问题
-                if(subscriptionRecords.get(0).getSrid() == 0){
-                    subscriptionRecords = null;
-                }
 
                 askforRecommend();
             }
@@ -208,7 +208,12 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             try {
                 jo.put("page",page);
                 if(contentType == 0){
-                    jo.put("uid",uid);
+                    if(uid == null){
+                        Log.e("error","uid在刷新订阅视频时为空");
+                        return;
+                    }else{
+                        jo.put("uid",uid);
+                    }
                 }
 
             } catch (JSONException e) {
@@ -243,7 +248,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
      */
     private void askforRecommend() {
         JSONObject jo = new JSONObject();
-        if(contentType == 1 && RECOMMEND_PAGE_DEFAULT != 1){
+        if(contentType == 1 ){
             RECOMMEND_PAGE_DEFAULT += 1;
         }
         if(contentType == 0){
@@ -621,6 +626,12 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         unselectedView.setTextColor(getResources().getColor(R.color.mainuptextnormal));
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtil.transparencyBar(getActivity());
+    }
 
     @Override
     public void onDestroy() {

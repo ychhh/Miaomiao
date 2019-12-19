@@ -128,7 +128,9 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                             bundle.putSerializable("iscanceled","true");
                             bundle.putSerializable("canceled_file_path",path);
                         }else{
+                            String path = sp.getString("finished_file_path","");
                             bundle.putSerializable("iscanceled","false");
+                            bundle.putSerializable("finished_file_path",path);
                         }
                         bundle.putSerializable("draftbody",sp.getString("draftbody",""));
                         intent.putExtras(bundle);
@@ -312,6 +314,7 @@ public class InfoAndCommentActivity extends AppCompatActivity implements EasyPer
                         TODO    以type = 2 跳转
                  */
                 startPublishActivity(2,null);
+                popupWindow.dismiss();
             }
         });
 

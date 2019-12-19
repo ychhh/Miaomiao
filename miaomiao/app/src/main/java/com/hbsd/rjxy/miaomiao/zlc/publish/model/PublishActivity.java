@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
@@ -225,13 +227,18 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             }.start();
         }
         if ("progressUpdate".equals(eventInfo.getContentString())) {
-            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 100);
+            int progressNum;
+            if(type == 0){
+                progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 90);
+            }else{
+                progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 100);
+            }
             tvLog.setText(progressNum + "%");
             progressBar.setProgress(progressNum);
         }
         if("progressUpdateCover".equals(eventInfo.getContentString())){
-            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 10);
-            tvLog.setText((progressNum+90) + "%");
+            int progressNum = (int) Math.round((double) eventInfo.getContentMap().get("progress") * 10)+90;
+            tvLog.setText(progressNum + "%");
             progressBar.setProgress(progressNum);
         }
         if ("finishPublishing".equals(eventInfo.getContentString())) {
@@ -486,22 +493,26 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         type = (int) bundle.getSerializable("type");
         if (bundle.getSerializable("isdraft").equals("true")) {
             Log.e("检查草稿", "是草稿");
-            multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
-            Log.e("草稿的multi_info", "" + multi_info.toString());
             //检查是否需要上传
             if (type == 2) {
                 //文本，直接转multi_info
                 multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
             } else {
                 //文件，如果未上传完成，需要path
+                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
                 if (bundle.getSerializable("iscanceled").equals("true")) {
                     needToUpload = true;
                     path = (String) bundle.getSerializable("canceled_file_path");
+                    makeCover();
                 } else {
+                    path = (String) bundle.getSerializable("finished_file_path");
+                    makeCover();
                     needToUpload = false;
                     isUploadComplete = true;
                 }
+
             }
+            Log.e("草稿的multi_info", "" + multi_info.toString());
             etEdit.setText(multi_info.getMcontent());
         } else {
             /*
@@ -521,34 +532,40 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
              */
             //生成第一帧帧图
-
-            if(type == 0){
-                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-                mediaMetadataRetriever.setDataSource(path);
-                Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
-                ivFrameImage.setImageBitmap(bitmap);
-                Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
-                //如果是视频上传,生成帧图jpg文件，记录coverPath
-                File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
-                OutputStream stream = null;
-                try {
-                    stream = new FileOutputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //拿到了需要上传的cover的path
-                coverPath = file.getPath();
-            }
-
-
+            makeCover();
         }
         Log.e("检查草稿", "设置当前type为:" + type);
+    }
+
+    private void makeCover() {
+        Bitmap bitmap;
+        if(type == 0){
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(path);
+            bitmap = mediaMetadataRetriever.getFrameAtTime();
+        }else{
+            bitmap = BitmapFactory.decodeFile(path);
+        }
+        ivFrameImage.setImageBitmap(bitmap);
+        Log.e("path", "" + getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+        //如果是视频上传,生成帧图jpg文件，记录coverPath
+        if(type == 0){
+            File file = new File(getExternalCacheDir().getAbsolutePath() + "/cover.jpg");
+            OutputStream stream = null;
+            try {
+                stream = new FileOutputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            coverPath = file.getPath();
+        }
+        //拿到了需要上传的cover的path
     }
 
     /*
@@ -752,6 +769,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         multi_info.setMcontent(etEdit.getText().toString());
                         sp.edit().putBoolean("have_draft", true)
                                 .putBoolean("have_canceled_file", false)
+                                .putString("finished_file_path",path)
                                 .putString("draftbody", gson.toJson(multi_info))
                                 .putInt("type", type).commit();
                     } else {
@@ -817,7 +835,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME, MODE_PRIVATE);
+                sp.edit().putBoolean("have_text_draft", false).commit();
                 exitWindow.dismiss();
                 finish();
             }

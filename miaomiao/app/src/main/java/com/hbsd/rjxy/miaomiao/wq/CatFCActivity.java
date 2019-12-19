@@ -178,7 +178,9 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
                             bundle.putSerializable("iscanceled","true");
                             bundle.putSerializable("canceled_file_path",path);
                         }else{
+                            String path = sp.getString("finished_file_path","");
                             bundle.putSerializable("iscanceled","false");
+                            bundle.putSerializable("finished_file_path",path);
                         }
                         bundle.putSerializable("draftbody",sp.getString("draftbody",""));
                         intent.putExtras(bundle);
