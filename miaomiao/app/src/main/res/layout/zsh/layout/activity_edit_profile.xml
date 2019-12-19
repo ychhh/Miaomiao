@@ -34,7 +34,7 @@
             android:id="@+id/iv_reImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/u45" />
+            android:src="@drawable/pre" />
 
         <TextView
             android:id="@+id/tv_changeHead"
@@ -68,7 +68,7 @@
 
                 <EditText
                     android:id="@+id/self_reName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
                     android:text="豆豆" />
@@ -89,7 +89,7 @@
 
                 <EditText
                     android:id="@+id/self_reSbp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
                     android:text="编辑资料获得关注哦" />
@@ -109,7 +109,7 @@
 
                 <EditText
                     android:id="@+id/self_reSex"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="60dp"
                     android:text="男" />

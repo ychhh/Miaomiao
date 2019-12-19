@@ -23,18 +23,18 @@ import android.widget.Toast;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.zlc.publish.model.PublishActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.GlideEngine;
-import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.os.BuildCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -52,12 +52,12 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
     private ImageButton ibfabu;
     private RecyclerView mRvTextList;
 
-    //zlc
-    List<LocalMedia> selectResultList;
 
-    PopupWindow popupWindow;
-    View popupView;
-    private int type = -1;  //0：视频，1：图片，2：纯文字
+    private List<LocalMedia> selectResultList;
+    private View popupView;
+    private PopupWindow popupWindow;
+    private int type;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,10 +93,6 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
             ex.printStackTrace();
             Log.d("EXCEPTION", ex.getMessage());
         }
-
-        //初始化发布按钮
-        initPublishButton();
-
     }
 
     //获取cid
@@ -115,8 +111,18 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
 //                Intent intent = new Intent(MainActivity.this,CatMainActivity.class);
 //                startActivity(intent);
                 break;
+            case R.id.fabu:
+                Intent intent1 = new Intent(CatFCActivity.this, PublishActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("","");
+                intent1.putExtras(bundle);
+                startActivity(intent1);
+                break;
+
         }
     }
+
+
 
 
 
@@ -130,6 +136,7 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
 ////            return false;
 //        }
 //    }
+
 
 
 
@@ -331,6 +338,7 @@ public class CatFCActivity extends AppCompatActivity implements EasyPermissions.
                         TODO    以type = 2 跳转
                  */
                 startPublishActivity(2,null);
+                popupWindow.dismiss();
             }
         });
 

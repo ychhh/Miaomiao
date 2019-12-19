@@ -2,7 +2,6 @@ package com.hbsd.rjxy.miaomiao.zlc.video.controller;
 
 
 import com.google.gson.Gson;
-import com.hbsd.rjxy.miaomiao.ych.cat.service.CatService;
 import com.hbsd.rjxy.miaomiao.zlc.utils.RequestUtil;
 import com.hbsd.rjxy.miaomiao.zlc.video.service.VideoService;
 import org.json.JSONException;
@@ -20,8 +19,6 @@ public class VideoController {
 
     @Autowired
     VideoService videoService;
-    @Autowired
-    CatService catService;
 
     Gson gson = new Gson();
 
@@ -88,21 +85,6 @@ public class VideoController {
         return "fail";
 
     }
-
-
-    @RequestMapping("/video/getCat")
-    @ResponseBody
-    public String getCat(HttpServletRequest request, HttpServletResponse response){
-        JSONObject re = null;
-        try {
-            re = new JSONObject(RequestUtil.getJson(request));
-            return gson.toJson(catService.findAllByCid(re.getInt("cid")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return "fail";
-    }
-
 
 
 

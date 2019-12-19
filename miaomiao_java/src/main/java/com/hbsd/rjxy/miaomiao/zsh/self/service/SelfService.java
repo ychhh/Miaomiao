@@ -1,7 +1,9 @@
 package com.hbsd.rjxy.miaomiao.zsh.self.service;
 
 import com.hbsd.rjxy.miaomiao.entity.User;
+import com.hbsd.rjxy.miaomiao.ljt.Login.Constant;
 import com.hbsd.rjxy.miaomiao.zsh.self.dao.SelfDao;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,18 @@ public class SelfService {
     public User findUserById(Integer uid){
         User user=selfDao.findUserByUid(uid);
         return user;
+    }
+    @Transactional
+    public Boolean confirmPwd(Integer uid,String oldPwd) {
+        String data_pwd = selfDao.findUserByUid(uid).getPwd();
+        String old_md5Pwd = DigestUtils.md5Hex(DigestUtils.md5Hex(oldPwd) + Constant.SALT);
+        System.out.println("数据库的旧密码是"+oldPwd);
+        System.out.println("加密后的旧密码是"+old_md5Pwd);
+
+        if (data_pwd.equals(old_md5Pwd)) {
+            return true;
+        }
+        return false;
     }
     /**
      * 根据uid修改用户姓名
@@ -52,14 +66,19 @@ public class SelfService {
      */
     @Transactional
     public int updateUserHpathById(String hpath,Integer uid){
-       return selfDao.updateUserHpathById("http://q20jftoug.bkt.clouddn.com/"+hpath,uid);
+        return selfDao.updateUserHpathById("http://q20jftoug.bkt.clouddn.com/"+hpath,uid);
     }
+
+
+
+
     /**
      * 根据uid更改用户信息（姓名、性别、简介）
      * @param username
      * @param sex
      * @param uintro
      * @param uid
+     *
      * @return
      */
     @Transactional
@@ -67,16 +86,17 @@ public class SelfService {
         return selfDao.updateUserMsgById(username,sex,uintro,uid);
     }
 
-
     /**
-     * 根据id修改用户密码
+     *
      * @param pwd
      * @param id
      * @return
      */
     @Transactional
     public int updatePwdById(String pwd,Integer id){
-        return selfDao.updateUserPwdById(pwd,id);
+       String md5Pwd= DigestUtils.md5Hex(DigestUtils.md5Hex(pwd)+ Constant.SALT);
+        return selfDao.updateUserPwdById(md5Pwd,id);
     }
+
 
 }

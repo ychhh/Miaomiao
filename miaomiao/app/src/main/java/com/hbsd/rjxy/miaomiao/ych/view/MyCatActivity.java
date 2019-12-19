@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,8 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.BindViews;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -47,14 +43,12 @@ public class MyCatActivity extends Activity {
     Gson gson=new Gson();
     Map<String,String> map1=new HashMap<String, String>();
     Map<String,String> map=new HashMap<String, String>();
-    ImageView img_back;
     int x=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cat);
         recyclerView=findViewById(R.id.recycler);
-        img_back=findViewById(R.id.back_mycat);
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -103,12 +97,7 @@ public class MyCatActivity extends Activity {
                 handler.sendMessage(msg);
             }
         });
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 //        map.put("img1","https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575951502205&di=94392c75e406ce38a767558d793816ac&imgtype=0&src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20180211%2F01%2F1518283482-zxHFomPtAE.jpg");
 //        maps.add(map);
 //        Log.e(TAG, "onCreate: "+11111111 );

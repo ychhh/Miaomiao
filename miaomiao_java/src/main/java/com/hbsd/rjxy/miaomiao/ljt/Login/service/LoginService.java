@@ -3,12 +3,14 @@ package com.hbsd.rjxy.miaomiao.ljt.Login.service;
 import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.ljt.Login.Constant;
 import com.hbsd.rjxy.miaomiao.ljt.Login.dao.LoginDao;
+import com.hbsd.rjxy.miaomiao.ljt.Login.util.RandomUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Random;
 
 
 @Service
@@ -24,6 +26,7 @@ public class LoginService {
         User user=new User();
         user.setTel(DigestUtils.md5Hex(DigestUtils.md5Hex(tel)+ Constant.SALT));
         user.setUregist(uregist);
+        user.setUsername(RandomUtil.getStringRandom());
         loginDao.save(user);
     }
 
@@ -48,11 +51,4 @@ public class LoginService {
         return user;
     }
 
-//    /**
-//     *
-//     */
-//    @Transactional
-//    public void updateUserUlast_LoginById(Date lastLoginTime,Integer uid){
-//        loginDao.updateUserUlast_LoginById(lastLoginTime,uid);
-//    }
 }

@@ -13,11 +13,13 @@
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/img_cat2"
         android:layout_width="0dp"
+        android:src="@drawable/u45"
         android:layout_weight="1"
         android:layout_height="match_parent" />
     <com.hbsd.rjxy.miaomiao.utils.CircleImageView
         android:id="@+id/img_cat3"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:src="@drawable/u45"
         android:layout_height="match_parent" />
 </LinearLayout>

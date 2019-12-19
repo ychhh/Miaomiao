@@ -149,6 +149,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             <---测试-->
             未上传失败后重新开启上传的情况
             现在就是不能再上传视频完成后，封面上传完成之前保存视频的上传url
+
      */
 
     @Override
@@ -162,6 +163,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         /*
             TODO    目前的场景有三个
                 （1）上传成功：修改tbLog，开启线程3.5秒后隐藏tbLog和pb
+
          */
         if ("dismissProgressbar".equals(eventInfo.getContentString())) {
             initProgressbar();
@@ -516,6 +518,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
             /*
                 TODO    :如果是视频的话，生成第一帧帧图的bitmap，然后转文件，上传7牛
+
              */
             //生成第一帧帧图
 

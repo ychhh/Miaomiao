@@ -43,6 +43,10 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCancellationSignal;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +56,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.UPLOAD_USERHEAD_TOKEN_URL;
 
@@ -74,6 +80,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private UploadUtils uploadUtils;
     List<LocalMedia> selectResultList;
     private boolean isEditedHead = false;
+    private boolean isPrepared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         /*接收我的界面传来的数据*/
         intent = getIntent();
         String str = intent.getStringExtra("user");
-        //todo 拿到服务器端图片地址
+        //
         qiNiuImgPath = intent.getStringExtra("hpath");
         Gson gson = new Gson();
         user = gson.fromJson(str, User.class);
@@ -96,6 +103,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSbp = findViewById(R.id.self_reSbp);
         tx_reSex = findViewById(R.id.self_reSex);
         tv_changeHead = findViewById(R.id.tv_changeHead);
+
         /*数据初始化*/
         initView();
         /*大监听*/
@@ -107,12 +115,11 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     }
 
     public void initView() {
-        /*TODO
-         *   图片的设置
-         *   */
         tx_reSex.setText(user.getUserSex());
         tx_reSbp.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
+        RequestOptions options = new RequestOptions().circleCrop();
+        Glide.with(this).load(user.gethPath()).apply(options).into(iv_reImg);
         editUserPresenterCompl = new EditUserPresenterCompl(this);
     }
 
@@ -139,8 +146,12 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     buttonInactive();
                     if (isEditedHead) {
                         //准备上传
-                        tv_changeHead.setText("正在上传···");
-                        startUploadProgress();
+                        if (isPrepared == true) {
+                            startRealUpload(uploadUtils);
+                            postEditMsg();
+                        } else {
+                            Toast.makeText(EditProfileActivity.this, "网络连接较慢,稍后重试", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         postEditMsg();
                     }
@@ -163,9 +174,10 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
      * 获取token，准备上传
      */
     private void startUploadProgress() {
+        isPrepared = false;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("uid", 1);
+            jsonObject.put("uid", user.getUserId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -182,15 +194,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                 String token = response.body().string();
                 uploadUtils = new UploadUtils(token, localImgPath, new File(localImgPath).getName());
                 qiNiuImgPath = uploadUtils.getKey();//服务器端图片名称，包含后缀
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        buttonActive();
-                        tv_changeHead.setText("点击更换头像");
-                    }
-                });
-                postEditMsg();
-                startRealUpload(uploadUtils);
+                isPrepared = true;
                 Log.e("Edit--qiniuImgPath", qiNiuImgPath);
             }
         });
@@ -202,7 +206,36 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
      * @param uploadUtils
      */
     private void startRealUpload(UploadUtils uploadUtils) {
-        uploadUtils.upload();
+        uploadUtils.upload(new UpCompletionHandler() {
+            @Override
+            public void complete(String key, ResponseInfo info, JSONObject response) {
+                if (info.isOK()) {
+                    //上传成功
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_changeHead.setText("点击更换头像");
+                            buttonActive();
+                        }
+                    });
+
+                } else {
+                    //上传失败，打印错误信息
+                    Log.e("upload fail", "" + info);
+
+                }
+            }
+        }, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                tv_changeHead.setText("正在上传···");
+            }
+        }, new UpCancellationSignal() {
+            @Override
+            public boolean isCancelled() {
+                return false;
+            }
+        });
     }
 
     private void askPermission() {
@@ -251,7 +284,6 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PictureConfig.CHOOSE_REQUEST && resultCode == Activity.RESULT_OK) {
             selectResultList = PictureSelector.obtainMultipleResult(data);
-            String localImgPath = null;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P || BuildCompat.isAtLeastQ()) {
                 localImgPath = selectResultList.get(0).getAndroidQToPath();
             } else {
@@ -263,6 +295,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     .load(localImgPath)
                     .apply(options)
                     .into(iv_reImg);
+            startUploadProgress();
         }
     }
 
@@ -276,17 +309,18 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private void postEditMsg() {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("uid", 8);
+            obj.put("uid", user.getUserId());
             obj.put("newName", tx_reName.getText().toString());
             obj.put("newIntro", tx_reSbp.getText().toString());
             obj.put("newSex", tx_reSex.getText().toString());
             obj.put("isEditedHead", isEditedHead);
+
             if (isEditedHead) {
                 obj.put("newHpath", qiNiuImgPath);
             }
-            // todo 注意服务器端的调整
             String jsonStr = obj.toString();
             Log.e("json", jsonStr);
+
             EventBus.getDefault().post(jsonStr);
             OkHttpUtils.getInstance().postJson(Constant.GET_USER_URL + "edit", jsonStr, new Callback() {
                 @Override

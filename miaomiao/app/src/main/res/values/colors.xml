@@ -12,7 +12,7 @@
     <color name="mainuptextselected">#FFFFFF</color>
     <color name="servicetext">#fff</color>
     <!--背景色-->
-    <color name="bgcolor">#ff8800</color><!--#CA7945-->
+    <color name="bgcolor">#000000</color><!--#CA7945-->
     <color name="bggray">#B3B3B3</color>
 
     <color name="white">#ffffff</color>

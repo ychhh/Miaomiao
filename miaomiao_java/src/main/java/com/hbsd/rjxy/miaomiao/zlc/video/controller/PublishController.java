@@ -31,6 +31,7 @@ public class PublishController {
         try {
             JSONObject jsonObject = new JSONObject(RequestUtil.getJson(request));
             //TODO 调catService的方法，根据cid查询uid是否合理
+
             System.out.println(jsonObject.get("cid")+","+jsonObject.get("uid"));
         } catch (JSONException e) {
             e.printStackTrace();

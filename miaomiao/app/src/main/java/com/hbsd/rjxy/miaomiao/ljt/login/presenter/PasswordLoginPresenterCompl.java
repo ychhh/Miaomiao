@@ -34,7 +34,6 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
             e.printStackTrace();
         }
 
-        // todo 添加username，hpath
         Callback callback=new Callback(){
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -42,16 +41,8 @@ public class PasswordLoginPresenterCompl implements IPasswordLoginPresenter{
                 JSONObject jsonObject= null;
                 try {
                     jsonObject = new JSONObject(content);
-                    String result=jsonObject.getString("result");//1.密码正确(附带返回用户id)2.密码错误3.手机号未注册
-                    if (result.equals("true")){
-                        iPasswordLoginView.onLoginResult(result,jsonObject.getInt("uid"));
-                    }else if(result.equals("error")){
-                        iPasswordLoginView.onLoginResult(result,0);
-                    }else if (result.equals("false")){
-                        iPasswordLoginView.onLoginResult(result,0);
-                    }else if(result.equals("null")){
-                        iPasswordLoginView.onLoginResult(result,0);
-                    }
+                    String result=jsonObject.getString("result");
+                    iPasswordLoginView.onLoginResult(result,jsonObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
