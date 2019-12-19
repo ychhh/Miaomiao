@@ -123,15 +123,14 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
              */
 
             SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
-            uid = sp.getString("uid","1");
-            if("1".equals(uid)){
+            uid = sp.getString("uid","default");
+            if("default".equals(uid)){
                 //没登录，不去请求订阅列表
                 //现在写的是登录的情况
-                askforSubscriptionList();
-//                askforRecommend();
+                askforRecommend();
             }else {
-                //没登录这样
-            askforRecommend();
+                //登录这样
+                askforSubscriptionList();
             }
 
 
@@ -494,11 +493,19 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             meGSYVideoPlayer.startAfterPrepared();
 
 
-
+            /*
+                TODO    如果没有订阅，不修改ui
+             */
         }else if("subscribeInit".equals(videoEvent.getContentString())){
             if(videoEvent.getContentList().isEmpty()){
+                setTextViewColor(tv_recommend,tv_subscribed);
+                //请求订阅的视频内容...
+                RECOMMEND_PAGE_DEFAULT += 1;
+                contentType = 1;
+                Toast.makeText(getContext(),"当前还没有订阅的猫猫",Toast.LENGTH_SHORT).show();
                 return;
             }
+            setTextViewColor(tv_subscribed,tv_recommend);
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
             for(Multi_info multi_info : videoEvent.getContentList()){
@@ -556,8 +563,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                         //如果没有登录
                         startActivity(new Intent(getContext(),PleaseLoginActivity.class));
                     }else{
+                        this.uid = uid;
+                        Log.e("uid",""+this.uid);
                         //以后下面的内容放到else分支里，1改成unregist
-                        setTextViewColor(tv_subscribed,tv_recommend);
                         //请求订阅的视频内容...
                         RECOMMEND_PAGE_DEFAULT -= 1;
                         adapter.loadMoreComplete();
@@ -669,9 +677,10 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //这个要替换当前的这些视频
-                List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                List<Multi_info> videoL = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
                 EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
-                videoEvent.setContentList(videoList);
+                Log.e("subscribeInit",""+videoL.toString());
+                videoEvent.setContentList(videoL);
                 videoEvent.setContentString("subscribeInit");
                 EventBus.getDefault().post(videoEvent);
             }

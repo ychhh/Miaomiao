@@ -1,6 +1,7 @@
 package com.hbsd.rjxy.miaomiao.zlc.video.dao;
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -45,6 +46,7 @@ public interface VideoDao extends JpaRepository<Multi_info,Integer> {
     @Query(value = "select * from multi_info m,subscription_record s where s.uid=? and m.cid=s.cid and m.type=0 order by m.mupload_time desc " +
             " limit ?,?",nativeQuery = true)
     List<Multi_info> findVideoPagingByUid(int uid,int start,int step);
+
 
 
     /**

@@ -2,11 +2,13 @@ package com.hbsd.rjxy.miaomiao.zlc.video.service;
 
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.ych.subscription.dao.SubDao;
 import com.hbsd.rjxy.miaomiao.zlc.utils.QiniuUtils;
 import com.hbsd.rjxy.miaomiao.zlc.video.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hbsd.rjxy.miaomiao.zlc.constant.VideoConstant.PAGING_STEP;
@@ -16,6 +18,8 @@ public class VideoService {
 
     @Autowired
     VideoDao videoDao;
+    @Autowired
+    SubDao subDao;
 
     public List<Multi_info> findAll(){
         return videoDao.findAll();
@@ -48,7 +52,12 @@ public class VideoService {
      * 分页查询，根据订阅
      */
     public List<Multi_info> findVideoPagingByUid(int page,int uid){
-        System.out.println(videoDao.findVideoPagingByUid((page-1)*PAGING_STEP,PAGING_STEP,uid));
+        if(subDao.findAllByUid(uid).size() == 0){
+            System.out.println("未查到订阅记录");
+            List<Multi_info> list = new ArrayList<>();
+            return list;
+        }
+        System.out.println(videoDao.findVideoPagingByUid(uid,(page-1)*PAGING_STEP,PAGING_STEP));
         return videoDao.findVideoPagingByUid(uid,(page-1)*PAGING_STEP,PAGING_STEP);
     }
 

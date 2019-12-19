@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,20 @@ import com.hbsd.rjxy.miaomiao.R;
 
 import com.hbsd.rjxy.miaomiao.entity.Multi_info;
 import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +47,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
+import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_CAT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
 
 public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implements View.OnClickListener {
@@ -85,36 +95,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                                         （1）动画效果，（2）订阅的业务逻辑
 
                  */
-
-                        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
-                        animator.setDuration(1000);
-                        animator.start();
-                        ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
-                        animator1.setDuration(1500);
-                        animator1.start();
-                        ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
-                        animator2.setDuration(1500);
-                        animator2.start();
-                        animator2.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                v.setVisibility(View.INVISIBLE);
-                                ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
-                                animator3.setDuration(1000);
-                                animator3.start();
-                                helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
-                                animator3.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
-                                    }
-                                });
-
-                            }
-                        });
-
+                        initAnimate(v,helper);
                         SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
                         String uid = sp.getString("uid", "1");
                         Map<String, String> map = new HashMap<>();
@@ -142,6 +123,48 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     }
                 });
             }
+        }else{
+            //如果是空的sublist，也要初始化按钮
+            helper.getView(R.id.iv_subscribe_plus).setVisibility(View.VISIBLE);
+            helper.getView(R.id.iv_subscribe_plus).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                /*
+                    TODO:   （1）先判断是否登录了，没登录，去登陆！
+                            （2）已经登陆了，那之前在fragment里一定拿到过订阅列表的信息
+                            （3）对比订阅列表的cid和本视频的cid，判断是否显示这个订阅的视图
+                            （4）订阅：
+                                        （1）动画效果，（2）订阅的业务逻辑
+
+                 */
+                    initAnimate(v,helper);
+                    SharedPreferences sp = context.getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    String uid = sp.getString("uid", "1");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("uid", uid);
+                    map.put("cid", item.getCid() + "");
+                    OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                        }
+
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            subscriptionRecords =
+                                    gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                    }.getType());
+                            Log.e("updated SubList", "" + subscriptionRecords.toString());
+
+                            //我要更新这个subscriptionRecords
+                        }
+                    });
+
+
+                }
+            });
         }
 
 
@@ -217,6 +240,37 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         helper.gsyVideoPlayer.setRelativeLayout(helper.getView(R.id.popFish));
     }
 
+    private void initAnimate(View v,MeViewHolder helper) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
+        animator.setDuration(1000);
+        animator.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0f);
+        animator1.setDuration(1500);
+        animator1.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0f);
+        animator2.setDuration(1500);
+        animator2.start();
+        animator2.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                v.setVisibility(View.INVISIBLE);
+                ObjectAnimator animator3 = ObjectAnimator.ofFloat(helper.getView(R.id.iv_subscribe_success), "alpha", 0f, 1f, 0f);
+                animator3.setDuration(1000);
+                animator3.start();
+                helper.getView(R.id.iv_subscribe_success).setVisibility(View.VISIBLE);
+                animator3.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        helper.getView(R.id.iv_subscribe_success).setVisibility(View.INVISIBLE);
+                    }
+                });
+
+            }
+        });
+    }
+
     /*
         TODO    type传0是点击头像，1点击评论图片
      */
@@ -257,7 +311,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
     }
 }
 
-class GetChead extends AsyncTask<Object,Object,String>{
+class GetChead extends AsyncTask<Object,Object,String> {
 
     GetChead(int cid ,MeViewHolder helper,Context context){
         this.cid = cid;
@@ -306,6 +360,9 @@ class GetChead extends AsyncTask<Object,Object,String>{
 
         return null;
     }
+
+
+
 }
 
 
