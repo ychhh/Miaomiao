@@ -39,11 +39,9 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
 
     private EditText etPhone;
     private EditText etPwd;
-    private ImageView ivLogin;
     private ImageView ivEye;
     private ImageView ivClearPhone;
     private ImageView ivClearPwd;
-    private Button btnLoginProblems;
     private RadioButton rbAgree;
     private IPasswordLoginPresenter passwordLoginPresenter;
     private View popupView;
@@ -64,19 +62,16 @@ public class PasswordLoginActivity extends AppCompatActivity implements IPasswor
     private void findViews() {
         etPhone = findViewById(R.id.et_phone);
         etPwd = findViewById(R.id.et_pwd);
-        ivLogin = findViewById(R.id.iv_login);
         ivEye=findViewById(R.id.iv_eye);
         ivEye.setImageResource(R.drawable.eye_close);
         ivClearPhone=findViewById(R.id.iv_clearPhone);
         ivClearPwd=findViewById(R.id.iv_clearPwd);
-        btnLoginProblems = findViewById(R.id.btn_loginProblems);
         rbAgree = findViewById(R.id.rb_agree);
-
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_login:
+            case R.id.btn_login:
                 if (etPwd.getText().length() == 0 || etPhone.getText().length() == 0) {
                     Toast.makeText(this, "手机号或密码不能为空！", Toast.LENGTH_SHORT).show();
                 } else {

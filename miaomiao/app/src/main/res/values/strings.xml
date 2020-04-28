@@ -6,4 +6,5 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="title_activity_self_fragment">SelfFragment</string>
+    <string name="service">&lt;&lt;服务协议&gt;&gt;与&lt;&lt;隐私政策&gt;&gt;</string>
 </resources>

@@ -19,7 +19,7 @@
             android:layout_height="30dp"
             android:layout_marginBottom="20dp"
             android:onClick="onClicked"
-            android:src="@drawable/left" />
+            android:src="@drawable/ic_back_arrow" />
 
         <TextView
             android:layout_width="match_parent"

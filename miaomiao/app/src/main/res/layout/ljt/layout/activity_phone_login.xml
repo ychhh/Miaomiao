@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.8"
     android:background="@color/bgcolor"
     android:orientation="vertical"
     android:padding="10dp">
@@ -16,7 +15,7 @@
             android:layout_width="30dp"
             android:layout_height="45dp"
             android:onClick="onClicked"
-            android:src="@drawable/left" />
+            android:src="@drawable/ic_back_arrow" />
 
         <Button
             android:id="@+id/btn_pwdLogin"
@@ -27,7 +26,7 @@
             android:background="#00000000"
             android:onClick="onClicked"
             android:text="密码登录"
-            android:textColor="#fff"
+            android:textColor="@color/mainTextColor"
             android:textSize="22sp" />
     </RelativeLayout>
 
@@ -36,16 +35,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:layout_weight="1"
+        android:layout_weight="0.6"
         android:text="手机号登录"
-        android:textColor="@color/white"
+        android:textColor="@color/mainTextColor"
         android:textSize="28sp"
         android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginBottom="20dp"
+        android:layout_weight="0.8">
 
         <EditText
             android:id="@+id/et_phone"
@@ -54,6 +54,8 @@
             android:hint="请输入手机号"
             android:inputType="phone"
             android:paddingRight="40dp"
+            android:textColor="@color/mainTextColor"
+            android:textColorHint="#ccd"
             android:textSize="23sp" />
 
         <ImageView
@@ -68,7 +70,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="0.8"
         android:orientation="horizontal">
 
         <EditText
@@ -79,6 +82,8 @@
             android:layout_marginRight="6dp"
             android:layout_weight="3"
             android:hint="请输入验证码"
+            android:textColor="@color/mainTextColor"
+            android:textColorHint="#ccd"
             android:textSize="23sp" />
 
         <Button
@@ -86,22 +91,38 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@color/bgcolor"
-            android:hint="获取验证码"
+            android:background="#F76968"
             android:onClick="onClicked"
+            android:text="获取验证码"
             android:textColor="#fff"
             android:textSize="18sp" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_login"
-        android:layout_width="60dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:layout_weight="3"
-        android:onClick="onClicked"
-        android:src="@drawable/login_main" />
+        android:layout_weight="2.1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="温馨提示：未注册喵喵应用的账号，登录后将自动注册"
+            android:textColor="@color/bggray" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="top"
+            android:layout_margin="20dp"
+            android:background="#F76968"
+            android:onClick="onClicked"
+            android:text="登录"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_loginProblems"
@@ -113,7 +134,7 @@
         android:onClick="onClicked"
         android:padding="10dp"
         android:text="登录遇到问题"
-        android:textColor="#99ffff"
+        android:textColor="#991CAA"
         android:textSize="18sp" />
 
     <RelativeLayout
@@ -130,7 +151,8 @@
             <RadioButton
                 android:id="@+id/rb_agree"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/mainTextColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -138,7 +160,7 @@
                 android:background="#00000000"
                 android:gravity="center_vertical"
                 android:text="我已阅读并同意"
-                android:textColor="#fff"
+                android:textColor="@color/mainTextColor"
                 android:textSize="18sp" />
 
             <Button
@@ -148,9 +170,55 @@
                 android:background="#00000000"
                 android:gravity="center_vertical"
                 android:onClick="onClicked"
-                android:text="服务协议与隐私政策"
+                android:text="@string/service"
                 android:textColor="#00f"
                 android:textSize="18sp" />
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bggray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="第三方登录"
+            android:textColor="@color/bggray"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/tb_qq" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/tb_wx" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/tb_wb" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

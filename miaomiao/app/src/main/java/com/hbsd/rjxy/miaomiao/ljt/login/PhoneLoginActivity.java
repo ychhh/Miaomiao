@@ -39,9 +39,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     private EditText etPhone;
     private EditText etPhoneCode;
     private Button btnGetPhoneCode;
-    private ImageView ivLogin;
     private ImageView ivClear;
-    private Button btnLoginProblems;
     private RadioButton rbAgree;
     public EventHandler eh; //事件接收器
     private TimeCount mTimeCount;//计时器
@@ -62,8 +60,6 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
         etPhone = findViewById(R.id.et_phone);
         etPhoneCode = findViewById(R.id.et_phoneCode);
         btnGetPhoneCode = findViewById(R.id.btn_getPhoneCode);
-        ivLogin = findViewById(R.id.iv_login);
-        btnLoginProblems = findViewById(R.id.btn_loginProblems);
         rbAgree = findViewById(R.id.rb_agree);
         mTimeCount = new TimeCount(60000, 1000);
         ivClear=findViewById(R.id.iv_clear);
@@ -144,7 +140,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
                     Toast.makeText(PhoneLoginActivity.this, "请输入手机号码", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.iv_login://登录
+            case R.id.btn_login://登录
                 if (!etPhone.getText().toString().trim().equals("")){
                     if (checkTel(etPhone.getText().toString().trim())) {
                         if (!etPhoneCode.getText().toString().trim().equals("")) {

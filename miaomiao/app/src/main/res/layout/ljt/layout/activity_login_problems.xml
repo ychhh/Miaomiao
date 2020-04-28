@@ -12,7 +12,7 @@
         android:layout_height="30dp"
         android:layout_marginBottom="15dp"
         android:onClick="onClicked"
-        android:src="@drawable/left" />
+        android:src="@drawable/ic_back_arrow" />
 
     <Button
         android:id="@+id/btn_problem1"
