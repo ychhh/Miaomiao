@@ -98,7 +98,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         /*控件*/
         btn_back = findViewById(R.id.self_back);
         btn_commit = findViewById(R.id.self_reCommit);
-        iv_reImg = findViewById(R.id.iv_reImg);
+
         tx_reName = findViewById(R.id.self_reName);
         tx_reSbp = findViewById(R.id.self_reSbp);
         tx_reSex = findViewById(R.id.self_reSex);
@@ -162,10 +162,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                     isEditedHead = true;
                     askPermission();
                     break;
-                case R.id.iv_reImg:
-                    isEditedHead = true;
-                    askPermission();
-                    break;
+
             }
         }
     }

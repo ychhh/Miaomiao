@@ -20,6 +20,7 @@ import com.hbsd.rjxy.miaomiao.ych.view.MyCatActivity;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.view.IMainView;
 
 
+import com.hbsd.rjxy.miaomiao.zsh.setting.MyselfFragment;
 import com.hbsd.rjxy.miaomiao.zsh.setting.SelfFragment;
 
 
@@ -28,7 +29,7 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener {
 
     private FragmentTabHost  tabHost = null;
-    private Class[] tabClass = {MainFragment.class,Fragment2.class, MyCatFragment.class, Fragment2.class, SelfFragment.class};
+    private Class[] tabClass = {MainFragment.class,Fragment2.class, MyCatFragment.class, Fragment2.class, MyselfFragment.class};
     private ImageView iv_tabSpec = null;
     private boolean secondDown = false; //两次返回键退出
 
