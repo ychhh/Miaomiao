@@ -244,25 +244,25 @@ public class MyselfFragment extends Fragment implements SelfMainView {
         if(user.getUserName()!=null){
             tx_userName.setText(user.getUserName());
         }
-        if(!user.gethPath().equals("null")){
-            String imgUrl=user.gethPath();
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                        RequestOptions options = new RequestOptions().circleCrop();
-                        Glide.with(getActivity()).load(user.gethPath()).apply(options).into(img_userHead);
-
-
-                }
-            });
-
-
-
-
-    }
-        else{
-            user.sethPath("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
-    }
+//        if(!user.gethPath().equals("null")){
+//            String imgUrl=user.gethPath();
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                        RequestOptions options = new RequestOptions().circleCrop();
+//                        Glide.with(getActivity()).load(user.gethPath()).apply(options).into(img_userHead);
+//
+//
+//                }
+//            });
+//
+//
+//
+//
+//    }
+//        else{
+//            user.sethPath("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
+//    }
 
     }
 }
