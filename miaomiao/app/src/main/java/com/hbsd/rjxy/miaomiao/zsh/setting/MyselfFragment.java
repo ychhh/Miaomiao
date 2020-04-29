@@ -81,7 +81,7 @@ public class MyselfFragment extends Fragment implements SelfMainView {
         MyselfFragment fragment = new MyselfFragment();
 
         user.setUserName("it is ok");
-        user.setUserId(151);
+        user.setId(151);
         return fragment;
     }
 
@@ -229,14 +229,14 @@ public class MyselfFragment extends Fragment implements SelfMainView {
         /*记得修改数据，这块目前是模拟数据*/
         //user=getUserPresenterCompl.getUser(user.getUserId());
         user = new User();
-        user.setUserId(uid);
+        user.setId(uid);
         user =new User();
         user.setUserName("ok");
-        user.setUserId(25);
+        user.setId(25);
         user.setUserSex("女");
-        user.setUserCatCount(0);
+        user.setCatCount(0);
         user.setUserIntro("我是风儿你是沙");
-        user.sethPath("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
+        user.setHeadId("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
     }
     @Override
     public void initUserView(User user) {
