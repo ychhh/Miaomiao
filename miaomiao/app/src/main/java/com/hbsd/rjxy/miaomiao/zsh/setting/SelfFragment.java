@@ -128,7 +128,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
             startActivity(intent);
         }
         user = new User();
-        user.setUserId(uid);
+        user.setId(uid);
 
         /*初始化UserData*/
         initData();
@@ -147,7 +147,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
     }
 
     public void initData() {
-        getUserPresenterCompl.getUser(user.getUserId());
+        getUserPresenterCompl.getUser(user.getId());
 
     }
 
@@ -157,20 +157,20 @@ public class SelfFragment extends Fragment implements SelfMainView {
     public void initUserView(User user0) {
 
         user=user0;
-        Log.e("user",user.getUserId()+"和"+user.getUserName()+user.getUserIntro()+user.getUserSex());
+        Log.e("user",user.getId()+"和"+user.getUserName()+user.getUserIntro()+user.getUserSex());
         if(tx_intro!=null){
             Log.e("user",user.getUserName()+user.getUserIntro()+user.getUserSex());
             tx_intro.setText(user.getUserName());
 
         }
-        Log.e("打印userPath",user.gethPath());
-        if(!user.gethPath().equals("null")){
-            imgUrl=user.gethPath();
+        Log.e("打印userPath",user.getHeadId());
+        if(!user.getHeadId().equals("null")){
+            imgUrl=user.getHeadId();
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                         RequestOptions options = new RequestOptions().circleCrop();
-                        Glide.with(getActivity()).load(user.gethPath()).apply(options).into(imgView);
+                        Glide.with(getActivity()).load(user.getHeadId()).apply(options).into(imgView);
 
 
                 }
@@ -181,7 +181,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     }
         else{
-            user.sethPath("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
+            user.setHeadId("http://q20jftoug.bkt.clouddn.com/23c425fd06e548b0850712dbc4dee741.jpeg");
     }
 
 
@@ -240,9 +240,9 @@ public class SelfFragment extends Fragment implements SelfMainView {
                     break;
                 }
                 case R.id.btn_editF: {
-                    Log.e("btn_edit", user.getUserId() + "");
+                    Log.e("btn_edit", user.getId() + "");
                     /*如果未登录，则跳到登录界面*/
-                    if ((user.getUserId() + "").equals("0")) {
+                    if ((user.getId() + "").equals("0")) {
                         Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                         startActivity(intent);
                     }
@@ -260,13 +260,14 @@ public class SelfFragment extends Fragment implements SelfMainView {
                 }
                 case R.id.self_order: {
                     /*如果未登录，则跳到登录界面*/
-                    if ((user.getUserId() + "").equals("0")) {
+                    if ((user.getId() + "").equals("0")) {
                         Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                         startActivity(intent);
                     }
                     else {
                         Intent intent = new Intent(getActivity(), FollowActivity.class);
-                        intent.putExtra("uid", user.getUserTel());
+//                        intent.putExtra("uid", user.getUserTel());//原 todo
+                        intent.putExtra("uid", user.getUserPhone());
                         startActivity(intent);
                     }
                     break;
@@ -277,7 +278,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
                         修改密码
                     * */
 
-                    if ((user.getUserId() + "").equals("0")) {
+                    if ((user.getId() + "").equals("0")) {
                         /*如果用户处于非登录*/
                         Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                         startActivity(intent);
@@ -326,8 +327,8 @@ public class SelfFragment extends Fragment implements SelfMainView {
             String qiNiuImgPath="http://"+Constant.QINIU_URL+"/"+jsonObject.getString("newHpath");
             imgUrl=qiNiuImgPath;
             /*Test*/
-            user.sethPath(imgUrl);
-            Log.e("修改回来之后的user",user.getUserName()+user.gethPath());
+            user.setHeadId(imgUrl);
+            Log.e("修改回来之后的user",user.getUserName()+user.getHeadId());
             Log.e("头像的位置",qiNiuImgPath);
 
         } catch (JSONException e) {
@@ -347,7 +348,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //根据行号判断所选为哪个item
-            if (user.getUserId() == 0) {
+            if (user.getId() == 0) {
 
                 Intent intent = new Intent(getActivity(), PhoneLoginActivity.class);
                 startActivity(intent);
@@ -364,11 +365,11 @@ public class SelfFragment extends Fragment implements SelfMainView {
                         break;
                     case 1:
                         Intent intent = new Intent(getActivity(), FollowActivity.class);
-                        intent.putExtra("uid", user.getUserTel());
+                        intent.putExtra("uid", user.getUserPhone());
                         startActivity(intent);
                         break;
                     case 2: {
-                        if ((user.getUserId() + "").equals("0")) {
+                        if ((user.getId() + "").equals("0")) {
                             /*如果用户处于非登录*/
                             Intent intent2 = new Intent(getActivity(), PhoneLoginActivity.class);
                             startActivity(intent2);

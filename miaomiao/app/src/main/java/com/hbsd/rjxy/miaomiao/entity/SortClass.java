@@ -9,7 +9,7 @@ public class SortClass implements Comparator {
         Comment c1 = (Comment)o1;
         Comment c2 = (Comment)o2;
 
-        int flag = c2.getPublishTime().compareTo(c1.getPublishTime());
+        int flag = c2.getCreateTime().compareTo(c1.getCreateTime());
         return flag;
     }
 }

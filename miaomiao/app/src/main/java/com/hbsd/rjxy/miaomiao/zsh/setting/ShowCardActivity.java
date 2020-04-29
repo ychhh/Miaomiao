@@ -36,7 +36,7 @@ public class ShowCardActivity extends AppCompatActivity implements ShowCardView 
         String str=intent.getStringExtra("user");
         user=gson.fromJson(str,User.class);
 
-        String imgUrl=user.gethPath();
+        String imgUrl=user.getHeadId();
 
 
         initData();
@@ -68,9 +68,9 @@ public class ShowCardActivity extends AppCompatActivity implements ShowCardView 
 
         tx_intro.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
-        tx_id.setText(user.getUserId()+"");
+        tx_id.setText(user.getHeadId()+"");
         tx_sex.setText(user.getUserSex());
         RequestOptions options = new RequestOptions().circleCrop();
-        Glide.with(this).load(user.gethPath()).apply(options).into(imageView);
+        Glide.with(this).load(user.getHeadId()).apply(options).into(imageView);
     }
 }

@@ -109,7 +109,7 @@ public class EditPwdWithOldActivity extends AppCompatActivity implements EditPwd
                 if (confirmPwd.equals(newPwd)) {
                     Log.e("editPwdWithOldActivity","两次密码一致");
                     editPwdPresenterCompl = new EditPwdPresenterCompl(EditPwdWithOldActivity.this);
-                    editPwdPresenterCompl.editPwdWithOld(user.getUserId(), oldPwd, newPwd);
+                    editPwdPresenterCompl.editPwdWithOld(user.getId(), oldPwd, newPwd);
                 } else {
                     Toast.makeText(EditPwdWithOldActivity.this, "确认密码两次输入不一致", Toast.LENGTH_SHORT).show();
                 }

@@ -1,9 +1,6 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
 
-
-
-
 public class RecordLikes {
 
 

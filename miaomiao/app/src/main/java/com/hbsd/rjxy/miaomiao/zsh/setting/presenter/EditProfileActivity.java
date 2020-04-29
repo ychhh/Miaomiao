@@ -133,7 +133,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                         //Log.e("读取到当下想修改的用户名为",newName);
                         JSONObject obj=new JSONObject();
                         try {
-                            obj.put("uid",user.getUserId());
+                            obj.put("uid",user.getId());
                             obj.put("newName",newName);
                             obj.put("newIntro",newsbp);
                             obj.put("newSex",newSex);

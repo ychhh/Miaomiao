@@ -396,8 +396,8 @@ public class CommentFragment extends Fragment {
             isPublishing = false;
         }else if("publishCommentSuccess".equals(eventInfo.getContentString())){
             //我要修改时间和coid
-            commentList.get(0).setCoid(Integer.parseInt(eventInfo.getContentMap().get("coid").toString()));
-            commentList.get(0).setPublishTime(eventInfo.getContentMap().get("publishTime").toString());
+            commentList.get(0).setId(Integer.parseInt(eventInfo.getContentMap().get("coid").toString()));
+            commentList.get(0).setCreateTime(eventInfo.getContentMap().get("publishTime").toString());
             commentAdapter.notifyDataSetChanged();
             //解锁
             isPublishing = false;
@@ -490,16 +490,16 @@ public class CommentFragment extends Fragment {
                         }else{
                             //发表评论
                             Comment comment = new Comment();
-                            comment.setMiid(miid);
-                            comment.setUid(Integer.parseInt(uid));
-                            comment.setCocontent(etComment.getText().toString());
-                            comment.setColike(0);
-                            comment.setCostatus(0);
-                            comment.setUhead(sp.getString("hpath",""));
-                            comment.setUname(sp.getString("username",""));
+                            comment.setMultiInfoId(miid);
+                            comment.setUserId(Integer.parseInt(uid));
+                            comment.setCommentContent(etComment.getText().toString());
+                            comment.setCommentLike(0);
+                            comment.setDeleted(0);
+                            comment.setUserHead(sp.getString("hpath",""));
+                            comment.setUserName(sp.getString("username",""));
                             //时间应该放在服务器处理
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
-                            comment.setPublishTime(simpleDateFormat.format(System.currentTimeMillis()));
+                            comment.setCreateTime(simpleDateFormat.format(System.currentTimeMillis()));
                             List<View> views = new ArrayList<>();
                             views.add(v);
                             HideKeyBoard.hideSoftKeyboard(getContext(),views);
@@ -527,8 +527,8 @@ public class CommentFragment extends Fragment {
                                     EventInfo eventInfo = new EventInfo();
                                     eventInfo.setContentString("publishCommentSuccess");
                                     Map<String,String> map = new HashMap<>();
-                                    map.put("coid",temp.getCoid()+"");
-                                    map.put("publishTime",temp.getPublishTime());
+                                    map.put("coid",temp.getId()+"");
+                                    map.put("publishTime",temp.getCreateTime().toString());
                                     eventInfo.setContentMap(map);
                                     EventBus.getDefault().post(eventInfo);
                                 }

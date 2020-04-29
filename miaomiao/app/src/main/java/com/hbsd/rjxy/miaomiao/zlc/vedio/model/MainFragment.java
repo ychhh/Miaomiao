@@ -24,9 +24,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
-import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.MultiInfor;
 
-import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.entity.SubscriptionRecord;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.utils.StatusBarUtil;
@@ -79,8 +79,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
-    private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
-    private List<Subscription_record> subscriptionRecords;
+    private List<MultiInfor> videoList;         //这里只显示视频，所以是videoList
+    private List<SubscriptionRecord> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -180,7 +180,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 subscriptionRecords =
-                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                        gson.fromJson(response.body().string(),new TypeToken<List<SubscriptionRecord>>(){}.getType());
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
 
                 askforRecommend();
@@ -228,9 +228,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     //这个要替换当前的这些视频
-                    List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                    List<MultiInfor> videoList = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
                     Log.e("refresh",""+videoList.toString());
-                    EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                    EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                     videoEvent.setContentList(videoList);
                     videoEvent.setContentString("refreshVideoList");
                     EventBus.getDefault().post(videoEvent);
@@ -282,8 +282,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
-                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                List<MultiInfor> videoList = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
+                EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                 if(contentType == 1 && RECOMMEND_PAGE_DEFAULT == 1){
                     RECOMMEND_PAGE_DEFAULT += 1;
                 }
@@ -435,7 +435,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     //订阅事件
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getVideoList(EventInfo<String,String,Multi_info> videoEvent){
+    public void getVideoList(EventInfo<String,String,MultiInfor> videoEvent){
         if(videoEvent.getContentString().equals("videoInit")){
             if(videoEvent.isAvailable()){
                 /**
@@ -443,7 +443,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  *      如果当前视频列表已经存在数据
                  */
                 if(this.videoList.size() != 0){
-                    for(Multi_info multi_info : videoEvent.getContentList()){
+                    for(MultiInfor multi_info : videoEvent.getContentList()){
                         this.videoList.add(multi_info);
                     }
                 }else{
@@ -484,7 +484,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             }
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
-            for(Multi_info multi_info : videoEvent.getContentList()){
+            for(MultiInfor multi_info : videoEvent.getContentList()){
                 this.videoList.add(multi_info);
             }
             adapter.notifyItemChanged(0);
@@ -513,7 +513,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             setTextViewColor(tv_subscribed,tv_recommend);
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
-            for(Multi_info multi_info : videoEvent.getContentList()){
+            for(MultiInfor multi_info : videoEvent.getContentList()){
                 this.videoList.add(multi_info);
             }
             adapter.notifyItemChanged(0);
@@ -534,7 +534,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
     @Override
-    public List<Multi_info> initData(List<Multi_info> videoList) {
+    public List<MultiInfor> initData(List<MultiInfor> videoList) {
         //测试
         if(videoList == null){
             videoList = new ArrayList<>();
@@ -688,8 +688,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //这个要替换当前的这些视频
-                List<Multi_info> videoL = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
-                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                List<MultiInfor> videoL = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
+                EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                 Log.e("subscribeInit",""+videoL.toString());
                 videoEvent.setContentList(videoL);
                 videoEvent.setContentString("subscribeInit");

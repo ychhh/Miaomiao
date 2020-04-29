@@ -137,20 +137,20 @@ public class AddCatActivity extends Activity {
                 Map map=new HashMap();
                 String breed= et_breed.getText().toString();
                 Log.e(TAG, "onClick: "+breed );
-                cat.setCbreed(breed);
-                cat.setUid(1);
-                cat.setCfood(et_food.getText().toString());
-                cat.setCname(et_name.getText().toString());
-                cat.setCintro(et_intro.getText().toString());
-                cat.setCsex(et_sex.getText().toString());
-                cat.setCtoy(et_toy.getText().toString());
+                cat.setBreedId(breed);
+                cat.setUserId(1);
+                cat.setCatFood(et_food.getText().toString());
+                cat.setCatName(et_name.getText().toString());
+                cat.setCatIntro(et_intro.getText().toString());
+                cat.setCatSex(et_sex.getText().toString());
+                cat.setCatToy(et_toy.getText().toString());
                 SimpleDateFormat simpleDateFormat = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     simpleDateFormat = new SimpleDateFormat("yyyy年mm月dd");
                 }
                 try {
                     Date date = simpleDateFormat.parse(tv_meetday.getText().toString());
-                    cat.setCbirthday( date);
+                    cat.setCatBirthday( date);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

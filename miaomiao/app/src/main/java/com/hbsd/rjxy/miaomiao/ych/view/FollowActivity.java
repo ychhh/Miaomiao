@@ -145,15 +145,15 @@ public class FollowActivity extends Activity {
             }else {
                 viewHolder= (ViewHolder) convertView.getTag();
             }
-            viewHolder.cat_name.setText(cat.getCname());
-            viewHolder.cat_intro.setText(cat.getCintro());
-            Glide.with(context).load(cat.getHpath()).into(viewHolder.cat_head);
+            viewHolder.cat_name.setText(cat.getCatName());
+            viewHolder.cat_intro.setText(cat.getCatIntro());
+            Glide.with(context).load(cat.getCatHead()).into(viewHolder.cat_head);
             viewHolder.cat_head.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     Intent intent=new Intent(FollowActivity.this, CatFCActivity.class);
-                    intent.putExtra("uid",cat.getCid());
+                    intent.putExtra("uid",cat.getId());//todo  uid?cid?
                     startActivity(intent);
 
                 }

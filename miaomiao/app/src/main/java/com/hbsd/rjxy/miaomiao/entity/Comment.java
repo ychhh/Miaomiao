@@ -1,104 +1,128 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
+import java.util.Date;
+
+/**
+ * @Description  
+ * @Author  
+ * @Date 2020-04-22 
+ */
 
 
 public class Comment {
 
-    private int coid;
-    private int miid;
-    private int colike;
-    private int costatus;
-    private int uid;
-    private String cocontent;
-    private String publishTime;
-    private String uhead;
-    private String uname;
 
-    public int getCoid() {
-        return coid;
-    }
+	private Integer id;
 
-    public void setCoid(int coid) {
-        this.coid = coid;
-    }
+	private Integer multiInfoId;
 
-    public int getMiid() {
-        return miid;
-    }
+	private Integer commentLike;
 
-    public void setMiid(int miid) {
-        this.miid = miid;
-    }
+	private Integer userId;
 
-    public int getColike() {
-        return colike;
-    }
+	private Integer version;
 
-    public void setColike(int colike) {
-        this.colike = colike;
-    }
+	private Integer deleted;
 
-    public int getCostatus() {
-        return costatus;
-    }
+	private Date createTime;
 
-    public void setCostatus(int costatus) {
-        this.costatus = costatus;
-    }
+	private Date updateTime;
 
-    public int getUid() {
-        return uid;
-    }
+   	private String commentContent;
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
+	private String userHead;
 
-    public String getCocontent() {
-        return cocontent;
-    }
+	private String userName;
 
-    public void setCocontent(String cocontent) {
-        this.cocontent = cocontent;
-    }
+   	public void setCreateTime(String creatTime){
+   		this.createTime=createTime;
+	}
 
-    public String getPublishTime() {
-        return publishTime;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setPublishTime(String publishTime) {
-        this.publishTime = publishTime;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
+	public Integer getMultiInfoId() {
+		return multiInfoId;
+	}
 
-    public String getUhead() {
-        return uhead;
-    }
+	public void setMultiInfoId(Integer multiInfoId) {
+		this.multiInfoId = multiInfoId;
+	}
 
-    public void setUhead(String uhead) {
-        this.uhead = uhead;
-    }
+	public Integer getCommentLike() {
+		return commentLike;
+	}
 
-    public String getUname() {
-        return uname;
-    }
+	public void setCommentLike(Integer commentLike) {
+		this.commentLike = commentLike;
+	}
 
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "coid=" + coid +
-                ", miid=" + miid +
-                ", colike=" + colike +
-                ", costatus=" + costatus +
-                ", uid=" + uid +
-                ", cocontent='" + cocontent + '\'' +
-                ", publishTime='" + publishTime + '\'' +
-                ", uhead='" + uhead + '\'' +
-                ", uname='" + uname + '\'' +
-                '}';
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getCommentContent() {
+		return commentContent;
+	}
+
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+
+	public String getUserHead() {
+		return userHead;
+	}
+
+	public void setUserHead(String userHead) {
+		this.userHead = userHead;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }
