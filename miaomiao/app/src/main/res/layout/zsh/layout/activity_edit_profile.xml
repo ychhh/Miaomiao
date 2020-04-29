@@ -30,11 +30,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_reImg"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/pre" />
+
 
         <TextView
             android:id="@+id/tv_changeHead"

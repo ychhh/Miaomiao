@@ -36,13 +36,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center">
-                <ImageView
-                    android:id="@+id/img_head"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/pre"
 
-                    />
                 <TextView
                     android:id="@+id/self_main_intro"
                     android:layout_marginTop="10dp"
