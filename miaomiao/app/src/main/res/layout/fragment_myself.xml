@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".zsh.setting.MyselfFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="#ccc"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_addFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/zshaddfri"
+                    />
+
+                <Space
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/zshsetting" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_userHead"
+                    android:layout_width="103dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/zshpren" />
+                <TextView
+                    android:id="@+id/tx_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="用户八嘎呀路"
+                    android:textColor="#f00" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+                <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tx_fsNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="粉丝"
+                        android:textColor="#000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tx_gzNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="0"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="关注"
+                    android:textColor="#000" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tx_mbNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="0"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="喵币"
+                    android:textColor="#000" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!--我的内容-->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshbofang"
+                    />
+                <TextView
+
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的内容"/>
+
+                <TextView
+                    android:id="@+id/tx_wdzy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="150dp"
+                    android:text="点击查看主页内容>"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--我的话题圈-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshjinghao"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的话题圈"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--我的动态-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshdongtai"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的动态"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--我的视频-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshkb"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的视频"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--钱包-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshkb"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的钱包"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--我的猫-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshwdm"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的猫"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--我的评论-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshwdpl"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的评论"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--主播个人中心-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshzbgrzx"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="主播个人中心"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--喵喵游戏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshyx"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="喵喵游戏"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--生活服务-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshshfw"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="生活服务"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--卡包-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshkb"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="卡包"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--邀请好友赚喵币-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshyqhy"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="邀请好友赚喵币"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--绑定邀请码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshbdyqm"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="绑定邀请码"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--反馈和帮助-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zshfk"
+                    />
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:layout_marginLeft="15dp"
+                    android:text="反馈和帮助"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="250dp"
+                    android:text=">"
+                    android:textColor="#888" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+</LinearLayout>
+</FrameLayout>
