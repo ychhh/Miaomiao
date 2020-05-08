@@ -36,6 +36,7 @@ public class Constant {
 
     public static final String PUBLISH_SP_NAME = "PUBLISH_PREFERENCE";  //草稿，以及其他和用户发布相关的sharepreference
     public static final String LOGIN_SP_NAME="loginInfo";//与登录有关的sp,存储用户id（uid），是否有密码（hasPassword）
+                                                        //若为QQ授权登录，存储的是qqOpenid，用户名（username），头像地址（userHeadPath），性别（gender）
     public static final String HAS_PASSWORD="hasPassword";// 登录后用户是否有密码，true：有，false：无
     public static final String LOGIN_USERNAME="username";//登录后用户的用户名
     public static final String LOGIN_HEADPATH="userHeadPath";//登录后用户的头像地址无地址为"null"

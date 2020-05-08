@@ -202,21 +202,27 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/login_qq"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="32dp"
+                android:layout_weight="1"
+                android:onClick="onClicked"
                 android:src="@drawable/tb_qq" />
 
             <ImageView
+                android:id="@+id/login_wx"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="32dp"
+                android:layout_weight="1"
+                android:onClick="onClicked"
                 android:src="@drawable/tb_wx" />
 
             <ImageView
+                android:id="@+id/login_wb"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="32dp"
+                android:layout_weight="1"
+                android:onClick="onClicked"
                 android:src="@drawable/tb_wb" />
         </LinearLayout>
     </LinearLayout>

@@ -1,5 +1,6 @@
 package com.hbsd.rjxy.miaomiao.ljt.login;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -22,6 +23,12 @@ import com.hbsd.rjxy.miaomiao.ljt.login.view.IPhoneLoginView;
 import com.hbsd.rjxy.miaomiao.utils.Constant;
 import com.hbsd.rjxy.miaomiao.utils.EditTextUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.MainActivity;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,10 +52,18 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
     private TimeCount mTimeCount;//计时器
     private IPhoneLoginPresenter iPhoneLoginPresenter;
 
+    private static final String TAG = "PhoneLoginActivity";
+    private static final String APP_ID = "1110459446";//官方获取的APPID
+    private Tencent mTencent;
+    private UserInfo mUserInfo;
+    private BaseUiListener mIUiListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
+        //传入参数APPID和全局Context上下文
+        mTencent = Tencent.createInstance(APP_ID,PhoneLoginActivity.this.getApplicationContext());
         iPhoneLoginPresenter=new PhoneLoginPresenterCompl(this);
         init();
         findViews();
@@ -163,6 +178,14 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
             case R.id.iv_rtn:
                 finish();
                 break;
+            case R.id.login_qq:
+                /**通过这句代码，SDK实现了QQ的登录，这个方法有三个参数，第一个参数是context上下文，第二个参数SCOPO 是一个String类型的字符串，表示一些权限
+                 官方文档中的说明：应用需要获得哪些API的权限，由“，”分隔。例如：SCOPE = “get_user_info,add_t”；所有权限用“all”
+                 第三个参数，是一个事件监听器，IUiListener接口的实例，这里用的是该接口的实现类 */
+                mIUiListener = new BaseUiListener();
+                //all表示获取所有权限
+                mTencent.login(PhoneLoginActivity.this, "all", mIUiListener);
+                break;
 
         }
     }
@@ -233,6 +256,93 @@ public class PhoneLoginActivity extends AppCompatActivity implements IPhoneLogin
             btnGetPhoneCode.setClickable(true);
             btnGetPhoneCode.setText("获取验证码");
         }
+    }
+
+    /**
+     * 自定义监听器实现IUiListener接口后，需要实现的3个方法
+     * onComplete完成 onError错误 onCancel取消
+     */
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object response) {
+            Toast.makeText(PhoneLoginActivity.this, "授权成功", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "response:" + response);
+            JSONObject obj = (JSONObject) response;
+            try {
+                String openID = obj.getString("openid");
+                String accessToken = obj.getString("access_token");
+                String expires = obj.getString("expires_in");
+                mTencent.setOpenId(openID);
+                mTencent.setAccessToken(accessToken, expires);
+                QQToken qqToken = mTencent.getQQToken();
+                mUserInfo = new UserInfo(getApplicationContext(), qqToken);
+                mUserInfo.getUserInfo(new IUiListener() {
+                    @Override
+                    public void onComplete(Object response) {
+                        //todo 用户qq授权登录成功之后，传到后台登录数据，拿到uid，存储qq相关信息
+                        Log.e(TAG, "登录成功" + response.toString());
+                        //QQ登录成功后将用户信息进行存储进行存储
+                        JSONObject object = (JSONObject) response;
+                        SharedPreferences sharedPreferences = getSharedPreferences(Constant.LOGIN_SP_NAME, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        try {
+                            editor.putString("qqOpenid", openID);
+                            String username=object.getString("nickname");
+                            editor.putString(Constant.LOGIN_USERNAME,username);
+                            String userHeadPath=object.getString("figureurl");
+                            editor.putString(Constant.LOGIN_HEADPATH,userHeadPath);
+                            String gender=object.getString("gender");
+                            editor.putString("gender",gender);
+                            Log.e("QQ用户登录的信息",openID+username+userHeadPath);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        editor.commit();
+                        SharedPreferences sp=getSharedPreferences(Constant.PUBLISH_SP_NAME,MODE_PRIVATE);
+                        sp.edit().putString(Constant.REMIND_PUBLISH_ONCE,"NEEDREMIND").commit();
+                        Intent intent=new Intent();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setClass(PhoneLoginActivity.this, MainActivity.class);
+                        startActivity(intent); //页面跳转
+                    }
+
+                    @Override
+                    public void onError(UiError uiError) {
+                        Log.e(TAG, "登录失败" + uiError.toString());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.e(TAG, "登录取消");
+
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            Toast.makeText(PhoneLoginActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onCancel() {
+            Toast.makeText(PhoneLoginActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, mIUiListener);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class User {
 
 	private Date createTime;
 
-    private String qqNum;
+    private String qqOpenid;
 
     public Integer getId() {
         return id;
@@ -163,11 +163,11 @@ public class User {
         this.createTime = createTime;
     }
 
-    public String getQqNum() {
-        return qqNum;
+    public String getQqOpenid() {
+        return qqOpenid;
     }
 
-    public void setQqNum(String qqNum) {
-        this.qqNum = qqNum;
+    public void setQqOpenid(String qqOpenid) {
+        this.qqOpenid = qqOpenid;
     }
 }
