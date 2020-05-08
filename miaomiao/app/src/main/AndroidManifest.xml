@@ -59,8 +59,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>>
-        <activity android:name=".ljt.login.ShowServiceActivity" />
+        </activity>
+        <activity android:name=".ljt.login.ShowServiceActivity"/>
         <activity android:name=".ljt.login.PasswordLoginActivity" />
         <activity android:name=".ljt.login.ShowProblemActivity" />
         <activity android:name=".ljt.login.LoginProblemsActivity" />
