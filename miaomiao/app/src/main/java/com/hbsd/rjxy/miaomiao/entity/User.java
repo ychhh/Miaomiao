@@ -41,6 +41,8 @@ public class User {
 
 	private Date createTime;
 
+    private String qqNum;
+
     public Integer getId() {
         return id;
     }
@@ -159,5 +161,13 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getQqNum() {
+        return qqNum;
+    }
+
+    public void setQqNum(String qqNum) {
+        this.qqNum = qqNum;
     }
 }

@@ -62,7 +62,8 @@ public class MyCatFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getActivity(), R.layout.activity_my_cat, null);
+        //View view = View.inflate(getActivity(), R.layout.activity_my_cat, null);//todo ljt更改
+        View view=inflater.inflate(R.layout.activity_my_cat, container, false);
         recyclerView = view.findViewById(R.id.recycler);
         btn_addcat=view.findViewById(R.id.btn_addc);
         map1.put("uid", "1");

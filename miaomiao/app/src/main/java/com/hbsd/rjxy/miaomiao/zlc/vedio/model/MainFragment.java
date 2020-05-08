@@ -59,6 +59,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_SUBSCRIBE_VIDEO_LIST;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
@@ -123,7 +124,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     (1)判断是否是登录的
              */
 
-            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
             uid = sp.getString("uid","default");
             if("default".equals(uid)){
                 //没登录，不去请求订阅列表
@@ -151,7 +152,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                 String uid = sp.getString("uid","default");
                 if("default".equals(uid)){
                     askforRefreshVideoList(null);
@@ -260,7 +261,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 jo.put("page",RECOMMEND_PAGE_DEFAULT);
             }else{
                 jo.put("page",SUBSCRIBE_PAGE_DEFAULT);
-                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                 String uid = sp.getString("uid","1");
                 jo.put("uid",uid);
             }
@@ -562,7 +563,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  */
                 if(contentType != 0){
                     //当前不是订阅内容，判断是否登录
-                    SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                     String uid = sp.getString("uid","default");
                     if("default".equals(uid)){
                         //如果没有登录
@@ -570,6 +571,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     }else{
                         this.uid = uid;
                         Log.e("uid",""+this.uid);
+
                         //以后下面的内容放到else分支里，1改成unregist
                         //请求订阅的视频内容...
                         RECOMMEND_PAGE_DEFAULT -= 1;
