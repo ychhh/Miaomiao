@@ -3,6 +3,7 @@ package com.hbsd.rjxy.miaomiao.zlc.vedio.model;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.hbsd.rjxy.miaomiao.zsh.setting.MyselfFragment;
 import com.hbsd.rjxy.miaomiao.zsh.setting.SelfFragment;
 
 
+import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.TAB_STRING;
 
 public class MainActivity extends AppCompatActivity implements IMainView ,View.OnClickListener {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        clearLoginMsg();
 
         //初始化登录用户   如果未登陆过，传空，如果登陆过，根据id请求获取user信息，创建user实体
 
@@ -182,5 +186,13 @@ public class MainActivity extends AppCompatActivity implements IMainView ,View.O
 
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void clearLoginMsg(){
+        //todo ！！ 有需要的话记得清空登录信息
+        SharedPreferences sharedPreferences=getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
     }
 }

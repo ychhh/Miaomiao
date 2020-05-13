@@ -1,64 +1,62 @@
 package com.hbsd.rjxy.miaomiao.entity;
 
-
 import java.util.Date;
 
 /**
- *
- * user表的实体类
+ * @Description  
+ * @Author  
+ * @Date 2020-04-22 
  */
+
+
 public class User {
 
-    private int userId;
-    private String userTel;
-    private String userSex;
-    private String userPassword;
-    private String userName;
-    private String userIntro;
-    private String hPath;
-    private int isVip;
-    private int isAdmain;
-    private int bannedId;
-    private int userCatCount;
-    private Date userRegistTime;
-    private Date userLastLogin;
+	private Integer id;
 
-    public User() {
+	private String userPhone;
+
+	private String userSex;
+
+	private String userPwd;
+
+	private String userName;
+
+	private String userIntro;
+
+	private String headId;//此字段暂时存储头像位置
+
+	private Integer isVip;
+
+	private Integer isAdmin;
+
+	private Integer bannedId;
+
+	private Integer catCount;
+
+	private Integer version;
+
+	private Integer deleted;
+
+	private Date lastLogin;
+
+	private Date createTime;
+
+    private String qqOpenid;
+
+    public Integer getId() {
+        return id;
     }
 
-    public User(int userId, String userTel, String userSex, String userPassword,
-                String userName, String userIntro, String hPath, int isVip,
-                int isAdmain, int bannedId, int userCatCount, Date userRegistTime,
-                Date userLastLogin) {
-        this.userId = userId;
-        this.userTel = userTel;
-        this.userSex = userSex;
-        this.userPassword = userPassword;
-        this.userName = userName;
-        this.userIntro = userIntro;
-        this.hPath = hPath;
-        this.isVip = isVip;
-        this.isAdmain = isAdmain;
-        this.bannedId = bannedId;
-        this.userCatCount = userCatCount;
-        this.userRegistTime = userRegistTime;
-        this.userLastLogin = userLastLogin;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUserTel() {
-        return userTel;
-    }
-
-    public void setUserTel(String userTel) {
-        this.userTel = userTel;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     public String getUserSex() {
@@ -69,12 +67,12 @@ public class User {
         this.userSex = userSex;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getUserPwd() {
+        return userPwd;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setUserPwd(String userPwd) {
+        this.userPwd = userPwd;
     }
 
     public String getUserName() {
@@ -93,79 +91,83 @@ public class User {
         this.userIntro = userIntro;
     }
 
-
-    public String gethPath() {
-        return hPath;
+    public String getHeadId() {
+        return headId;
     }
 
-    public void sethPath(String hPath) {
-        this.hPath = hPath;
+    public void setHeadId(String headId) {
+        this.headId = headId;
     }
 
-    public int getIsVip() {
+    public Integer getIsVip() {
         return isVip;
     }
 
-    public void setIsVip(int isVip) {
+    public void setIsVip(Integer isVip) {
         this.isVip = isVip;
     }
 
-    public int getIsAdmain() {
-        return isAdmain;
+    public Integer getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setIsAdmain(int isAdmain) {
-        this.isAdmain = isAdmain;
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
-    public int getBannedId() {
+    public Integer getBannedId() {
         return bannedId;
     }
 
-    public void setBannedId(int bannedId) {
+    public void setBannedId(Integer bannedId) {
         this.bannedId = bannedId;
     }
 
-    public int getUserCatCount() {
-        return userCatCount;
+    public Integer getCatCount() {
+        return catCount;
     }
 
-    public void setUserCatCount(int userCatCount) {
-        this.userCatCount = userCatCount;
+    public void setCatCount(Integer catCount) {
+        this.catCount = catCount;
     }
 
-    public Date getUserRegistTime() {
-        return userRegistTime;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setUserRegistTime(Date userRegistTime) {
-        this.userRegistTime = userRegistTime;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
-    public Date getUserLastLogin() {
-        return userLastLogin;
+    public Integer getDeleted() {
+        return deleted;
     }
 
-    public void setUserLastLogin(Date userLastLogin) {
-        this.userLastLogin = userLastLogin;
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userTel='" + userTel + '\'' +
-                ", userSex='" + userSex + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userIntro='" + userIntro + '\'' +
-                ", hPath='" + hPath + '\'' +
-                ", isVip=" + isVip +
-                ", isAdmain=" + isAdmain +
-                ", bannedId=" + bannedId +
-                ", userCatCount=" + userCatCount +
-                ", userRegistTime=" + userRegistTime +
-                ", userLastLogin=" + userLastLogin +
-                '}';
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getQqOpenid() {
+        return qqOpenid;
+    }
+
+    public void setQqOpenid(String qqOpenid) {
+        this.qqOpenid = qqOpenid;
     }
 }

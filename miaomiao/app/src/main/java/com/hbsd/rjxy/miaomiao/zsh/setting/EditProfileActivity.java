@@ -119,7 +119,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         tx_reSbp.setText(user.getUserIntro());
         tx_reName.setText(user.getUserName());
         RequestOptions options = new RequestOptions().circleCrop();
-        Glide.with(this).load(user.gethPath()).apply(options).into(iv_reImg);
+        Glide.with(this).load(user.getHeadId()).apply(options).into(iv_reImg);
         editUserPresenterCompl = new EditUserPresenterCompl(this);
     }
 
@@ -174,7 +174,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         isPrepared = false;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("uid", user.getUserId());
+            jsonObject.put("uid", user.getHeadId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -306,7 +306,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     private void postEditMsg() {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("uid", user.getUserId());
+            obj.put("uid", user.getHeadId());
             obj.put("newName", tx_reName.getText().toString());
             obj.put("newIntro", tx_reSbp.getText().toString());
             obj.put("newSex", tx_reSex.getText().toString());

@@ -33,7 +33,7 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
-import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.MultiInfor;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.UploadUtils;
 import com.qiniu.android.http.ResponseInfo;
@@ -53,6 +53,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,7 +100,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private boolean needToUpload = false;   //是否需要上传
     private String path;
     private String coverPath;
-    private Multi_info multi_info;
+    private MultiInfor multi_info;
 
     private PopupWindow saveWindow;     //保存的popupwindow
     private PopupWindow exitWindow;     //退出编辑的popupwindow
@@ -182,7 +183,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             tvLog.setText("正在上传封面图");
         }
         if ("uploadFinish".equals(eventInfo.getContentString())) {
-            multi_info.setMpath((String) eventInfo.getContentMap().get("url"));
+            multi_info.setContentPath((String) eventInfo.getContentMap().get("url"));
             multi_info.setType(type);
 
             if(type == 1){
@@ -245,7 +246,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         }
         if("uploadCoverFinish".equals(eventInfo.getContentString())){
-            multi_info.setMcover((String) eventInfo.getContentMap().get("coverUrl"));
+            multi_info.setMultiInforCover((String) eventInfo.getContentMap().get("coverUrl"));
             tvLog.setText("上传成功");
             needToUpload = false;
             isUploadComplete = true;
@@ -308,11 +309,15 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     sp.edit().putBoolean("have_text_draft", false).commit();
                 }
                 multi_info.setType(type);
-                multi_info.setCid(1);
-                multi_info.setUid(1);
-                multi_info.setMcontent(etEdit.getText().toString());
+                multi_info.setCatId(1);
+                multi_info.setUserId(1);
+                multi_info.setMultiInforContent(etEdit.getText().toString());
                 SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-                multi_info.setMupload_time(sdf.format(System.currentTimeMillis()));
+                try {
+                    multi_info.setCreateTime(sdf.parse(sdf.format(System.currentTimeMillis())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 OkHttpUtils.getInstance().postJson(PUBLISH_URL_PUBLISH, gson.toJson(multi_info), new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -496,10 +501,10 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             //检查是否需要上传
             if (type == 2) {
                 //文本，直接转multi_info
-                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
+                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), MultiInfor.class);
             } else {
                 //文件，如果未上传完成，需要path
-                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), Multi_info.class);
+                multi_info = gson.fromJson((String) bundle.getSerializable("draftbody"), MultiInfor.class);
                 if (bundle.getSerializable("iscanceled").equals("true")) {
                     needToUpload = true;
                     path = (String) bundle.getSerializable("canceled_file_path");
@@ -513,7 +518,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
             }
             Log.e("草稿的multi_info", "" + multi_info.toString());
-            etEdit.setText(multi_info.getMcontent());
+            etEdit.setText(multi_info.getMultiInforContent());
         } else {
             /*
                 TODO ：   拿到uid  cid
@@ -525,7 +530,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             }
             needToUpload = true;
             isUploadComplete = false;
-            multi_info = new Multi_info();
+            multi_info = new MultiInfor();
 
             /*
                 TODO    :如果是视频的话，生成第一帧帧图的bitmap，然后转文件，上传7牛
@@ -754,9 +759,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 SharedPreferences sp = getSharedPreferences(PUBLISH_SP_NAME, MODE_PRIVATE);
                 if (type == 2) {
                     //设置uid，cid，发布日期不设置，文字内容mcontent，type
-                    multi_info.setCid(1);
-                    multi_info.setUid(1);
-                    multi_info.setMcontent(etEdit.getText().toString());
+                    multi_info.setCatId(1);
+                    multi_info.setUserId(1);
+                    multi_info.setMultiInforContent(etEdit.getText().toString());
                     sp.edit().putBoolean("have_text_draft", true).putString("textdraftbody", gson.toJson(multi_info)).commit();
                 } else {
                     /*
@@ -764,9 +769,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                      */
                     if (isUploadComplete && !needToUpload) {
                         //上传已经完成，url已经存进去了
-                        multi_info.setUid(1);
-                        multi_info.setCid(1);
-                        multi_info.setMcontent(etEdit.getText().toString());
+                        multi_info.setUserId(1);
+                        multi_info.setCatId(1);
+                        multi_info.setMultiInforContent(etEdit.getText().toString());
                         sp.edit().putBoolean("have_draft", true)
                                 .putBoolean("have_canceled_file", false)
                                 .putString("finished_file_path",path)
@@ -776,9 +781,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         //上传未完成，先取消上传
                         isCanceled = true;
                         multi_info.setType(type);
-                        multi_info.setUid(1);
-                        multi_info.setCid(1);
-                        multi_info.setMcontent(etEdit.getText().toString());
+                        multi_info.setUserId(1);
+                        multi_info.setCatId(1);
+                        multi_info.setMultiInforContent(etEdit.getText().toString());
                         sp.edit().putBoolean("have_draft", true)
                                 .putBoolean("have_canceled_file", true)
                                 .putString("canceled_file_path", path)

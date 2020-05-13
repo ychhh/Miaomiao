@@ -22,8 +22,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 
-import com.hbsd.rjxy.miaomiao.entity.Multi_info;
-import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.entity.MultiInfor;
+import com.hbsd.rjxy.miaomiao.entity.SubscriptionRecord;
 import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.zlc.vedio.model.InfoAndCommentActivity;
@@ -50,13 +50,13 @@ import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_GET_CAT;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.URL_SUBSCRIBE_CAT;
 
-public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implements View.OnClickListener {
+public class MeAdapter extends BaseQuickAdapter<MultiInfor, MeViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<Subscription_record> subscriptionRecords;
+    private List<SubscriptionRecord> subscriptionRecords;
     Gson gson = new Gson();
 
-    public MeAdapter(int layoutResId, @Nullable List data, Context context, List<Subscription_record> subscriptionRecords) {
+    public MeAdapter(int layoutResId, @Nullable List data, Context context, List<SubscriptionRecord> subscriptionRecords) {
         super(layoutResId, data);
         this.context = context;
         if (subscriptionRecords != null) {
@@ -66,16 +66,16 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
 
     @Override
-    protected void convert(final MeViewHolder helper, Multi_info item) {
+    protected void convert(final MeViewHolder helper, MultiInfor item) {
 
         //设置视频小鱼干数量  评论数量
-        helper.setText(R.id.tv_video_fish, "" + item.getMhot()).setText(R.id.tv_comment_amount, "" + item.getMcomment_count());
+        helper.setText(R.id.tv_video_fish, "" + item.getMultiInforHot()).setText(R.id.tv_comment_amount, "" + item.getMultiInforCommentCount());
 
 
         if (subscriptionRecords != null) {
             int flag = 0;
-            for (Subscription_record subscriptionRecord : subscriptionRecords) {
-                if (subscriptionRecord.getCid() == item.getCid()) {
+            for (SubscriptionRecord subscriptionRecord : subscriptionRecords) {
+                if (subscriptionRecord.getCatId() == item.getCatId()) {
                     helper.getView(R.id.iv_subscribe_plus).setVisibility(View.INVISIBLE);
                     flag = 1;
                     break;
@@ -100,7 +100,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                         String uid = sp.getString("uid", "1");
                         Map<String, String> map = new HashMap<>();
                         map.put("uid", uid);
-                        map.put("cid", item.getCid() + "");
+                        map.put("cid", item.getCatId() + "");
                         OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -111,7 +111,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 subscriptionRecords =
-                                        gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                        gson.fromJson(response.body().string(), new TypeToken<List<SubscriptionRecord>>() {
                                         }.getType());
                                 Log.e("updated SubList", "" + subscriptionRecords.toString());
 
@@ -143,7 +143,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                     String uid = sp.getString("uid", "1");
                     Map<String, String> map = new HashMap<>();
                     map.put("uid", uid);
-                    map.put("cid", item.getCid() + "");
+                    map.put("cid", item.getCatId() + "");
                     OkHttpUtils.getInstance().postForm(URL_SUBSCRIBE_CAT, map, new Callback() {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -154,7 +154,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             subscriptionRecords =
-                                    gson.fromJson(response.body().string(), new TypeToken<List<Subscription_record>>() {
+                                    gson.fromJson(response.body().string(), new TypeToken<List<SubscriptionRecord>>() {
                                     }.getType());
                             Log.e("updated SubList", "" + subscriptionRecords.toString());
 
@@ -168,12 +168,12 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         }
 
 
-        helper.setText(R.id.tv_videocontent, item.getMcontent());
+        helper.setText(R.id.tv_videocontent, item.getMultiInforContent());
 
 
 
 
-        int cid = item.getCid();
+        int cid = item.getCatId();
         //通过cid请求头像
         helper.getView(R.id.iv_cathead).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,8 +189,8 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
                 //点击小鱼干，发送请求  判断是否登录过
 
                 //判断已经登陆过
-                item.setMhot(item.getMhot() + 1);
-                helper.setText(R.id.tv_video_fish, "" + item.getMhot());
+                item.setMultiInforHot(item.getMultiInforHot() + 1);
+                helper.setText(R.id.tv_video_fish, "" + item.getMultiInforHot());
                 new FeedPresenter(context, item).execute();
             }
         });
@@ -207,10 +207,10 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
         });
 
         //设置评论数量
-        helper.setText(R.id.tv_comment_amount, item.getMcomment_count() + "");
+        helper.setText(R.id.tv_comment_amount, item.getMultiInforCommentCount() + "");
 
 
-        helper.gsyVideoPlayer.setUpLazy(item.getMpath(), true, null, null, "title");
+        helper.gsyVideoPlayer.setUpLazy(item.getContentPath(), true, null, null, "title");
         //标题    不可见
         helper.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //返回摁钮不可见
@@ -232,7 +232,7 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
 
         //加载封面
         Glide.with(context)
-                .load(item.getMcover())
+                .load(item.getMultiInforCover())
                 .placeholder(R.drawable.bg_house)
                 .into(helper.iv_thumb);
         helper.gsyVideoPlayer.setImageView(helper.iv_thumb);
@@ -275,11 +275,11 @@ public class MeAdapter extends BaseQuickAdapter<Multi_info, MeViewHolder> implem
     /*
         TODO    type传0是点击头像，1点击评论图片
      */
-    private Intent createIntent(Multi_info item, int type) {
+    private Intent createIntent(MultiInfor item, int type) {
         Intent intent = new Intent(context, InfoAndCommentActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("miid", item.getMiid());
-        bundle.putSerializable("cid", item.getCid());
+        bundle.putSerializable("miid", item.getId());
+        bundle.putSerializable("cid", item.getCatId());
         if (type == 0) {
             bundle.putSerializable("from", "head");
         } else if (type == 1) {

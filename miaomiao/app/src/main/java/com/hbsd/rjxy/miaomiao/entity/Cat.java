@@ -2,158 +2,203 @@ package com.hbsd.rjxy.miaomiao.entity;
 
 import java.util.Date;
 
+/**
+ * @Description  
+ * @Author  
+ * @Date 2020-04-22 
+ */
+
+
 public class Cat {
-    private int cid;
-    private int uid;
-    private int miid;
-    private String hpath;
-    private int chot;
-    private int is_ste;
-    private Date cregist;
-    private Date update_time;
-    private Date cbirthday;
-    private float cweight;
-    private String cname;
-    private String csex;
-    private String cbreed;
-    private String ctoy;
-    private String cintro;
-    private String csource;
-    private String cfood;
 
-    public int getCid() {
-        return cid;
-    }
 
-    public void setCid(int cid) {
-        this.cid = cid;
-    }
+	private Integer id;
 
-    public int getUid() {
-        return uid;
-    }
+	private Integer userId;
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
+	private Integer cityId;
 
-    public int getMiid() {
-        return miid;
-    }
+	private String catName;
 
-    public void setMiid(int miid) {
-        this.miid = miid;
-    }
+	private Date catBirthday;
 
-    public String getHpath() {
-        return hpath;
-    }
+	private String catSex;
 
-    public void setHpath(String hpath) {
-        this.hpath = hpath;
-    }
+	private String breedId;
 
-    public int getChot() {
-        return chot;
-    }
+	private Double catWeight;
 
-    public void setChot(int chot) {
-        this.chot = chot;
-    }
+	private String catToy;
 
-    public int getIs_ste() {
-        return is_ste;
-    }
+	private String catHead;
 
-    public void setIs_ste(int is_ste) {
-        this.is_ste = is_ste;
-    }
+	private int catHot;
 
-    public Date getCregist() {
-        return cregist;
-    }
+	private String catIntro;
 
-    public void setCregist(Date cregist) {
-        this.cregist = cregist;
-    }
+	private String catSource;
 
-    public Date getUpdate_time() {
-        return update_time;
-    }
+	private String catFood;
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
-    }
+	private Integer isSte;
 
-    public Date getCbirthday() {
-        return cbirthday;
-    }
+	private Integer version;
 
-    public void setCbirthday(Date cbirthday) {
-        this.cbirthday = cbirthday;
-    }
+	private Integer deleted;
 
-    public float getCweight() {
-        return cweight;
-    }
+	private Date createTime;
 
-    public void setCweight(float cweight) {
-        this.cweight = cweight;
-    }
+	private Date updateTime;
 
-    public String getCname() {
-        return cname;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setCname(String cname) {
-        this.cname = cname;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getCsex() {
-        return csex;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public void setCsex(String csex) {
-        this.csex = csex;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public String getCbreed() {
-        return cbreed;
-    }
+	public Integer getCityId() {
+		return cityId;
+	}
 
-    public void setCbreed(String cbreed) {
-        this.cbreed = cbreed;
-    }
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
 
-    public String getCtoy() {
-        return ctoy;
-    }
+	public String getCatName() {
+		return catName;
+	}
 
-    public void setCtoy(String ctoy) {
-        this.ctoy = ctoy;
-    }
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
 
-    public String getCintro() {
-        return cintro;
-    }
+	public Date getCatBirthday() {
+		return catBirthday;
+	}
 
-    public void setCintro(String cintro) {
-        this.cintro = cintro;
-    }
+	public void setCatBirthday(Date catBirthday) {
+		this.catBirthday = catBirthday;
+	}
 
-    public String getCsource() {
-        return csource;
-    }
+	public String getCatSex() {
+		return catSex;
+	}
 
-    public void setCsource(String csource) {
-        this.csource = csource;
-    }
+	public void setCatSex(String catSex) {
+		this.catSex = catSex;
+	}
 
-    public String getCfood() {
-        return cfood;
-    }
+	public String getBreedId() {
+		return breedId;
+	}
 
-    public void setCfood(String cfood) {
-        this.cfood = cfood;
-    }
+	public void setBreedId(String breedId) {
+		this.breedId = breedId;
+	}
+
+	public Double getCatWeight() {
+		return catWeight;
+	}
+
+	public void setCatWeight(Double catWeight) {
+		this.catWeight = catWeight;
+	}
+
+	public String getCatToy() {
+		return catToy;
+	}
+
+	public void setCatToy(String catToy) {
+		this.catToy = catToy;
+	}
+
+	public String getCatHead() {
+		return catHead;
+	}
+
+	public void setCatHead(String catHead) {
+		this.catHead = catHead;
+	}
+
+	public int getCatHot() {
+		return catHot;
+	}
+
+	public void setCatHot(int catHot) {
+		this.catHot = catHot;
+	}
+
+	public String getCatIntro() {
+		return catIntro;
+	}
+
+	public void setCatIntro(String catIntro) {
+		this.catIntro = catIntro;
+	}
+
+	public String getCatSource() {
+		return catSource;
+	}
+
+	public void setCatSource(String catSource) {
+		this.catSource = catSource;
+	}
+
+	public String getCatFood() {
+		return catFood;
+	}
+
+	public void setCatFood(String catFood) {
+		this.catFood = catFood;
+	}
+
+	public Integer getIsSte() {
+		return isSte;
+	}
+
+	public void setIsSte(Integer isSte) {
+		this.isSte = isSte;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

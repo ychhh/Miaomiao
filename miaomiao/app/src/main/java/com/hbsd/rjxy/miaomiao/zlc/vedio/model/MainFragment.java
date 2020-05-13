@@ -24,9 +24,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.R;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
-import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.MultiInfor;
 
-import com.hbsd.rjxy.miaomiao.entity.Subscription_record;
+import com.hbsd.rjxy.miaomiao.entity.SubscriptionRecord;
 import com.hbsd.rjxy.miaomiao.utils.OkHttpUtils;
 import com.hbsd.rjxy.miaomiao.utils.ScrollCalculatorHelper;
 import com.hbsd.rjxy.miaomiao.utils.StatusBarUtil;
@@ -59,6 +59,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_SUBSCRIBE_VIDEO_LIST;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.INIT_VIDEO_URL;
 import static com.hbsd.rjxy.miaomiao.utils.Constant.LOGIN_SP_NAME;
@@ -79,8 +80,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     private RecyclerView recyclerView;
     private MeAdapter adapter;
-    private List<Multi_info> videoList;         //这里只显示视频，所以是videoList
-    private List<Subscription_record> subscriptionRecords;
+    private List<MultiInfor> videoList;         //这里只显示视频，所以是videoList
+    private List<SubscriptionRecord> subscriptionRecords;
     ScrollCalculatorHelper scrollCalculatorHelper ;
     private int playTop;
     private int playBottom;
@@ -123,7 +124,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     (1)判断是否是登录的
              */
 
-            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+            SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
             uid = sp.getString("uid","default");
             if("default".equals(uid)){
                 //没登录，不去请求订阅列表
@@ -151,7 +152,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
         rlVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                 String uid = sp.getString("uid","default");
                 if("default".equals(uid)){
                     askforRefreshVideoList(null);
@@ -180,7 +181,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 subscriptionRecords =
-                        gson.fromJson(response.body().string(),new TypeToken<List<Subscription_record>>(){}.getType());
+                        gson.fromJson(response.body().string(),new TypeToken<List<SubscriptionRecord>>(){}.getType());
                 Log.e("askforSubscriptionList",""+subscriptionRecords.toString());
 
                 askforRecommend();
@@ -228,9 +229,9 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     //这个要替换当前的这些视频
-                    List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
+                    List<MultiInfor> videoList = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
                     Log.e("refresh",""+videoList.toString());
-                    EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                    EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                     videoEvent.setContentList(videoList);
                     videoEvent.setContentString("refreshVideoList");
                     EventBus.getDefault().post(videoEvent);
@@ -260,7 +261,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                 jo.put("page",RECOMMEND_PAGE_DEFAULT);
             }else{
                 jo.put("page",SUBSCRIBE_PAGE_DEFAULT);
-                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                 String uid = sp.getString("uid","1");
                 jo.put("uid",uid);
             }
@@ -282,8 +283,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                List<Multi_info> videoList = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
-                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                List<MultiInfor> videoList = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
+                EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                 if(contentType == 1 && RECOMMEND_PAGE_DEFAULT == 1){
                     RECOMMEND_PAGE_DEFAULT += 1;
                 }
@@ -435,7 +436,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
     //订阅事件
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getVideoList(EventInfo<String,String,Multi_info> videoEvent){
+    public void getVideoList(EventInfo<String,String,MultiInfor> videoEvent){
         if(videoEvent.getContentString().equals("videoInit")){
             if(videoEvent.isAvailable()){
                 /**
@@ -443,7 +444,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  *      如果当前视频列表已经存在数据
                  */
                 if(this.videoList.size() != 0){
-                    for(Multi_info multi_info : videoEvent.getContentList()){
+                    for(MultiInfor multi_info : videoEvent.getContentList()){
                         this.videoList.add(multi_info);
                     }
                 }else{
@@ -484,7 +485,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             }
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
-            for(Multi_info multi_info : videoEvent.getContentList()){
+            for(MultiInfor multi_info : videoEvent.getContentList()){
                 this.videoList.add(multi_info);
             }
             adapter.notifyItemChanged(0);
@@ -513,7 +514,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             setTextViewColor(tv_subscribed,tv_recommend);
             GSYVideoManager.releaseAllVideos();
             this.videoList.clear();
-            for(Multi_info multi_info : videoEvent.getContentList()){
+            for(MultiInfor multi_info : videoEvent.getContentList()){
                 this.videoList.add(multi_info);
             }
             adapter.notifyItemChanged(0);
@@ -534,7 +535,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
 
 
     @Override
-    public List<Multi_info> initData(List<Multi_info> videoList) {
+    public List<MultiInfor> initData(List<MultiInfor> videoList) {
         //测试
         if(videoList == null){
             videoList = new ArrayList<>();
@@ -562,7 +563,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                  */
                 if(contentType != 0){
                     //当前不是订阅内容，判断是否登录
-                    SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sp = getContext().getSharedPreferences(LOGIN_SP_NAME, MODE_PRIVATE);
                     String uid = sp.getString("uid","default");
                     if("default".equals(uid)){
                         //如果没有登录
@@ -570,6 +571,7 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
                     }else{
                         this.uid = uid;
                         Log.e("uid",""+this.uid);
+
                         //以后下面的内容放到else分支里，1改成unregist
                         //请求订阅的视频内容...
                         RECOMMEND_PAGE_DEFAULT -= 1;
@@ -688,8 +690,8 @@ public class MainFragment extends Fragment implements IMainFragmentView , IVideo
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //这个要替换当前的这些视频
-                List<Multi_info> videoL = gson.fromJson(response.body().string(),new TypeToken<List<Multi_info>>(){}.getType());
-                EventInfo<String,String,Multi_info> videoEvent = new EventInfo<>();
+                List<MultiInfor> videoL = gson.fromJson(response.body().string(),new TypeToken<List<MultiInfor>>(){}.getType());
+                EventInfo<String,String,MultiInfor> videoEvent = new EventInfo<>();
                 Log.e("subscribeInit",""+videoL.toString());
                 videoEvent.setContentList(videoL);
                 videoEvent.setContentString("subscribeInit");

@@ -81,22 +81,22 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                 根据uid查询用户的头像和username
          */
 
-        if(item.getUhead().equals("")||item.getUhead() == null){
+        if(item.getUserHead().equals("")||item.getUserHead() == null){
             Glide.with(context)
                     .load(R.drawable.u45)
                     .override(Target.SIZE_ORIGINAL)
                     .into((ImageView) helper.getView(R.id.civ_comment_head));
         }else{
             Glide.with(context)
-                    .load(item.getUhead())
+                    .load(item.getUserHead())
                     .override(Target.SIZE_ORIGINAL)
                     .into((ImageView) helper.getView(R.id.civ_comment_head));
         }
 
-        helper.setText(R.id.comment_uname,item.getUname());
+        helper.setText(R.id.comment_uname,item.getUserName());
 
 
-        helper.setText(R.id.tv_comment_content,item.getCocontent());
+        helper.setText(R.id.tv_comment_content,item.getCommentContent());
 
 
         /*
@@ -107,22 +107,22 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                 （3）不同天，判断多少天以前
          */
         TimeUtils timeUtils = new TimeUtils(currentTime);
-        helper.setText(R.id.tv_comment_publish_time,timeUtils.compareTime(item.getPublishTime()));
+        helper.setText(R.id.tv_comment_publish_time,timeUtils.compareTime(item.getCreateTime().toString()));
 
 
         int flag = 0;
         for(int i = 0 ; i < recordLikes.size();i++){
-            if(recordLikes.get(i).getCoid() == item.getCoid()){
+            if(recordLikes.get(i).getCoid() == item.getId()){
                 flag = 1;
                 helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_pressed));
                 helper.setLiked(true);
-                Log.e("设置了",item.getCocontent()+"''''''"+"点赞");
+                Log.e("设置了",item.getCommentContent()+"''''''"+"点赞");
             }
         }
         if(flag == 0){
             helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_unpressed));
             helper.setLiked(false);
-            Log.e("设置了",item.getCocontent()+"''''''"+"没点赞");
+            Log.e("设置了",item.getCommentContent()+"''''''"+"没点赞");
         }
 
 
@@ -148,16 +148,16 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                         }else{
                             //当前无锁
                             helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_unpressed));
-                            item.setColike(item.getColike()-1);
-                            if(item.getColike() != 0){
-                                helper.setText(R.id.comment_like_account,item.getColike()+"");
+                            item.setCommentLike(item.getCommentLike()-1);
+                            if(item.getCommentLike() != 0){
+                                helper.setText(R.id.comment_like_account,item.getCommentLike()+"");
                             }else{
                                 helper.setText(R.id.comment_like_account,"");
                             }
                             helper.setLiked(false);
                             JSONObject jsonObject = new JSONObject();
                             try {
-                                jsonObject.put("coid",item.getCoid());
+                                jsonObject.put("coid",item.getId());
                                 jsonObject.put("uid",currentId);
                                 jsonObject.put("miid",miid);
                             } catch (JSONException e) {
@@ -184,12 +184,12 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                             //当前有锁
                         }else{
                             helper.setImageBitmap(R.id.iv_comment_like, BitmapFactory.decodeResource(context.getResources(),R.drawable.comment_like_pressed));
-                            item.setColike(item.getColike()+1);
-                            helper.setText(R.id.comment_like_account,item.getColike()+"");
+                            item.setCommentLike(item.getCommentLike()+1);
+                            helper.setText(R.id.comment_like_account,item.getCommentLike()+"");
                             helper.setLiked(true);
                             JSONObject jsonObject = new JSONObject();
                             try {
-                                jsonObject.put("coid",item.getCoid());
+                                jsonObject.put("coid",item.getId());
                                 jsonObject.put("uid",currentId);
                                 jsonObject.put("miid",miid);
                             } catch (JSONException e) {
@@ -223,11 +223,11 @@ public class CommentAdapter extends BaseQuickAdapter<Comment, CommentViewHolder>
                 <1000时不用缩写
                 >1000时使用1.1k
          */
-        if(item.getColike() >= 1000){
+        if(item.getCommentLike() >= 1000){
 
         }
-        if(item.getColike() != 0){
-            helper.setText(R.id.comment_like_account,item.getColike()+"");
+        if(item.getCommentLike() != 0){
+            helper.setText(R.id.comment_like_account,item.getCommentLike()+"");
         }else{
             helper.setText(R.id.comment_like_account,"");
         }

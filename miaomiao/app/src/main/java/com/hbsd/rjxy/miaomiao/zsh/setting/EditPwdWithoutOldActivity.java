@@ -127,7 +127,7 @@ public class EditPwdWithoutOldActivity extends AppCompatActivity implements Edit
                     String newPwd=tx_pwd.getText().toString();
                     String confirm=tx_confirm.getText().toString();
                     if(newPwd.equals(confirm)){
-                        Integer id=user.getUserId();
+                        Integer id=user.getId();
                         editPwdPresenterCompl.editPwdWithoutOld(id,newPwd);
                         finish();
 

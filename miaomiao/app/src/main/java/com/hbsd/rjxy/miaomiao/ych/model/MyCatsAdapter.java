@@ -53,18 +53,18 @@ public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
             if (item.get(i) != null) {
                 Log.e(TAG, "convert i: " + i);
                 if (i%3 == 0)
-                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat1));
+                    Glide.with(context).load(item.get(i).getCatHead()).into((ImageView) helper.getView(R.id.img_cat1));
                 if (i%3 == 1)
-                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat2));
+                    Glide.with(context).load(item.get(i).getCatHead()).into((ImageView) helper.getView(R.id.img_cat2));
                 if (i%3 == 2)
-                    Glide.with(context).load(item.get(i).getHpath()).into((ImageView) helper.getView(R.id.img_cat3));
+                    Glide.with(context).load(item.get(i).getCatHead()).into((ImageView) helper.getView(R.id.img_cat3));
             }
         }
         helper.getView(R.id.img_cat1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(v.getContext(), CatFCActivity.class);
-                intent.putExtra("cid",item.get(0).getCid());
+                intent.putExtra("cid",item.get(0).getId());
                 v.getContext().startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(v.getContext(), CatFCActivity.class);
-                intent.putExtra("cid",item.get(1).getCid());
+                intent.putExtra("cid",item.get(1).getId());
                 v.getContext().startActivity(intent);
             }
         });
@@ -80,7 +80,7 @@ public class MyCatsAdapter extends BaseQuickAdapter<List<Cat>, BaseViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(v.getContext(), CatFCActivity.class);
-                intent.putExtra("cid",item.get(2).getCid());
+                intent.putExtra("cid",item.get(2).getId());
                 v.getContext().startActivity(intent);
             }
         });

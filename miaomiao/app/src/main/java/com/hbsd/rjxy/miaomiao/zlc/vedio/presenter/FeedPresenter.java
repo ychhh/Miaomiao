@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hbsd.rjxy.miaomiao.entity.EventInfo;
-import com.hbsd.rjxy.miaomiao.entity.Multi_info;
+import com.hbsd.rjxy.miaomiao.entity.MultiInfor;
 import com.hbsd.rjxy.miaomiao.entity.User;
 import com.hbsd.rjxy.miaomiao.utils.MeBufferReader;
 
@@ -37,9 +37,9 @@ public class FeedPresenter extends AsyncTask<Object,Object,String>{
 
 
     private Context context;
-    private Multi_info multi_info;
+    private MultiInfor multi_info;
 
-    public FeedPresenter(Context context, @NonNull Multi_info multi_info) {
+    public FeedPresenter(Context context, @NonNull MultiInfor multi_info) {
         this.context = context;
         this.multi_info = multi_info;
     }
@@ -53,7 +53,7 @@ public class FeedPresenter extends AsyncTask<Object,Object,String>{
             con.setRequestMethod("POST");
             OutputStream os = con.getOutputStream();
             JSONObject jo = new JSONObject();
-            jo.put("miid",multi_info.getMiid());
+            jo.put("miid",multi_info.getId());
             os.write(jo.toString().getBytes());
 
 

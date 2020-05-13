@@ -53,10 +53,9 @@ import static android.content.Context.MODE_PRIVATE;
         对右侧抽屉的初始化,运用自定义的AddItemAdapter
         <!---refresh-->
         利用从EditUserPresenterCompl中传过来的修改后的Json(user),进行当下用户的刷新
-
 */
 public class SelfFragment extends Fragment implements SelfMainView {
-      public View view;
+    public View view;
 //    public static final String[] TITLES = {"First", "Second"};
 //    private DrawerLayout mDrawer_layout;//DrawerLayout容器
 //    private RelativeLayout mMenu_layout_right;//右边抽屉
@@ -77,12 +76,12 @@ public class SelfFragment extends Fragment implements SelfMainView {
 //    private String imgUrl;
 
     @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            view = inflater.inflate(
-                    R.layout.self_main,
-                    container,
-                    false
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(
+                R.layout.self_main,
+                container,
+                false
         );
 
 
@@ -190,7 +189,7 @@ public class SelfFragment extends Fragment implements SelfMainView {
 
     @Override
     public void refresh() {
-      //  initUserView(user);
+        //  initUserView(user);
     }
 
     /*抽屉的初始化*/
